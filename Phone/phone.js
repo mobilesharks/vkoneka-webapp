@@ -1649,8 +1649,12 @@ function InitUi(){
             catch(e){}
         }
     }
-    if(profileName) $("#UserCallID").html(profilePrepend +""+ profileName);
+
+    if(profileName){ 
+        $("#UserCallID").html(profilePrepend +""+ profileName);
+    }
     $("#UserProfilePic").css("background-image", "url('"+ getPicture("profilePicture") +"')");
+    //$("#UserProfilePic").css("background-image", "url('https://ui-avatars.com/api/?background=random&name="+profilePictureName+"&size=128')");
     
     $("#BtnFilter").attr("title", lang.filter_and_sort)
     $("#BtnFilter").on('click', function(event){
