@@ -81,10 +81,10 @@ let wallpaperDark = getDbItem("wallpaperDark", "wallpaper.dark.webp");     // Wa
  */
 let profileUserID = getDbItem("profileUserID", null);   // Internal reference ID. (DON'T CHANGE THIS!)
 let profileName = getDbItem("profileName", null);       // eg: Keyla James
-let wssServer = getDbItem("wssServer", null);           // eg: raspberrypi.local
-let WebSocketPort = getDbItem("WebSocketPort", null);   // eg: 444 | 4443
-let ServerPath = getDbItem("ServerPath", null);         // eg: /ws
-let SipDomain = getDbItem("SipDomain", null);           // eg: raspberrypi.local
+let wssServer = getDbItem("wssServer", 'pbx.gov.cv');           // eg: raspberrypi.local
+let WebSocketPort = getDbItem("WebSocketPort", 8089);   // eg: 444 | 4443
+let ServerPath = getDbItem("ServerPath", '/ws');         // eg: /ws
+let SipDomain = getDbItem("SipDomain", 'pbx.gov.cv');           // eg: raspberrypi.local
 let SipUsername = getDbItem("SipUsername", null);       // eg: webrtc
 let SipPassword = getDbItem("SipPassword", null);       // eg: webrtc
 
@@ -11803,20 +11803,20 @@ function ShowMyProfile(){
         html += "<div class=UiTextHeading onclick=\"ToggleHeading(this,'Configure_Extension_Html')\"><i class=\"fa fa-user-circle-o UiTextHeadingIcon\" style=\"background-color:#a93a3a\"></i> "+ lang.account +"</div>"
     }
     var AccountHtml =  "<div id=Configure_Extension_Html style=\"display:none\">";
-    AccountHtml += "<div class=UiText>"+ lang.asterisk_server_address +":</div>";
-    AccountHtml += "<div><input id=Configure_Account_wssServer class=UiInputText type=text placeholder='"+ lang.eg_asterisk_server_address +"' value='"+ getDbItem("wssServer", "") +"'></div>";
+    //AccountHtml += "<div class=UiText>"+ lang.asterisk_server_address +":</div>";
+    AccountHtml += "<div><input id=Configure_Account_wssServer class=UiInputText type=hidden placeholder='"+ lang.eg_asterisk_server_address +"' value='"+ getDbItem("wssServer", "pbx.gov.cv") +"'></div>";
 
-    AccountHtml += "<div class=UiText>"+ lang.websocket_port +":</div>";
-    AccountHtml += "<div><input id=Configure_Account_WebSocketPort class=UiInputText type=text placeholder='"+ lang.eg_websocket_port +"' value='"+ getDbItem("WebSocketPort", "") +"'></div>";
+    //AccountHtml += "<div class=UiText>"+ lang.websocket_port +":</div>";
+    AccountHtml += "<div><input id=Configure_Account_WebSocketPort class=UiInputText type=hidden placeholder='"+ lang.eg_websocket_port +"' value='"+ getDbItem("WebSocketPort", "8089") +"'></div>";
 
-    AccountHtml += "<div class=UiText>"+ lang.websocket_path +":</div>";
-    AccountHtml += "<div><input id=Configure_Account_ServerPath class=UiInputText type=text placeholder='"+ lang.eg_websocket_path +"' value='"+ getDbItem("ServerPath", "") +"'></div>";
+    //AccountHtml += "<div class=UiText>"+ lang.websocket_path +":</div>";
+    AccountHtml += "<div><input id=Configure_Account_ServerPath class=UiInputText type=hidden placeholder='"+ lang.eg_websocket_path +"' value='"+ getDbItem("ServerPath", "/ws") +"'></div>";
 
     AccountHtml += "<div class=UiText>"+ lang.full_name +":</div>";
     AccountHtml += "<div><input id=Configure_Account_profileName class=UiInputText type=text placeholder='"+ lang.eg_full_name +"' value='"+ getDbItem("profileName", "") +"'></div>";
 
-    AccountHtml += "<div class=UiText>"+ lang.sip_domain +":</div>";
-    AccountHtml += "<div><input id=Configure_Account_SipDomain class=UiInputText type=text placeholder='"+ lang.eg_sip_domain +"' value='"+ getDbItem("SipDomain", "") +"'></div>";
+    //AccountHtml += "<div class=UiText>"+ lang.sip_domain +":</div>";
+    AccountHtml += "<div><input id=Configure_Account_SipDomain class=UiInputText type=hidden placeholder='"+ lang.eg_sip_domain +"' value='"+ getDbItem("SipDomain", "pbx.gov.cv") +"'></div>";
 
     AccountHtml += "<div class=UiText>"+ lang.sip_username +":</div>";
     AccountHtml += "<div><input id=Configure_Account_SipUsername class=UiInputText type=text placeholder='"+ lang.eg_sip_username +"' value='"+ getDbItem("SipUsername", "") +"'></div>";
@@ -11824,7 +11824,7 @@ function ShowMyProfile(){
     AccountHtml += "<div class=UiText>"+ lang.sip_password +":</div>";
     AccountHtml += "<div><input id=Configure_Account_SipPassword class=UiInputText type=password placeholder='"+ lang.eg_sip_password +"' value='"+ getDbItem("SipPassword", "") +"'></div>";
 
-    AccountHtml += "<div class=UiText>"+ lang.subscribe_voicemail +":</div>";
+    /*AccountHtml += "<div class=UiText>"+ lang.subscribe_voicemail +":</div>";
     AccountHtml += "<div><input type=checkbox id=Configure_Account_Voicemail_Subscribe "+ ((VoiceMailSubscribe == true)? "checked" : "") +"><label for=Configure_Account_Voicemail_Subscribe>"+ lang.yes +"</label></div>";
 
     AccountHtml += "<div id=Voicemail_Did_row style=\"display:"+ ((VoiceMailSubscribe == true)? "unset" : "none") +"\">";
@@ -11837,7 +11837,7 @@ function ShowMyProfile(){
     AccountHtml += "<ul style=\"list-style-type:none\">"
     AccountHtml += "<li><input type=radio name=chatEngine id=chat_type_sip "+ ((ChatEngine == "XMPP")? "" : "checked") +"><label for=chat_type_sip>SIP</label>"
     AccountHtml += "<li><input type=radio name=chatEngine id=chat_type_xmpp "+ ((ChatEngine == "XMPP")? "checked" : "") +"><label for=chat_type_xmpp>XMPP</label>"
-    AccountHtml += "</ul>"
+    AccountHtml += "</ul>"*/
 
     AccountHtml += "<div id=RowChatEngine_xmpp style=\"display:"+ ((ChatEngine == "XMPP")? "unset" : "none") +"\">";
 

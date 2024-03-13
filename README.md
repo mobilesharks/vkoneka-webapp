@@ -591,3 +591,11 @@ $ sudo asterisk -r
 ![Video Call Presenting Scratchpad](https://github.com/InnovateAsterisk/Browser-Phone/blob/master/Screenshots/VideoCall_PresentScratchpad.jpg)
 
 ![Video Call Presenting Video File](https://github.com/InnovateAsterisk/Browser-Phone/blob/master/Screenshots/VideoCall_PresentVideo.jpg)
+
+## Run with docker 
+```
+docker build -t vkonekta-webapp:1.0.0 .
+```
+```
+docker run -d -p 8080:80 vkonekta-webapp:1.0.0
+```

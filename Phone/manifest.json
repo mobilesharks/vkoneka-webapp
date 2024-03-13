@@ -1,12 +1,12 @@
 {
-    "name": "Browser Phone",
-    "short_name": "Browser Phone",
-    "id": "com.innovateasterisk.browserphone",
+    "name": "vKonekta Browser Phone",
+    "short_name": "vKonekta Browser Phone",
+    "id": "cv.nosi.vkonekta.browserphone",
     "start_url": "index.html",
     "display": "standalone",
     "background_color": "#fff",
     "theme_color": "#f6f6f6",
-    "description": "Browser Phone is a fully featured browser based WebRTC SIP phone for Asterisk. Designed to work with Asterisk PBX.",
+    "description": "vKonekta Browser Phone is a fully featured browser based WebRTC SIP phone",
     "screenshots": [
         {
             "src": "icons/screenshot1.webp",
