@@ -11808,7 +11808,6 @@ function ShowMyProfile(){
 
     html += "<div border=0 class=UiSideField>";
     html += "<div class=container>";
-    html += "<div class=row>";
     // SIP Account
     if(EnableAccountSettings == true){
         html += "<div class=UiTextHeading onclick=\"ToggleHeading(this,'Configure_Extension_Html')\"><i class=\"fa fa-user-circle-o UiTextHeadingIcon\" style=\"background-color:#a93a3a\"></i> "+ lang.account +"</div>"
@@ -11870,9 +11869,7 @@ function ShowMyProfile(){
 
     AccountHtml += "</div>";
     if(EnableAccountSettings == true) {
-        html += "<div class=\"col-md-12\">"
         html += AccountHtml;
-        html += "</div>"
     }
 
     // 2 Audio & Video
@@ -11882,17 +11879,14 @@ function ShowMyProfile(){
 
     if(EnableVideoCalling == true){
 
-        //AudioVideoHtml += "<div class=UiText>"+ lang.preview +":</div>";
+        AudioVideoHtml += "<div class=UiText>"+ lang.preview +":</div>";
         AudioVideoHtml += "<div style=\"text-align:center; margin-top:10px\"><video id=local-video-preview class=previewVideo muted playsinline></video></div>";
 
-        AudioVideoHtml += "<div class=\"row\">";
-
-        AudioVideoHtml += "<div class=\"col-md-12\">";
         AudioVideoHtml += "<div class=UiText>"+ lang.camera +":</div>";
         AudioVideoHtml += "<div style=\"text-align:center\"><select id=previewVideoSrc style=\"width:100%\"></select></div>";
        
-        //AudioVideoHtml += "<div class=UiText>"+ lang.frame_rate +":</div>"
-        AudioVideoHtml += "<div class=pill-nav style=\"display:none\">";
+        AudioVideoHtml += "<div class=UiText>"+ lang.frame_rate +":</div>"
+        AudioVideoHtml += "<div class=pill-nav>";
         AudioVideoHtml += "<input name=Settings_FrameRate id=r40 type=radio value=\"2\"><label class=radio_pill for=r40>2</label>";
         AudioVideoHtml += "<input name=Settings_FrameRate id=r41 type=radio value=\"5\"><label class=radio_pill for=r41>5</label>";
         AudioVideoHtml += "<input name=Settings_FrameRate id=r42 type=radio value=\"10\"><label class=radio_pill for=r42>10</label>";
@@ -11903,8 +11897,8 @@ function ShowMyProfile(){
         AudioVideoHtml += "<input name=Settings_FrameRate id=r47 type=radio value=\"\"><label class=radio_pill for=r47><i class=\"fa fa-trash\"></i></label>";
         AudioVideoHtml += "</div>";
 
-        //AudioVideoHtml += "<div class=UiText>"+ lang.quality +":</div>";
-        AudioVideoHtml += "<div class=pill-nav style=\"display:none\">";
+        AudioVideoHtml += "<div class=UiText>"+ lang.quality +":</div>";
+        AudioVideoHtml += "<div class=pill-nav>";
         AudioVideoHtml += "<input name=Settings_Quality id=r30 type=radio value=\"160\"><label class=radio_pill for=r30><i class=\"fa fa-video-camera\" style=\"transform: scale(0.4)\"></i> HQVGA</label>";
         AudioVideoHtml += "<input name=Settings_Quality id=r31 type=radio value=\"240\"><label class=radio_pill for=r31><i class=\"fa fa-video-camera\" style=\"transform: scale(0.6)\"></i> QVGA</label>";
         AudioVideoHtml += "<input name=Settings_Quality id=r32 type=radio value=\"480\"><label class=radio_pill for=r32><i class=\"fa fa-video-camera\" style=\"transform: scale(0.8)\"></i> VGA</label>";
@@ -11912,8 +11906,8 @@ function ShowMyProfile(){
         AudioVideoHtml += "<input name=Settings_Quality id=r34 type=radio value=\"\"><label class=radio_pill for=r34><i class=\"fa fa-trash\"></i></label>";
         AudioVideoHtml += "</div>";
         
-        //AudioVideoHtml += "<div class=UiText>"+ lang.image_orientation +":</div>";
-        AudioVideoHtml += "<div class=pill-nav style=\"display:none\">";
+        AudioVideoHtml += "<div class=UiText>"+ lang.image_orientation +":</div>";
+        AudioVideoHtml += "<div class=pill-nav>";
         AudioVideoHtml += "<input name=Settings_Orientation id=r20 type=radio value=\"rotateY(0deg)\"><label class=radio_pill for=r20><i class=\"fa fa-address-card\" style=\"transform: rotateY(0deg)\"></i> "+ lang.image_orientation_normal +"</label>";
         AudioVideoHtml += "<input name=Settings_Orientation id=r21 type=radio value=\"rotateY(180deg)\"><label class=radio_pill for=r21><i class=\"fa fa-address-card\" style=\"transform: rotateY(180deg)\"></i> "+ lang.image_orientation_mirror +"</label>";
         AudioVideoHtml += "</div>";
@@ -11926,27 +11920,20 @@ function ShowMyProfile(){
         AudioVideoHtml += "<input name=Settings_AspectRatio id=r13 type=radio value=\"\"><label class=radio_pill for=r13><i class=\"fa fa-trash\"></i></label>";
         AudioVideoHtml += "</div>";
 
-        AudioVideoHtml += "</div>"; // close col 3
-
     }
 
-    AudioVideoHtml += "<div class=\"col-md-12\">";
     AudioVideoHtml += "<div class=UiText>"+ lang.speaker +":</div>";
     AudioVideoHtml += "<div style=\"text-align:center\"><select id=playbackSrc style=\"width:100%\"></select></div>";
     AudioVideoHtml += "<div class=Settings_VolumeOutput_Container><div id=Settings_SpeakerOutput class=Settings_VolumeOutput></div></div>";
     AudioVideoHtml += "<div><button class=roundButtons id=preview_output_play><i class=\"fa fa-play\"></i></button></div>";
-    AudioVideoHtml += "</div>"; // close col 3
 
-    AudioVideoHtml += "<div class=\"col-md-12\">";
     AudioVideoHtml += "<div id=RingDeviceSection>";
     AudioVideoHtml += "<div class=UiText>"+ lang.ring_device +":</div>";
     AudioVideoHtml += "<div style=\"text-align:center\"><select id=ringDevice style=\"width:100%\"></select></div>";
     AudioVideoHtml += "<div class=Settings_VolumeOutput_Container><div id=Settings_RingerOutput class=Settings_VolumeOutput></div></div>";
     AudioVideoHtml += "<div><button class=roundButtons id=preview_ringer_play><i class=\"fa fa-play\"></i></button></div>";
     AudioVideoHtml += "</div>";
-    AudioVideoHtml += "</div>"; // close col 3
 
-    AudioVideoHtml += "<div class=\"col-md-12\">";
     AudioVideoHtml += "<div class=UiText>"+ lang.microphone +":</div>";
     AudioVideoHtml += "<div style=\"text-align:center\"><select id=microphoneSrc style=\"width:100%\"></select></div>";
     AudioVideoHtml += "<div class=Settings_VolumeOutput_Container><div id=Settings_MicrophoneOutput class=Settings_VolumeOutput></div></div>";
@@ -11954,15 +11941,8 @@ function ShowMyProfile(){
     AudioVideoHtml += "<div><input type=checkbox id=Settings_EchoCancellation><label for=Settings_EchoCancellation> "+ lang.echo_cancellation +"<label></div>";
     AudioVideoHtml += "<div><input type=checkbox id=Settings_NoiseSuppression><label for=Settings_NoiseSuppression> "+ lang.noise_suppression +"<label></div>";
     AudioVideoHtml += "</div>";
-    AudioVideoHtml += "</div>"; // close col 3
 
-    AudioVideoHtml += "</div>"; // close row 
-
-    html += "<div class=\"col-md-12\">"
     html += AudioVideoHtml;
-    html += "</div>";
-
-    html += "</div>"; //close row
    
 
     // 3 Appearance
