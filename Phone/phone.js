@@ -125,7 +125,7 @@ let RecordAllCalls = (getDbItem("RecordAllCalls", "0") == "1");             // S
 let StartVideoFullScreen = (getDbItem("StartVideoFullScreen", "1") == "1"); // Starts a video call in the full screen (browser screen, not desktop)
 let SelectRingingLine = (getDbItem("SelectRingingLine", "1") == "1");       // Selects the ringing line if you are not on another call ()
 
-let UiMaxWidth = parseInt(getDbItem("UiMaxWidth", 1240));                                   // Sets the max-width for the UI elements (don't set this less than 920. Set to very high number for full screen eg: 999999)
+let UiMaxWidth = parseInt(getDbItem("UiMaxWidth", 100));                                   // Sets the max-width for the UI elements (don't set this less than 920. Set to very high number for full screen eg: 999999)
 let UiThemeStyle = getDbItem("UiThemeStyle", "system");                                     // Sets the color theme for the UI dark | light | system (set by your systems dark/light settings)
 let UiMessageLayout = getDbItem("UiMessageLayout", "middle");                               // Put the message Stream at the top or middle can be either: top | middle 
 let UiCustomConfigMenu = (getDbItem("UiCustomConfigMenu", "0") == "1");                     // If set to true, will only call web_hook_on_config_menu
@@ -1543,6 +1543,8 @@ function SetStatusWindow(){
 // =======
 function InitUi(){
 
+    PreloadAudioFiles();
+
     // Custom Web hook
     if(typeof web_hook_on_before_init !== 'undefined') web_hook_on_before_init(phoneOptions);
 
@@ -1551,7 +1553,7 @@ function InitUi(){
     var phone = $("#Phone");
     phone.empty();
     phone.attr("class", "pageContainer");
-    phone.css("max-width", UiMaxWidth + "px");
+    phone.css("max-width", UiMaxWidth + "%");
 
     // Left Section
     var leftSection = $("<div/>");
@@ -1763,7 +1765,6 @@ function InitUi(){
         UpdateUI();
     }
 
-    PreloadAudioFiles();
 
     // Custom Web hook
     if(typeof web_hook_on_init !== 'undefined') web_hook_on_init();
@@ -1885,6 +1886,10 @@ function ApplyThemeColor(){
     }
     $("#colorSchemeMode").attr("href", cssUrl);
 
+    //vkonekta Style Sheet Added
+    var vkonektacssUrl = hostingPrefix +"vkonekta.phone.css";
+    $("head").append('<link rel="stylesheet" id="vkonektaColorSchemeMode" href="'+vkonektacssUrl+'" />');
+
     // Wallpaper
     if($("#colorSchemeModeSheet").length){
         $("#colorSchemeModeSheet").empty();
@@ -1923,7 +1928,8 @@ function PreloadAudioFiles(){
         }
         oReq.send();
     });
-    // console.log(audioBlobs);
+    
+    //console.log(audioBlobs);
 }
 
 // Create User Agent
@@ -11801,7 +11807,8 @@ function ShowMyProfile(){
     var html = "<div style=\"text-align:right\"><button class=roundButtons onclick=\"ShowContacts()\"><i class=\"fa fa-close\"></i></button></div>"
 
     html += "<div border=0 class=UiSideField>";
-
+    html += "<div class=container>";
+    html += "<div class=row>";
     // SIP Account
     if(EnableAccountSettings == true){
         html += "<div class=UiTextHeading onclick=\"ToggleHeading(this,'Configure_Extension_Html')\"><i class=\"fa fa-user-circle-o UiTextHeadingIcon\" style=\"background-color:#a93a3a\"></i> "+ lang.account +"</div>"
@@ -11862,38 +11869,30 @@ function ShowMyProfile(){
     AccountHtml += "</div>";
 
     AccountHtml += "</div>";
-    if(EnableAccountSettings == true) html += AccountHtml;
+    if(EnableAccountSettings == true) {
+        html += "<div class=\"col-md-12\">"
+        html += AccountHtml;
+        html += "</div>"
+    }
 
     // 2 Audio & Video
     html += "<div class=UiTextHeading onclick=\"ToggleHeading(this,'Audio_Video_Html')\"><i class=\"fa fa fa-video-camera UiTextHeadingIcon\" style=\"background-color:#208e3c\"></i> "+ lang.audio_video +"</div>"
 
     var AudioVideoHtml = "<div id=Audio_Video_Html style=\"display:none\">";
 
-    AudioVideoHtml += "<div class=UiText>"+ lang.speaker +":</div>";
-    AudioVideoHtml += "<div style=\"text-align:center\"><select id=playbackSrc style=\"width:100%\"></select></div>";
-    AudioVideoHtml += "<div class=Settings_VolumeOutput_Container><div id=Settings_SpeakerOutput class=Settings_VolumeOutput></div></div>";
-    AudioVideoHtml += "<div><button class=roundButtons id=preview_output_play><i class=\"fa fa-play\"></i></button></div>";
-
-    AudioVideoHtml += "<div id=RingDeviceSection>";
-    AudioVideoHtml += "<div class=UiText>"+ lang.ring_device +":</div>";
-    AudioVideoHtml += "<div style=\"text-align:center\"><select id=ringDevice style=\"width:100%\"></select></div>";
-    AudioVideoHtml += "<div class=Settings_VolumeOutput_Container><div id=Settings_RingerOutput class=Settings_VolumeOutput></div></div>";
-    AudioVideoHtml += "<div><button class=roundButtons id=preview_ringer_play><i class=\"fa fa-play\"></i></button></div>";
-    AudioVideoHtml += "</div>";
-
-    AudioVideoHtml += "<div class=UiText>"+ lang.microphone +":</div>";
-    AudioVideoHtml += "<div style=\"text-align:center\"><select id=microphoneSrc style=\"width:100%\"></select></div>";
-    AudioVideoHtml += "<div class=Settings_VolumeOutput_Container><div id=Settings_MicrophoneOutput class=Settings_VolumeOutput></div></div>";
-    AudioVideoHtml += "<div><input type=checkbox id=Settings_AutoGainControl><label for=Settings_AutoGainControl> "+ lang.auto_gain_control +"<label></div>";
-    AudioVideoHtml += "<div><input type=checkbox id=Settings_EchoCancellation><label for=Settings_EchoCancellation> "+ lang.echo_cancellation +"<label></div>";
-    AudioVideoHtml += "<div><input type=checkbox id=Settings_NoiseSuppression><label for=Settings_NoiseSuppression> "+ lang.noise_suppression +"<label></div>";
-
     if(EnableVideoCalling == true){
+
+        //AudioVideoHtml += "<div class=UiText>"+ lang.preview +":</div>";
+        AudioVideoHtml += "<div style=\"text-align:center; margin-top:10px\"><video id=local-video-preview class=previewVideo muted playsinline></video></div>";
+
+        AudioVideoHtml += "<div class=\"row\">";
+
+        AudioVideoHtml += "<div class=\"col-md-12\">";
         AudioVideoHtml += "<div class=UiText>"+ lang.camera +":</div>";
         AudioVideoHtml += "<div style=\"text-align:center\"><select id=previewVideoSrc style=\"width:100%\"></select></div>";
-
-        AudioVideoHtml += "<div class=UiText>"+ lang.frame_rate +":</div>"
-        AudioVideoHtml += "<div class=pill-nav>";
+       
+        //AudioVideoHtml += "<div class=UiText>"+ lang.frame_rate +":</div>"
+        AudioVideoHtml += "<div class=pill-nav style=\"display:none\">";
         AudioVideoHtml += "<input name=Settings_FrameRate id=r40 type=radio value=\"2\"><label class=radio_pill for=r40>2</label>";
         AudioVideoHtml += "<input name=Settings_FrameRate id=r41 type=radio value=\"5\"><label class=radio_pill for=r41>5</label>";
         AudioVideoHtml += "<input name=Settings_FrameRate id=r42 type=radio value=\"10\"><label class=radio_pill for=r42>10</label>";
@@ -11904,8 +11903,8 @@ function ShowMyProfile(){
         AudioVideoHtml += "<input name=Settings_FrameRate id=r47 type=radio value=\"\"><label class=radio_pill for=r47><i class=\"fa fa-trash\"></i></label>";
         AudioVideoHtml += "</div>";
 
-        AudioVideoHtml += "<div class=UiText>"+ lang.quality +":</div>";
-        AudioVideoHtml += "<div class=pill-nav>";
+        //AudioVideoHtml += "<div class=UiText>"+ lang.quality +":</div>";
+        AudioVideoHtml += "<div class=pill-nav style=\"display:none\">";
         AudioVideoHtml += "<input name=Settings_Quality id=r30 type=radio value=\"160\"><label class=radio_pill for=r30><i class=\"fa fa-video-camera\" style=\"transform: scale(0.4)\"></i> HQVGA</label>";
         AudioVideoHtml += "<input name=Settings_Quality id=r31 type=radio value=\"240\"><label class=radio_pill for=r31><i class=\"fa fa-video-camera\" style=\"transform: scale(0.6)\"></i> QVGA</label>";
         AudioVideoHtml += "<input name=Settings_Quality id=r32 type=radio value=\"480\"><label class=radio_pill for=r32><i class=\"fa fa-video-camera\" style=\"transform: scale(0.8)\"></i> VGA</label>";
@@ -11913,8 +11912,8 @@ function ShowMyProfile(){
         AudioVideoHtml += "<input name=Settings_Quality id=r34 type=radio value=\"\"><label class=radio_pill for=r34><i class=\"fa fa-trash\"></i></label>";
         AudioVideoHtml += "</div>";
         
-        AudioVideoHtml += "<div class=UiText>"+ lang.image_orientation +":</div>";
-        AudioVideoHtml += "<div class=pill-nav>";
+        //AudioVideoHtml += "<div class=UiText>"+ lang.image_orientation +":</div>";
+        AudioVideoHtml += "<div class=pill-nav style=\"display:none\">";
         AudioVideoHtml += "<input name=Settings_Orientation id=r20 type=radio value=\"rotateY(0deg)\"><label class=radio_pill for=r20><i class=\"fa fa-address-card\" style=\"transform: rotateY(0deg)\"></i> "+ lang.image_orientation_normal +"</label>";
         AudioVideoHtml += "<input name=Settings_Orientation id=r21 type=radio value=\"rotateY(180deg)\"><label class=radio_pill for=r21><i class=\"fa fa-address-card\" style=\"transform: rotateY(180deg)\"></i> "+ lang.image_orientation_mirror +"</label>";
         AudioVideoHtml += "</div>";
@@ -11927,13 +11926,44 @@ function ShowMyProfile(){
         AudioVideoHtml += "<input name=Settings_AspectRatio id=r13 type=radio value=\"\"><label class=radio_pill for=r13><i class=\"fa fa-trash\"></i></label>";
         AudioVideoHtml += "</div>";
 
-        AudioVideoHtml += "<div class=UiText>"+ lang.preview +":</div>";
-        AudioVideoHtml += "<div style=\"text-align:center; margin-top:10px\"><video id=local-video-preview class=previewVideo muted playsinline></video></div>";
+        AudioVideoHtml += "</div>"; // close col 3
+
     }
 
-    AudioVideoHtml += "</div>";
+    AudioVideoHtml += "<div class=\"col-md-12\">";
+    AudioVideoHtml += "<div class=UiText>"+ lang.speaker +":</div>";
+    AudioVideoHtml += "<div style=\"text-align:center\"><select id=playbackSrc style=\"width:100%\"></select></div>";
+    AudioVideoHtml += "<div class=Settings_VolumeOutput_Container><div id=Settings_SpeakerOutput class=Settings_VolumeOutput></div></div>";
+    AudioVideoHtml += "<div><button class=roundButtons id=preview_output_play><i class=\"fa fa-play\"></i></button></div>";
+    AudioVideoHtml += "</div>"; // close col 3
 
+    AudioVideoHtml += "<div class=\"col-md-12\">";
+    AudioVideoHtml += "<div id=RingDeviceSection>";
+    AudioVideoHtml += "<div class=UiText>"+ lang.ring_device +":</div>";
+    AudioVideoHtml += "<div style=\"text-align:center\"><select id=ringDevice style=\"width:100%\"></select></div>";
+    AudioVideoHtml += "<div class=Settings_VolumeOutput_Container><div id=Settings_RingerOutput class=Settings_VolumeOutput></div></div>";
+    AudioVideoHtml += "<div><button class=roundButtons id=preview_ringer_play><i class=\"fa fa-play\"></i></button></div>";
+    AudioVideoHtml += "</div>";
+    AudioVideoHtml += "</div>"; // close col 3
+
+    AudioVideoHtml += "<div class=\"col-md-12\">";
+    AudioVideoHtml += "<div class=UiText>"+ lang.microphone +":</div>";
+    AudioVideoHtml += "<div style=\"text-align:center\"><select id=microphoneSrc style=\"width:100%\"></select></div>";
+    AudioVideoHtml += "<div class=Settings_VolumeOutput_Container><div id=Settings_MicrophoneOutput class=Settings_VolumeOutput></div></div>";
+    AudioVideoHtml += "<div><input type=checkbox id=Settings_AutoGainControl><label for=Settings_AutoGainControl> "+ lang.auto_gain_control +"<label></div>";
+    AudioVideoHtml += "<div><input type=checkbox id=Settings_EchoCancellation><label for=Settings_EchoCancellation> "+ lang.echo_cancellation +"<label></div>";
+    AudioVideoHtml += "<div><input type=checkbox id=Settings_NoiseSuppression><label for=Settings_NoiseSuppression> "+ lang.noise_suppression +"<label></div>";
+    AudioVideoHtml += "</div>";
+    AudioVideoHtml += "</div>"; // close col 3
+
+    AudioVideoHtml += "</div>"; // close row 
+
+    html += "<div class=\"col-md-12\">"
     html += AudioVideoHtml;
+    html += "</div>";
+
+    html += "</div>"; //close row
+   
 
     // 3 Appearance
     if(EnableAppearanceSettings == true) {
@@ -11941,9 +11971,9 @@ function ShowMyProfile(){
     }
 
     var AppearanceHtml = "<div id=Appearance_Html style=\"display:none\">"; 
-    AppearanceHtml += "<div id=ImageCanvas style=\"width:150px; height:150px\"></div>";
-    AppearanceHtml += "<div style=\"margin-top:50px;\"><input id=fileUploader type=file></div>";
-    AppearanceHtml += "<div style=\"margin-top:10px\"></div>";
+    AppearanceHtml += "<div id=ImageCanvas style=\"width:150px; height:150px; display:none\"></div>";
+    AppearanceHtml += "<div style=\"margin-top:50px; display:none\"><input id=fileUploader type=file ></div>";
+    AppearanceHtml += "<div style=\"margin-top:10px; display:none\"></div>";
 
     // SIP & XMPP vCard
     var profileVcard = getDbItem("profileVcard", null);
@@ -11978,6 +12008,8 @@ function ShowMyProfile(){
     if(EnableNotificationSettings == true) html += NotificationsHtml;
 
     html += "</div>";
+
+    html += "</div>"; //close container
 
     html += "<div class=UiWindowButtonBar id=ButtonBar></div>";
 
@@ -13360,22 +13392,25 @@ function getPicture(buddy, typestr, ignoreCache){
     var defaultImg = hostingPrefix + "" + imagesDirectory + "" + avatars[rndInt].trim();
     if(buddy == "profilePicture"){
         // Special handling for profile image
-        var dbImg = localDB.getItem("profilePicture");
+        /*var dbImg = localDB.getItem("profilePicture");
         if(dbImg == null){
             return defaultImg;
         }
         else {
             return dbImg;
             // return URL.createObjectURL(base64toBlob(dbImg, 'image/png'));
-        }
+        }*/
+        var profileName = getDbItem("profileName", "User");
+        return `https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(profileName)}&size=128`;
     }
 
     typestr = (typestr)? typestr : "extension";
     var buddyObj = FindBuddyByIdentity(buddy);
     if(buddyObj == null){
-        return defaultImg
+        //return defaultImg
+        return `https://ui-avatars.com/api/?background=random&name=${encodeURIComponent("User")}&size=128`;
     }
-    if(ignoreCache != true && buddyObj.imageObjectURL != ""){
+    /*if(ignoreCache != true && buddyObj.imageObjectURL != ""){
         // Use Cache
         return buddyObj.imageObjectURL;
     }
@@ -13387,7 +13422,8 @@ function getPicture(buddy, typestr, ignoreCache){
     else {
         buddyObj.imageObjectURL = URL.createObjectURL(base64toBlob(dbImg, 'image/webp')); // image/png
         return buddyObj.imageObjectURL;
-    }
+    }*/
+    return `https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(buddyObj.CallerIDName)}&size=128`;
 }
 
 // Image Editor
