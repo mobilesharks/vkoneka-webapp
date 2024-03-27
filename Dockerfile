@@ -1,14 +1,17 @@
-# Use an official nginx image as a parent image
-FROM public.ecr.aws/nginx/nginx:stable-alpine
+# Use an official bun image as a parent image
+FROM public.ecr.aws/avanti/oven/bun:1.0.29-alpine
 
-# Set the working directory in the container
-WORKDIR /usr/share/nginx/html
+# Set the working directory
+WORKDIR /usr/src/app
 
-# Copy the project files into the container at /usr/share/nginx/html
+# Copy the current directory contents into the container
 COPY . .
 
-# Expose port 80 to the outside world
-EXPOSE 80
+# Install any dependencies
+RUN bun install
 
-# Start nginx to serve the application
-CMD ["nginx", "-g", "daemon off;"]
+# Expose port 3000 to the outside world
+EXPOSE 3000
+
+# Run your app using Bun
+CMD ["bun", "run", "index.tsx"]

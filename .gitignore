@@ -9,3 +9,5 @@ ehthumbs.db
 Thumbs.db
 .vscode/settings.json
 .DS_Store
+
+node_modules/
