@@ -1,0 +1,36 @@
+services:
+  - name: docker:19.03.1-dind
+    command: [ "--tls=false", "--mtu=1240" ]
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+  DOCKER_HOST: tcp://docker:2375
+
+stages:
+  - build
+  - deploy
+  
+build_docker_image_dev:
+  image: docker:19.03.1
+  stage: build
+  only:
+    - develop
+  script:
+    - docker login -u "$REGISTRY_USERNAME" -p "$REGISTRY_PASSWORD" $REGISTRY_URL
+    - docker build -t $REGISTRY_URL/vkonekta/vkonekta-dev:$CI_PIPELINE_ID .
+    - docker tag $REGISTRY_URL/vkonekta/vkonekta-dev:$CI_PIPELINE_ID $REGISTRY_URL/vkonekta/vkonekta-dev:latest
+    - docker push $REGISTRY_URL/vkonekta/vkonekta-dev:$CI_PIPELINE_ID
+    - docker push $REGISTRY_URL/vkonekta/vkonekta-dev:latest
+
+deploy_dev:
+  image: docker:19.03.1
+  stage: deploy
+  only:
+    - develop
+  script:
+    - |
+      curl -u "$DEPLOY_USER_DEV:$DEPLOY_PASSWORD_DEV" \
+        -X POST \
+        -H 'Accept: application/json' \
+        -H 'Content-Type: application/json' \
+        'https://manager.nosi.cv/v3/project/c-cpx7p:p-w2wkl/workloads/deployment:vkonekta-dev:vkonekta-dev?action=redeploy'
