@@ -22,7 +22,7 @@ const instanceID = String(Date.now());
 const localDB = window.localStorage;
 
 // Set the following to null to disable
-let welcomeScreen = "<div class=\"UiWindowField\"><pre style=\"font-size: 12px\">";
+let welcomeScreen = "<div class=\"UiWindowField\"><pre style=\"font-size: 12px; text-transform: normal !important;\">";
 welcomeScreen += "===========================================================================\n";
 welcomeScreen += "Copyright © 2020 - All Rights Reserved\n";
 welcomeScreen += "===========================================================================\n";
@@ -937,6 +937,11 @@ function AddSomeoneWindow(numberStr){
     var html = "<div style=\"text-align:right\"><button class=roundButtons onclick=\"ShowContacts()\"><i class=\"fa fa-close\"></i></button></div>"
     
     html += "<div border=0 class=UiSideField>";
+    // TODO: ADDED
+    html += "<div class='card' style='width: 100%; max-width: 400px; margin: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;'>";
+    html += "<div class='card-header'>"+ lang.add_someone + "</div>";
+    html += "<div class='card-body' '>";
+    // END
 
     html += "<div class=UiText>"+ lang.full_name +":</div>";
     html += "<div><input id=AddSomeone_Name class=UiInputText type=text placeholder='"+ lang.eg_full_name +"'></div>";
@@ -991,6 +996,8 @@ function AddSomeoneWindow(numberStr){
     html += "<div><input type=checkbox id=AddSomeone_AutoDelete><label for=AddSomeone_AutoDelete>"+ lang.yes +"</label></div>";
     html += "</div>";
 
+    html += "</div>";
+    html += "</div>";
     html += "</div>";
 
     html += "<div class=UiWindowButtonBar id=ButtonBar></div>";
@@ -1568,9 +1575,11 @@ function InitUi(){
 
     // Picture, Caller ID and settings Menu
     leftHTML += "<div class=contact id=UserProfile style=\"cursor: default; margin-bottom:5px;\">";
+    leftHTML += "<img src='https://cdn.glitch.global/b76886d5-68d7-4ed7-a41a-95928840dcd9/logo_light.svg?v=1710335757434' class='logoIcon'/>"
     // Voicemail Count
-    leftHTML += "<span id=TxtVoiceMessages class=voiceMessageNotifyer>0</span>"
-    leftHTML += "<div id=UserProfilePic class=buddyIcon></div>";
+    leftHTML += "<span id=TxtVoiceMessages class=voiceMessageNotifyer>0</span>"    
+    // TODO: comment user avatar leftHTML += "<div id=UserProfilePic class=buddyIcon></div>";
+    
 
     // Action Buttons
     leftHTML += "<span class=settingsMenu>";
@@ -1583,26 +1592,26 @@ function InitUi(){
     leftHTML += "<button class=roundButtons id=SettingsMenu><i class=\"fa fa-cogs\"></i></button>";
     leftHTML += "</span>";  // class=settingsMenu
 
-    // Display Name
+    // Display Name    
     leftHTML += "<div class=contactNameText style=\"margin-right: 0px;\">"
     // Status
+    leftHTML += "<div>"
     leftHTML += "<span id=dereglink class=dotOnline style=\"display:none\"></span>";
     leftHTML += "<span id=WebRtcFailed class=dotFailed style=\"display:none\"></span>";
     leftHTML += "<span id=reglink class=dotOffline></span>";
     // User
     leftHTML += " <span id=UserCallID></span>"
     leftHTML += "</div>"; // class=contactNameText
+    leftHTML += "</div>";
     leftHTML += "<div class=presenceText><span id=regStatus>&nbsp;</span> <span id=dndStatus></span></div>";
-    leftHTML += "</div>";  //id=UserProfile
-
+    leftHTML += "</div>";  //id=UserProfile  
     leftHTML += "</div>"; //  class=profileContainer
-
     leftHTML += "</td></tr>";
-    leftHTML += "<tr id=searchArea><td class=streamSection style=\"height: 35px; box-sizing: border-box; padding-top: 3px; padding-bottom: 0px;\">";
-
+    leftHTML += "<tr id=searchArea><td class=streamSection style=\"height: 35px; box-sizing: border-box; padding:10px; margin:10px; background-color:#252E35;\">";
+  
     // Search
-    leftHTML += "<span id=divFindBuddy class=searchClean><INPUT id=txtFindBuddy type=text autocomplete=none style=\"width: calc(100% - 78px);\"></span>";
-    leftHTML += "<button class=roundButtons id=BtnFilter style=\"margin-left:5px\"><i class=\"fa fa-sliders\"></i></button>"
+    leftHTML += "<span id=divFindBuddy class=searchClean><INPUT id=txtFindBuddy type=text autocomplete=none style=\"width: calc(100% - 85px);\"></span>";
+    leftHTML += "<button class=roundButtons id=BtnFilter style=\"margin:2px;\"><i class=\"fa fa-sliders\"></i></button>"
 
     leftHTML += "</td></tr>";
     leftHTML += "<tr><td class=streamSection>"
@@ -11804,78 +11813,51 @@ function ShowMyProfile(){
     $("#searchArea").hide();
     $("#actionArea").empty();
 
-    var html = "<div style=\"text-align:right\"><button class=roundButtons onclick=\"ShowContacts()\"><i class=\"fa fa-close\"></i></button></div>"
+    var html = "<div style=\"text-align:right; padding-top:5px;\"><button class=roundButtons onclick=\"ShowContacts()\"><i class=\"fa fa-close\"></i></button></div>"
 
     html += "<div border=0 class=UiSideField>";
     html += "<div class=container>";
-    // SIP Account
-    if(EnableAccountSettings == true){
-        html += "<div class=UiTextHeading onclick=\"ToggleHeading(this,'Configure_Extension_Html')\"><i class=\"fa fa-user-circle-o UiTextHeadingIcon\" style=\"background-color:#a93a3a\"></i> "+ lang.account +"</div>"
+    
+    // SIP Account    
+    if (EnableAccountSettings == true) {
+        html += "<div class='card' style='width: 100%; max-width: 400px; margin: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;'>";
+        html += "<div class='card-header'>"+ lang.account + " Settings</div>";
+        html += "<div class='card-body' style='padding: 32px;'>";
+        html += "<div class='avatar-container'>";
+        html += "<i class='fa fa-user-circle-o avatar'></i>";
+        html += "<img id='avatar-img' class='avatar' style='display:none;'";
+        html += "<input type='file' id=fileUploader class='form-control-file'>";
+        html += "</div>";
+        html += "<div class='form-group' style='margin-bottom: 24px;'>";
+        html += "<label for='Configure_Account_profileName'>" + lang.full_name + ":</label>";
+        html += "<input id='Configure_Account_profileName' class='form-control' type='text' placeholder='" + lang.eg_full_name + "' value='" + getDbItem("profileName", "") + "'>";
+        html += "</div>";
+        html += "<div class='form-group'>";
+        html += "<label for='Configure_Account_SipUsername'>" + lang.sip_username + ":</label>";
+        html += "<input id='Configure_Account_SipUsername' class='form-control' type='text' placeholder='" + lang.eg_sip_username + "' value='" + getDbItem("SipUsername", "") + "'>";
+        html += "</div>";
+        html += "<div class='form-group'>";
+        html += "<label for='Configure_Account_SipPassword'>" + lang.sip_password + ":</label>";
+        html += "<input id='Configure_Account_SipPassword' class='form-control' type='password' placeholder='" + lang.eg_sip_password + "' value='" + getDbItem("SipPassword", "") + "'>";
+        html += "</div>";
+        html += "<div class='form-group'>";
+        html += "<label for='Configure_Account_Voicemail_Subscribe'>" + lang.subscribe_voicemail + ":</label>";
+        html += "<div class='form-check'>";
+        html += "<input type='checkbox' id='Configure_Account_Voicemail_Subscribe' class='form-check-input' " + (VoiceMailSubscribe ? "checked" : "") + ">";
+        html += "<label for='Configure_Account_Voicemail_Subscribe' class='form-check-label'>" + lang.yes + "</label>";
+        html += "</div>";
+        html += "</div>";
+        html += "</div>"; // End of card-body
+        html += "</div>"; // End of card'
     }
-    var AccountHtml =  "<div id=Configure_Extension_Html style=\"display:none\">";
-    //AccountHtml += "<div class=UiText>"+ lang.asterisk_server_address +":</div>";
-    AccountHtml += "<div><input id=Configure_Account_wssServer class=UiInputText type=hidden placeholder='"+ lang.eg_asterisk_server_address +"' value='"+ getDbItem("wssServer", "pbx.gov.cv") +"'></div>";
 
-    //AccountHtml += "<div class=UiText>"+ lang.websocket_port +":</div>";
-    AccountHtml += "<div><input id=Configure_Account_WebSocketPort class=UiInputText type=hidden placeholder='"+ lang.eg_websocket_port +"' value='"+ getDbItem("WebSocketPort", "8089") +"'></div>";
-
-    //AccountHtml += "<div class=UiText>"+ lang.websocket_path +":</div>";
-    AccountHtml += "<div><input id=Configure_Account_ServerPath class=UiInputText type=hidden placeholder='"+ lang.eg_websocket_path +"' value='"+ getDbItem("ServerPath", "/ws") +"'></div>";
-
-    AccountHtml += "<div class=UiText>"+ lang.full_name +":</div>";
-    AccountHtml += "<div><input id=Configure_Account_profileName class=UiInputText type=text placeholder='"+ lang.eg_full_name +"' value='"+ getDbItem("profileName", "") +"'></div>";
-
-    //AccountHtml += "<div class=UiText>"+ lang.sip_domain +":</div>";
-    AccountHtml += "<div><input id=Configure_Account_SipDomain class=UiInputText type=hidden placeholder='"+ lang.eg_sip_domain +"' value='"+ getDbItem("SipDomain", "pbx.gov.cv") +"'></div>";
-
-    AccountHtml += "<div class=UiText>"+ lang.sip_username +":</div>";
-    AccountHtml += "<div><input id=Configure_Account_SipUsername class=UiInputText type=text placeholder='"+ lang.eg_sip_username +"' value='"+ getDbItem("SipUsername", "") +"'></div>";
-
-    AccountHtml += "<div class=UiText>"+ lang.sip_password +":</div>";
-    AccountHtml += "<div><input id=Configure_Account_SipPassword class=UiInputText type=password placeholder='"+ lang.eg_sip_password +"' value='"+ getDbItem("SipPassword", "") +"'></div>";
-
-    /*AccountHtml += "<div class=UiText>"+ lang.subscribe_voicemail +":</div>";
-    AccountHtml += "<div><input type=checkbox id=Configure_Account_Voicemail_Subscribe "+ ((VoiceMailSubscribe == true)? "checked" : "") +"><label for=Configure_Account_Voicemail_Subscribe>"+ lang.yes +"</label></div>";
-
-    AccountHtml += "<div id=Voicemail_Did_row style=\"display:"+ ((VoiceMailSubscribe == true)? "unset" : "none") +"\">";
-    AccountHtml += "<div class=UiText style=\"margin-left:20px\">"+ lang.voicemail_did +":</div>";
-    AccountHtml += "<div style=\"margin-left:20px\"><input id=Configure_Account_Voicemail_Did class=UiInputText type=text placeholder='"+ lang.eg_internal_subscribe_extension +"' value='"+ getDbItem("VoicemailDid", "") +"'></div>";
-    AccountHtml += "</div>";
-
-    AccountHtml += "<div class=UiText>"+ lang.chat_engine +":</div>";
-
-    AccountHtml += "<ul style=\"list-style-type:none\">"
-    AccountHtml += "<li><input type=radio name=chatEngine id=chat_type_sip "+ ((ChatEngine == "XMPP")? "" : "checked") +"><label for=chat_type_sip>SIP</label>"
-    AccountHtml += "<li><input type=radio name=chatEngine id=chat_type_xmpp "+ ((ChatEngine == "XMPP")? "checked" : "") +"><label for=chat_type_xmpp>XMPP</label>"
-    AccountHtml += "</ul>"*/
-
-    AccountHtml += "<div id=RowChatEngine_xmpp style=\"display:"+ ((ChatEngine == "XMPP")? "unset" : "none") +"\">";
-
-    AccountHtml += "<div class=UiText>"+ lang.xmpp_server_address +":</div>";
-    AccountHtml += "<div><input id=Configure_Account_xmpp_address class=UiInputText type=text placeholder='"+ lang.eg_xmpp_server_address +"' value='"+ getDbItem("XmppServer", "") +"'></div>";
-
-    AccountHtml += "<div class=UiText>XMPP "+ lang.websocket_port +":</div>";
-    AccountHtml += "<div><input id=Configure_Account_xmpp_port class=UiInputText type=text placeholder='"+ lang.eg_websocket_port +"' value='"+ getDbItem("XmppWebsocketPort", "") +"'></div>";
-
-    AccountHtml += "<div class=UiText>XMPP "+ lang.websocket_path +":</div>";
-    AccountHtml += "<div><input id=Configure_Account_xmpp_path class=UiInputText type=text placeholder='"+ lang.eg_websocket_path +"' value='"+ getDbItem("XmppWebsocketPath", "") +"'></div>";
-
-    AccountHtml += "<div class=UiText>XMPP "+ lang.sip_domain +":</div>";
-    AccountHtml += "<div><input id=Configure_Account_xmpp_domain class=UiInputText type=text placeholder='"+ lang.eg_sip_domain +"' value='"+ getDbItem("XmppDomain", "") +"'></div>";
-
-    AccountHtml += "<div class=UiText>"+ lang.extension_number +":</div>";
-    AccountHtml += "<div><input id=Configure_Account_profileUser class=UiInputText type=text placeholder='"+ lang.eg_internal_subscribe_extension +"' value='"+ getDbItem("profileUser", "") +"'></div>";
-    AccountHtml += "</div>";
-
-    AccountHtml += "</div>";
-    if(EnableAccountSettings == true) {
-        html += AccountHtml;
-    }
 
     // 2 Audio & Video
-    html += "<div class=UiTextHeading onclick=\"ToggleHeading(this,'Audio_Video_Html')\"><i class=\"fa fa fa-video-camera UiTextHeadingIcon\" style=\"background-color:#208e3c\"></i> "+ lang.audio_video +"</div>"
+    // TODO: AudioVideoHtml removed from start page
+    //html += "<div class=UiTextHeading onclick=\"ToggleHeading(this,'Audio_Video_Html')\"><i class=\"fa fa fa-video-camera UiTextHeadingIcon\" style=\"background-color:#208e3c\"></i> " + lang.audio_video + "</div>"
 
     var AudioVideoHtml = "<div id=Audio_Video_Html style=\"display:none\">";
+    
 
     if(EnableVideoCalling == true){
 
@@ -11946,6 +11928,9 @@ function ShowMyProfile(){
    
 
     // 3 Appearance
+    // TODO: EnableAppearanceSettings to false
+    EnableAppearanceSettings = false;
+
     if(EnableAppearanceSettings == true) {
         html += "<div class=UiTextHeading onclick=\"ToggleHeading(this,'Appearance_Html')\"><i class=\"fa fa-pencil UiTextHeadingIcon\" style=\"background-color:#416493\"></i> "+ lang.appearance +"</div>"
     }
@@ -11975,6 +11960,8 @@ function ShowMyProfile(){
     if(EnableAppearanceSettings == true) html += AppearanceHtml;
 
     // 4 Notifications
+    // TODO: EnableNotificationSettings to false
+    EnableNotificationSettings = false;
     if(EnableNotificationSettings == true) {
         html += "<div class=UiTextHeading onclick=\"ToggleHeading(this,'Notifications_Html')\"><i class=\"fa fa-bell UiTextHeadingIcon\" style=\"background-color:#ab8e04\"></i> "+ lang.notifications +"</div>"
     }
@@ -14719,7 +14706,8 @@ function onBuddyUpdate(iq){
 
     return true;
 }
-function RefreshBuddyData(buddyObj){
+
+function RefreshBuddyData(buddyObj) {
 
     // Get vCard
     

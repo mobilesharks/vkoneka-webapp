@@ -11,10 +11,17 @@ input[type=text], input[type=password], input[type=email], input[type=tel] {
 }
 
 .dialButtons {
-    color: #855FFA;
+    color:#fff; 
+    background-color: #2E3841;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);    border: none; 
+    padding: 10px; 
+    /* border-radius: 5px;  */    
 }
 
 .dialButtons.dialButtonsDial {
+    color: #44ad4d;
+}
+.dialButtons.dialButtonsDial:hover {
     color: #fff;
 }
 
@@ -66,16 +73,18 @@ input[type=text], input[type=password], input[type=email], input[type=tel] {
 @media (prefers-color-scheme: dark) {
    
     .UiWindowButtonBar button {
-        border: 1px solid #855FFA !important;
-        background-color: transparent !important;
-        background-image: none !important;
-        color: #855FFA !important;
-    }
-    
-    .UiWindowButtonBar button:hover {
+        /* border: 1px solid #855FFA !important; */
         background-color: #855FFA !important;
         background-image: none !important;
         color: #fff !important;
+        border-radius: 4px;
+    }
+    
+    .UiWindowButtonBar button:hover {
+        border: 2px solid #855FFA !important;
+        background-color: transparent !important;
+        background-image: none !important;
+        color: #855FFA !important;
     
     }
 
