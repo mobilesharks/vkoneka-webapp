@@ -7,7 +7,7 @@ const port = 3000;
 
 // Define the /
 app.get('/', (req: Request, res: Response) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, 'landing.html'));
 });
 
 // Define the /privacy route
