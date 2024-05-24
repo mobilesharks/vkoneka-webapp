@@ -19,7 +19,7 @@ app.get('/about_us',(req:Request, res: Response) => {
 });
 
 app.get('/business',(req:Request, res: Response) => {
-  res.sendFile(path.join(__dirname, '404.html'));
+  res.sendFile(path.join(__dirname, 'business.html'));
 });
 
 app.get('/resources',(req:Request, res: Response) => {

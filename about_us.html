@@ -256,12 +256,10 @@
 
 
 .landing-second {
-    background: #F5F5F5;
+    background: #FFF;
 }
 
-.v-caracteristic {
-    max-width: 331.15px;
-}
+
 
 .title-landing-second {
     color: var(--title-blue);
@@ -452,12 +450,24 @@ a{
                     ><h7>Business</h7></a
                   >
                 </li>
-                <li class="nav-item pt-2">
+                <li class="nav-item pt-2 dropdown">
                   <a
-                    class="nav-link text-white menu-item"
+                    class="nav-link text-white menu-item dropdown-toggle menu_drop"
                     href="/resources"
-                    ><h7>Resources</h7></a
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
                   >
+                    <h7>Resources</h7>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item text-white" href="/faqa">FAQs</a></li>
+                    <li>
+                      <a class="dropdown-item text-white" href="/tech_corner"
+                        >Technical Corner</a
+                      >
+                    </li>
+                  </ul>
                 </li>
                 <li class="nav-item pt-2">
                   <a class="nav-link text-white menu-item" href="/about_us"
