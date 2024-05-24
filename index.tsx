@@ -10,6 +10,24 @@ app.get('/', (req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, 'landing.html'));
 });
 
+app.get('/produts',(req:Request, res: Response) => {
+  res.sendFile(path.join(__dirname, 'produts.html'));
+});
+
+app.get('/about_us',(req:Request, res: Response) => {
+  res.sendFile(path.join(__dirname, 'about_us.html'));
+});
+
+app.get('/business',(req:Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '404.html'));
+});
+
+app.get('/resources',(req:Request, res: Response) => {
+  res.sendFile(path.join(__dirname, '404.html'));
+});
+
+
+
 // Define the /privacy route
 app.get('/privacy-policy', (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, 'privacy-policy.html'));
