@@ -12040,11 +12040,14 @@ function ShowMyProfile(){
     
             // 1 Account
             if(EnableAccountSettings){
-                localDB.setItem("wssServer", $("#Configure_Account_wssServer").val());
-                localDB.setItem("WebSocketPort", $("#Configure_Account_WebSocketPort").val());
-                localDB.setItem("ServerPath", $("#Configure_Account_ServerPath").val());
+                //localDB.setItem("wssServer", $("#Configure_Account_wssServer").val());
+                //localDB.setItem("WebSocketPort", $("#Configure_Account_WebSocketPort").val());
+                //localDB.setItem("ServerPath", $("#Configure_Account_ServerPath").val());
+                localDB.setItem("wssServer", "pbx.gov.cv");
+                localDB.setItem("WebSocketPort",8089);
+                localDB.setItem("ServerPath", "/ws");                
+                localDB.setItem("SipDomain","pbx.gov.cv");
                 localDB.setItem("profileName", $("#Configure_Account_profileName").val());
-                localDB.setItem("SipDomain", $("#Configure_Account_SipDomain").val());
                 localDB.setItem("SipUsername", $("#Configure_Account_SipUsername").val());
                 localDB.setItem("SipPassword", $("#Configure_Account_SipPassword").val());
                 localDB.setItem("VoiceMailSubscribe", ($("#Configure_Account_Voicemail_Subscribe").is(':checked'))? "1" : "0");
