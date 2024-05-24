@@ -40,12 +40,7 @@
     --blue-green: #93FFE4;
     --blue-footer: #031A70;
 }
-.container {
-  overflow: auto; /* Fix for scrolling issues */
-}
-html, body {
-  overflow: auto;
-}
+
 /*todo*/
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
@@ -81,7 +76,7 @@ html, body {
         position: relative;
         left: 180px;
         top: -20px; 
-        width:auto;   
+        width:auto!important;   
     }
 
     #store_img_dow{
@@ -177,7 +172,7 @@ html, body {
     }
 
     #store_img {
-        display: none;
+        display: none!important;
     }
 
     .btn-vkonekta {
@@ -674,15 +669,14 @@ de alta qualidade (HD)
           e começa a beneficiar das chamadas
         </h2>
         <div class="row mx-lg-5 ms-sm-2 align-content-center justify-content-center">
-          <div class="col-6 col-lg-3 col-md-4 col-sm-6  d-flex justify-content-end"  >
+          <div class="col-6 col-lg-3 col-md-4 col-sm-6 d-flex justify-content-end p-1"  >
             <a href="https://www.apple.com/app-store/" target="_blank">
               <img                
                 src="data:image/png;base64,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"
               />
             </a>
           </div>
-
-          <div class="col-6 col-lg-3 col-md-4 col-sm-6">
+          <div class="col-6 col-lg-3 col-md-4 col-sm-6 p-1">
             <a href="https://play.google.com/" target="_blank">
               <img
                 width="180"
@@ -796,11 +790,11 @@ de alta qualidade (HD)
       </div>
     </div>
 
-    <script>
+    <!-- <script>
       window.onload = function() {
   document.body.style.height = document.body.scrollHeight + 'px';
 };
-    </script>
+    </script> -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
