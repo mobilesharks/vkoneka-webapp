@@ -28,8 +28,9 @@ app.get('/resources',(req:Request, res: Response) => {
 app.get('/faqs',(req:Request, res: Response) => {
   res.sendFile(path.join(__dirname, 'pages/faqs.html'));
 });
-
-
+app.get('/tech_corner',(req:Request, res: Response) => {
+  res.sendFile(path.join(__dirname, 'pages/tech_corner.html'));
+});
 
 // Define the /privacy route
 app.get('/privacy-policy', (req: Request, res: Response) => {
