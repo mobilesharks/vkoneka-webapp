@@ -7,30 +7,33 @@ const port = 3000;
 
 // Define the /
 app.get('/', (req: Request, res: Response) => {
-    res.sendFile(path.join(__dirname, 'landing.html'));
+    res.sendFile(path.join(__dirname, 'pages/landing.html'));
 });
 
 app.get('/produts',(req:Request, res: Response) => {
-  res.sendFile(path.join(__dirname, 'produts.html'));
+  res.sendFile(path.join(__dirname, 'pages/produts.html'));
 });
 
 app.get('/about_us',(req:Request, res: Response) => {
-  res.sendFile(path.join(__dirname, 'about_us.html'));
+  res.sendFile(path.join(__dirname, 'pages/about_us.html'));
 });
 
 app.get('/business',(req:Request, res: Response) => {
-  res.sendFile(path.join(__dirname, 'business.html'));
+  res.sendFile(path.join(__dirname, 'pages/business.html'));
 });
 
 app.get('/resources',(req:Request, res: Response) => {
-  res.sendFile(path.join(__dirname, '404.html'));
+  res.sendFile(path.join(__dirname, 'pages/404.html'));
+});
+app.get('/faqs',(req:Request, res: Response) => {
+  res.sendFile(path.join(__dirname, 'pages/faqs.html'));
 });
 
 
 
 // Define the /privacy route
 app.get('/privacy-policy', (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, 'privacy-policy.html'));
+  res.sendFile(path.join(__dirname, 'pages/privacy-policy.html'));
 });
 
 // Define the /general-terms route
@@ -40,7 +43,7 @@ app.get('/general-terms', (req: Request, res: Response) => {
 
 // Define the /contact route
 app.get('/contact', (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, 'contact.html'));
+  res.sendFile(path.join(__dirname, 'pages/contact.html'));
 });
 
 // Define the /download route
