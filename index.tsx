@@ -42,11 +42,6 @@ app.get('/general-terms', (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, 'general-terms.html'));
 });
 
-// Define the /contact route
-app.get('/contact', (req: Request, res: Response) => {
-  res.sendFile(path.join(__dirname, 'pages/contact.html'));
-});
-
 // Define the /download route
 app.get('/download', (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, 'download.html'));
