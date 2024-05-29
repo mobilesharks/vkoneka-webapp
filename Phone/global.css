@@ -6,6 +6,9 @@
   --text-grey: #8ea9c1;
   --blue-green: #93ffe4;
   --blue-footer: #031a70;
+  --gradient-blue: -webkit-linear-gradient(left,
+  white,
+  rgba(147, 255, 228, 1));
 }
 
 /* Extra small devices (phones, 600px and down) */
@@ -35,12 +38,12 @@
     margin-top: 48px;
   }
 
-  .btn-vkonekta {
+  /* .btn-vkonekta {
     position: relative;
     left: 180px;
     top: -20px;
     width: auto !important;
-  }
+  } */
 
   #store_img_dow {
     width: 160px !important;
@@ -49,6 +52,10 @@
 
   .title-landing-second {
     font-size: 28px !important;
+  }
+  .qr-code {
+    width: 115.26px!important;
+    height: 115.26px!important;
   }
 }
 
@@ -69,6 +76,7 @@
     flex-direction: column;
     gap: 20px;
   }
+  
 }
 
 /* Large devices (laptops/desktops, 992px and up) */
@@ -90,7 +98,7 @@
   .gradient-text {
     font-weight: 700;
     line-height: 64.14px;
-    font-size: 53px;
+    font-size: 53px!important;
   }
 
   .landing-third {
@@ -131,10 +139,38 @@
   .landing-first-img {
     width: 500px !important;
   }
+  .navbar-menu{
+    position: absolute;
+    top: -8px;
+    right: 150px;
+    z-index: 1;
+  }
+  .navbar-collapse{
+    background-color: #a967ff;
+    border-radius: 8px;
+    border: 2px solid  var(--text-grey);
+  }
+
+  .submenu_drop {
+    position: absolute!important;
+    left: -8px!important;
+  }
+  
+  
+
+  .gradient-text{
+    font-size: 30px;
+    font-weight: 600;
+  }
+
+  
+  
 }
 
-.menu_drop {
-  background: none !important;
+.submenu_drop {
+  /* background: none !important; */
+
+  background-color: #a967ff!important;
 }
 
 
@@ -148,10 +184,6 @@
   background: #000 !important;
   position: fixed;
 }
-
-.konekta-icon {}
-
-
 
 .logo-text {
   color: var(--blue-green);
@@ -208,7 +240,7 @@
   font-size: 22px;
 }
 
-.vkonetkta-card {
+.vkonekta-card {
   color: var(--title-blue);
   background-color: #ffffff;
   border-radius: 8px;
@@ -216,11 +248,11 @@
   box-shadow: 0px 9px 10px 10px #00000008;
 }
 
-.vkonetkta-card:hover {
+.vkonekta-card:hover {
   box-shadow: 0px 9px 10px 10px #00000029;
 }
 
-.vkonetkta-card-icon {
+.vkonekta-card-icon {
   width: 56px;
   height: 56px;
   border-radius: 8px;
@@ -262,9 +294,7 @@ a {
 }
 
 .gradient-text {
-  background: -webkit-linear-gradient(left,
-      white,
-      rgba(147, 255, 228, 1));
+  background: var(--gradient-blue);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
