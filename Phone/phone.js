@@ -1553,8 +1553,9 @@ function InitUi(){
     PreloadAudioFiles();
 
     // Custom Web hook
-    if(typeof web_hook_on_before_init !== 'undefined') web_hook_on_before_init(phoneOptions);
-
+    if (typeof web_hook_on_before_init !== 'undefined') web_hook_on_before_init(phoneOptions);
+    
+    $("#themeToggleBtn").click(toggleTheme);
     ApplyThemeColor()
 
     var phone = $("#Phone");
@@ -1571,14 +1572,15 @@ function InitUi(){
     leftHTML += "<tr><td class=streamSection style=\"height: 50px; box-sizing: border-box;\">";
     
     // Profile User
-    leftHTML += "<div class=profileContainer>";
+    leftHTML += "<div class=profileContainer>";    
 
-    // Picture, Caller ID and settings Menu
-    leftHTML += "<div class=contact id=UserProfile style=\"cursor: default; margin-bottom:5px;\">";
-    leftHTML += "<img src='https://cdn.glitch.global/b76886d5-68d7-4ed7-a41a-95928840dcd9/logo_light.svg?v=1710335757434' class='logoIcon'/>"
+    // Picture, Caller ID and settings Menu 
+    leftHTML += "<div class=contact id=UserProfile style=\"cursor: default; margin-bottom:5px;\">";   
     // Voicemail Count
-    leftHTML += "<span id=TxtVoiceMessages class=voiceMessageNotifyer>0</span>"    
-    // TODO: comment user avatar leftHTML += "<div id=UserProfilePic class=buddyIcon></div>";
+  
+    leftHTML += "<span id=TxtVoiceMessages class=voiceMessageNotifyer>0</span>" 
+    // leftHTML += "<div id=UserProfilePic class=buddyIcon></div>";
+    
     
 
     // Action Buttons
@@ -1589,11 +1591,13 @@ function InitUi(){
          // TODO
         leftHTML += "<button id=BtnCreateGroup><i class=\"fa fa-users\"></i><i class=\"fa fa-plus\" style=\"font-size:9px\"></i></button>";
     }
+    leftHTML += "<button class=roundButtons id=BtnToogle onclick=\"toggleTheme()\"><i class=\"fa fa-adjust\"></i></button>";
     leftHTML += "<button class=roundButtons id=SettingsMenu><i class=\"fa fa-cogs\"></i></button>";
     leftHTML += "</span>";  // class=settingsMenu
 
     // Display Name    
     leftHTML += "<div class=contactNameText style=\"margin-right: 0px;\">"
+    leftHTML += "<img src='https://cdn.glitch.global/b76886d5-68d7-4ed7-a41a-95928840dcd9/logo_light.svg?v=1710335757434' class='logoIcon'/>"
     // Status
     leftHTML += "<div>"
     leftHTML += "<span id=dereglink class=dotOnline style=\"display:none\"></span>";
@@ -1601,13 +1605,14 @@ function InitUi(){
     leftHTML += "<span id=reglink class=dotOffline></span>";
     // User
     leftHTML += " <span id=UserCallID></span>"
+    leftHTML += "<div class=presenceText><span id=regStatus>&nbsp;</span> <span id=dndStatus></span></div>";
     leftHTML += "</div>"; // class=contactNameText
     leftHTML += "</div>";
-    leftHTML += "<div class=presenceText><span id=regStatus>&nbsp;</span> <span id=dndStatus></span></div>";
+   
     leftHTML += "</div>";  //id=UserProfile  
     leftHTML += "</div>"; //  class=profileContainer
     leftHTML += "</td></tr>";
-    leftHTML += "<tr id=searchArea><td class=streamSection style=\"height: 35px; box-sizing: border-box; padding:10px; margin:10px; background-color:#252E35;\">";
+    leftHTML += "<tr id=searchArea><td class=streamSection style=\"height: 35px; box-sizing: border-box; padding:10px; margin:10px;\">";
   
     // Search
     leftHTML += "<span id=divFindBuddy class=searchClean><INPUT id=txtFindBuddy type=text autocomplete=none style=\"width: calc(100% - 85px);\"></span>";
@@ -1859,55 +1864,120 @@ function ShowMyProfileMenu(obj){
     }
     PopupMenu(obj, menu);
 }
-function ApplyThemeColor(){
-    //UiThemeStyle = light | dark | system (can change at any time)
-    var cssUrl = hostingPrefix +"phone.light.css";
-    var wallpaperUrl = hostingPrefix +""+ imagesDirectory +""+ wallpaperLight;
+// function ApplyThemeColor(){
+//     //UiThemeStyle = light | dark | system (can change at any time)
+//     var cssUrl = hostingPrefix +"phone.light.css";
+//     var wallpaperUrl = hostingPrefix +""+ imagesDirectory +""+ wallpaperLight;
+
+//     // Overall Theme
+//     if(UiThemeStyle == "system"){
+//         if(window.matchMedia){
+//             if(window.matchMedia('(prefers-color-scheme: dark)').matches){
+//                 cssUrl = hostingPrefix +"phone.dark.css";
+//                 wallpaperUrl = hostingPrefix +""+ imagesDirectory +""+ wallpaperDark;
+//             } else {
+//                 cssUrl = hostingPrefix +"phone.light.css";
+//                 wallpaperUrl = hostingPrefix +""+ imagesDirectory +""+ wallpaperLight;
+//             }
+//         } else {
+//             cssUrl = hostingPrefix +"phone.dark.css";
+//         }
+//     } else if(UiThemeStyle == "light"){
+//         cssUrl = hostingPrefix +"phone.light.css";
+//         wallpaperUrl = hostingPrefix +""+ imagesDirectory +""+ wallpaperLight;
+//     } else if(UiThemeStyle == "dark") {
+//         cssUrl = hostingPrefix +"phone.dark.css";
+//         wallpaperUrl = hostingPrefix +""+ imagesDirectory +""+ wallpaperDark;
+//     } else {
+//         // Defaults to light
+//         cssUrl = hostingPrefix +"phone.light.css";
+//         wallpaperUrl = hostingPrefix +""+ imagesDirectory +""+ wallpaperLight;
+//     }
+//     if($("#colorSchemeMode").length){
+//         // Style Sheet Added
+//     } else {
+//         $("head").append('<link rel="stylesheet" id="colorSchemeMode" />');
+//     }
+//     $("#colorSchemeMode").attr("href", cssUrl);
+
+//     //vkonekta Style Sheet Added
+//     var vkonektacssUrl = hostingPrefix +"vkonekta.phone.css";
+//     $("head").append('<link rel="stylesheet" id="vkonektaColorSchemeMode" href="'+vkonektacssUrl+'" />');
+
+//     // Wallpaper
+//     if($("#colorSchemeModeSheet").length){
+//         $("#colorSchemeModeSheet").empty();
+//     } else {
+//         $("head").append("<style id='colorSchemeModeSheet'></style>");
+//     }
+//     var wallpaperStyle = ".wallpaperBackground { background-image:url('"+ wallpaperUrl +"') }";
+//     $("#colorSchemeModeSheet").text(wallpaperStyle);
+// }
+function ApplyThemeColor() {
+    var cssUrl = hostingPrefix + "phone.light.css";
+    var wallpaperUrl = hostingPrefix + imagesDirectory + wallpaperLight;
 
     // Overall Theme
-    if(UiThemeStyle == "system"){
-        if(window.matchMedia){
-            if(window.matchMedia('(prefers-color-scheme: dark)').matches){
-                cssUrl = hostingPrefix +"phone.dark.css";
-                wallpaperUrl = hostingPrefix +""+ imagesDirectory +""+ wallpaperDark;
+    if (UiThemeStyle === "system") {
+        if (window.matchMedia) {
+            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                cssUrl = hostingPrefix + "phone.dark.css";
+                wallpaperUrl = hostingPrefix + imagesDirectory + wallpaperDark;
             } else {
-                cssUrl = hostingPrefix +"phone.light.css";
-                wallpaperUrl = hostingPrefix +""+ imagesDirectory +""+ wallpaperLight;
+                cssUrl = hostingPrefix + "phone.light.css";
+                wallpaperUrl = hostingPrefix + imagesDirectory + wallpaperLight;
             }
         } else {
-            cssUrl = hostingPrefix +"phone.dark.css";
+            cssUrl = hostingPrefix + "phone.dark.css";
         }
-    } else if(UiThemeStyle == "light"){
-        cssUrl = hostingPrefix +"phone.light.css";
-        wallpaperUrl = hostingPrefix +""+ imagesDirectory +""+ wallpaperLight;
-    } else if(UiThemeStyle == "dark") {
-        cssUrl = hostingPrefix +"phone.dark.css";
-        wallpaperUrl = hostingPrefix +""+ imagesDirectory +""+ wallpaperDark;
+    } else if (UiThemeStyle === "light") {
+        cssUrl = hostingPrefix + "phone.light.css";
+        wallpaperUrl = hostingPrefix + imagesDirectory + wallpaperLight;
+    } else if (UiThemeStyle === "dark") {
+        cssUrl = hostingPrefix + "phone.dark.css";
+        wallpaperUrl = hostingPrefix + imagesDirectory + wallpaperDark;
     } else {
         // Defaults to light
-        cssUrl = hostingPrefix +"phone.light.css";
-        wallpaperUrl = hostingPrefix +""+ imagesDirectory +""+ wallpaperLight;
+        cssUrl = hostingPrefix + "phone.light.css";
+        wallpaperUrl = hostingPrefix + imagesDirectory + wallpaperLight;
     }
-    if($("#colorSchemeMode").length){
+
+    if ($("#colorSchemeMode").length) {
         // Style Sheet Added
     } else {
         $("head").append('<link rel="stylesheet" id="colorSchemeMode" />');
     }
     $("#colorSchemeMode").attr("href", cssUrl);
 
-    //vkonekta Style Sheet Added
-    var vkonektacssUrl = hostingPrefix +"vkonekta.phone.css";
-    $("head").append('<link rel="stylesheet" id="vkonektaColorSchemeMode" href="'+vkonektacssUrl+'" />');
+    // vkonekta Style Sheet Added
+    var vkonektacssUrl = hostingPrefix + "vkonekta.phone.css";
+    if (!$("#vkonektaColorSchemeMode").length) {
+        $("head").append('<link rel="stylesheet" id="vkonektaColorSchemeMode" href="' + vkonektacssUrl + '" />');
+    }
 
     // Wallpaper
-    if($("#colorSchemeModeSheet").length){
+    if ($("#colorSchemeModeSheet").length) {
         $("#colorSchemeModeSheet").empty();
     } else {
         $("head").append("<style id='colorSchemeModeSheet'></style>");
     }
-    var wallpaperStyle = ".wallpaperBackground { background-image:url('"+ wallpaperUrl +"') }";
+    var wallpaperStyle = ".wallpaperBackground { background-image:url('" + wallpaperUrl + "') }";
     $("#colorSchemeModeSheet").text(wallpaperStyle);
+
+    // Update the theme icon
+    if (UiThemeStyle === "dark") {
+        $("#themeIcon").removeClass("fa-sun").addClass("fa-moon");
+    } else {
+        $("#themeIcon").removeClass("fa-moon").addClass("fa-sun");
+    }
 }
+
+function toggleTheme() {
+    UiThemeStyle = UiThemeStyle === 'light' ? 'dark' : 'light';
+    ApplyThemeColor();
+}
+
+
 
 function PreloadAudioFiles(){
     audioBlobs.Alert = { file : "Alert.mp3", url : hostingPrefix +"media/Alert.mp3" }
@@ -11820,41 +11890,83 @@ function ShowMyProfile(){
     
     // SIP Account    
     if (EnableAccountSettings == true) {
-        html += "<div class='card' style='width: 100%; max-width: 400px; margin: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;'>";
-        html += "<div class='card-header'>"+ lang.account + " Settings</div>";
-        html += "<div class='card-body' style='padding: 32px;'>";
-        html += "<div class='avatar-container'>";
-        html += "<i class='fa fa-user-circle-o avatar'></i>";
-        html += "<img id='avatar-img' class='avatar' style='display:none;'";
-        html += "<input type='file' id=fileUploader class='form-control-file'>";
-        html += "</div>";
-        html += "<div class='form-group' style='margin-bottom: 24px;'>";
-        html += "<label for='Configure_Account_profileName'>" + lang.full_name + ":</label>";
-        html += "<input id='Configure_Account_profileName' class='form-control' type='text' placeholder='" + lang.eg_full_name + "' value='" + getDbItem("profileName", "") + "'>";
-        html += "</div>";
-        html += "<div class='form-group'>";
-        html += "<label for='Configure_Account_SipUsername'>" + lang.sip_username + ":</label>";
-        html += "<input id='Configure_Account_SipUsername' class='form-control' type='text' placeholder='" + lang.eg_sip_username + "' value='" + getDbItem("SipUsername", "") + "'>";
-        html += "</div>";
-        html += "<div class='form-group'>";
-        html += "<label for='Configure_Account_SipPassword'>" + lang.sip_password + ":</label>";
-        html += "<input id='Configure_Account_SipPassword' class='form-control' type='password' placeholder='" + lang.eg_sip_password + "' value='" + getDbItem("SipPassword", "") + "'>";
-        html += "</div>";
-        html += "<div class='form-group'>";
-        html += "<label for='Configure_Account_Voicemail_Subscribe'>" + lang.subscribe_voicemail + ":</label>";
-        html += "<div class='form-check'>";
-        html += "<input type='checkbox' id='Configure_Account_Voicemail_Subscribe' class='form-check-input' " + (VoiceMailSubscribe ? "checked" : "") + ">";
-        html += "<label for='Configure_Account_Voicemail_Subscribe' class='form-check-label'>" + lang.yes + "</label>";
-        html += "</div>";
-        html += "</div>";
-        html += "</div>"; // End of card-body
-        html += "</div>"; // End of card'
+        html += "<div class=UiTextHeading onclick=\"ToggleHeading(this,'Configure_Extension_Html')\"><i class=\"fa fa-user-circle-o UiTextHeadingIcon\" style=\"background-color:#a93a3a\"></i> "+ lang.account +"</div>"        
+    }
+    var AccountHtml = "<div id=Configure_Extension_Html style=\"display:none\">";
+    AccountHtml += "<div class='card' style='width: 100%;  margin: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;'>";        
+    AccountHtml += "<div class='card-body' style='padding: 32px;'>";
+    // AccountHtml += "<div class='form-group' style='margin-bottom: 24px;'>";
+    // AccountHtml += "<label for='Configure_Account_profileName'>" + lang.full_name + ":</label>";
+    // AccountHtml += "<input id='Configure_Account_profileName' class='form-control' type='text' placeholder='" + lang.eg_full_name + "' value='" + getDbItem("profileName", "") + "'>";
+    // AccountHtml += "</div>";
+    AccountHtml += "<div class=UiText>"+ lang.full_name +":</div>";
+    AccountHtml += "<div><input id=Configure_Account_profileName class=UiInputText type=text placeholder='"+ lang.eg_full_name +"' value='"+ getDbItem("profileName", "") +"'></div>";
+    
+    // AccountHtml += "<div class='form-group'>";
+    // AccountHtml += "<label for='Configure_Account_SipUsername'>" + lang.sip_username + ":</label>";
+    // AccountHtml += "<input id='Configure_Account_SipUsername' class='form-control' type='text' placeholder='" + lang.eg_sip_username + "' value='" + getDbItem("SipUsername", "") + "'>";
+    // AccountHtml += "</div>";
+    AccountHtml += "<div class=UiText>"+ lang.sip_username +":</div>";
+    AccountHtml += "<div><input id=Configure_Account_SipUsername class=UiInputText type=text placeholder='"+ lang.eg_sip_username +"' value='"+ getDbItem("SipUsername", "") +"'></div>";
+    
+    // AccountHtml += "<div class='form-group'>";
+    // AccountHtml += "<label for='Configure_Account_SipPassword'>" + lang.sip_password + ":</label>";
+    // AccountHtml += "<input id='Configure_Account_SipPassword' class='form-control' type='password' placeholder='" + lang.eg_sip_password + "' value='" + getDbItem("SipPassword", "") + "'>";
+    // AccountHtml += "</div>";
+    AccountHtml += "<div class=UiText>"+ lang.sip_password +":</div>";
+    AccountHtml += "<div><input id=Configure_Account_SipPassword class=UiInputText type=password placeholder='"+ lang.eg_sip_password +"' value='"+ getDbItem("SipPassword", "") +"'></div>";
+
+    AccountHtml += "<div class='form-group'>";
+    AccountHtml += "<label for='Configure_Account_Voicemail_Subscribe'>" + lang.subscribe_voicemail + ":</label>";
+    AccountHtml += "<div class='form-check'>";
+    AccountHtml += "<input type='checkbox' id='Configure_Account_Voicemail_Subscribe' class='form-check-input' " + (VoiceMailSubscribe ? "checked" : "") + ">";
+    AccountHtml += "<label for='Configure_Account_Voicemail_Subscribe' class='form-check-label'>" + lang.yes + "</label>";
+    AccountHtml += "</div>";
+    AccountHtml += "</div>";
+    /*AccountHtml += "<div class=UiText>"+ lang.subscribe_voicemail +":</div>";
+    AccountHtml += "<div><input type=checkbox id=Configure_Account_Voicemail_Subscribe "+ ((VoiceMailSubscribe == true)? "checked" : "") +"><label for=Configure_Account_Voicemail_Subscribe>"+ lang.yes +"</label></div>";
+
+    AccountHtml += "<div id=Voicemail_Did_row style=\"display:"+ ((VoiceMailSubscribe == true)? "unset" : "none") +"\">";
+    AccountHtml += "<div class=UiText style=\"margin-left:20px\">"+ lang.voicemail_did +":</div>";
+    AccountHtml += "<div style=\"margin-left:20px\"><input id=Configure_Account_Voicemail_Did class=UiInputText type=text placeholder='"+ lang.eg_internal_subscribe_extension +"' value='"+ getDbItem("VoicemailDid", "") +"'></div>";
+    AccountHtml += "</div>";
+
+    AccountHtml += "<div class=UiText>"+ lang.chat_engine +":</div>";
+
+    AccountHtml += "<ul style=\"list-style-type:none\">"
+    AccountHtml += "<li><input type=radio name=chatEngine id=chat_type_sip "+ ((ChatEngine == "XMPP")? "" : "checked") +"><label for=chat_type_sip>SIP</label>"
+    AccountHtml += "<li><input type=radio name=chatEngine id=chat_type_xmpp "+ ((ChatEngine == "XMPP")? "checked" : "") +"><label for=chat_type_xmpp>XMPP</label>"
+    AccountHtml += "</ul>"*/
+
+    // AccountHtml += "<div id=RowChatEngine_xmpp style=\"display:"+ ((ChatEngine == "XMPP")? "unset" : "none") +"\">";
+
+    // AccountHtml += "<div class=UiText>"+ lang.xmpp_server_address +":</div>";
+    // AccountHtml += "<div><input id=Configure_Account_xmpp_address class=UiInputText type=text placeholder='"+ lang.eg_xmpp_server_address +"' value='"+ getDbItem("XmppServer", "") +"'></div>";
+
+    // AccountHtml += "<div class=UiText>XMPP "+ lang.websocket_port +":</div>";
+    // AccountHtml += "<div><input id=Configure_Account_xmpp_port class=UiInputText type=text placeholder='"+ lang.eg_websocket_port +"' value='"+ getDbItem("XmppWebsocketPort", "") +"'></div>";
+
+    // AccountHtml += "<div class=UiText>XMPP "+ lang.websocket_path +":</div>";
+    // AccountHtml += "<div><input id=Configure_Account_xmpp_path class=UiInputText type=text placeholder='"+ lang.eg_websocket_path +"' value='"+ getDbItem("XmppWebsocketPath", "") +"'></div>";
+
+    // AccountHtml += "<div class=UiText>XMPP "+ lang.sip_domain +":</div>";
+    // AccountHtml += "<div><input id=Configure_Account_xmpp_domain class=UiInputText type=text placeholder='"+ lang.eg_sip_domain +"' value='"+ getDbItem("XmppDomain", "") +"'></div>";
+
+    // AccountHtml += "<div class=UiText>"+ lang.extension_number +":</div>";
+    // AccountHtml += "<div><input id=Configure_Account_profileUser class=UiInputText type=text placeholder='"+ lang.eg_internal_subscribe_extension +"' value='"+ getDbItem("profileUser", "") +"'></div>";
+    AccountHtml += "</div>";
+    AccountHtml += "</div>";
+    AccountHtml += "</div>";
+    AccountHtml += "</div>";
+    
+    if (EnableAccountSettings == true) {
+        html += AccountHtml;
     }
 
 
+
     // 2 Audio & Video
-    // TODO: AudioVideoHtml removed from start page
-    //html += "<div class=UiTextHeading onclick=\"ToggleHeading(this,'Audio_Video_Html')\"><i class=\"fa fa fa-video-camera UiTextHeadingIcon\" style=\"background-color:#208e3c\"></i> " + lang.audio_video + "</div>"
+    html += "<div class=UiTextHeading onclick=\"ToggleHeading(this,'Audio_Video_Html')\"><i class=\"fa fa fa-video-camera UiTextHeadingIcon\" style=\"background-color:#208e3c\"></i> " + lang.audio_video + "</div>"
 
     var AudioVideoHtml = "<div id=Audio_Video_Html style=\"display:none\">";
     
@@ -11928,8 +12040,6 @@ function ShowMyProfile(){
    
 
     // 3 Appearance
-    // TODO: EnableAppearanceSettings to false
-    EnableAppearanceSettings = false;
 
     if(EnableAppearanceSettings == true) {
         html += "<div class=UiTextHeading onclick=\"ToggleHeading(this,'Appearance_Html')\"><i class=\"fa fa-pencil UiTextHeadingIcon\" style=\"background-color:#416493\"></i> "+ lang.appearance +"</div>"
@@ -11960,8 +12070,6 @@ function ShowMyProfile(){
     if(EnableAppearanceSettings == true) html += AppearanceHtml;
 
     // 4 Notifications
-    // TODO: EnableNotificationSettings to false
-    EnableNotificationSettings = false;
     if(EnableNotificationSettings == true) {
         html += "<div class=UiTextHeading onclick=\"ToggleHeading(this,'Notifications_Html')\"><i class=\"fa fa-bell UiTextHeadingIcon\" style=\"background-color:#ab8e04\"></i> "+ lang.notifications +"</div>"
     }

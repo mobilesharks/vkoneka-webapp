@@ -35,6 +35,8 @@ body {
     background-color: #CCCCCC;
     border: 1px solid #FFFFFF;
     box-shadow: 1px 1px 5px rgba(0,0,0,0.25);
+
+    margin-left: 50px;
 }
 
 .buddyActiveCall {
@@ -81,7 +83,11 @@ body {
 
 .searchClean{
     /* border: 1px solid #CCCCCC; */
-    background-color: #eaeaea
+   background-color: #F3F3F9 !important;
+   .i{
+    color: #9599AD !important;
+   }
+
 }
 .searchClean:before {
     color: #333333;
@@ -133,7 +139,7 @@ body {
 }
 
 .streamSectionBackground {
-    background-color: #efeadc;
+    background-color: #efeadc !important;
 }
 
 .chatMessage {
@@ -170,38 +176,40 @@ body {
     background-color: transparent;
 }
 .dialButtons{
-    color: #3478f3;
-    background-color: #eeeeee;
+    color: #3478f3 !important;
+    background-color: #FFFFFF !important;
+    box-shadow: inset 1px 1px 1px 0px rgba(250, 250, 250, 0.2), inset -1px -1px 1px rgba(0, 0, 0, 0.2);
 }
 .dialButtons:hover{
     border: 1px solid transparent;
-    background-color: #e1e1e1;
+    background-color: #e1e1e1 !important;
     color: #3478f3
 }
 .dialButtons:active{
     border: 1px solid transparent;
-    background-color: #666666;
-    color: #FFFFFF;
+    background-color: #666666 !important;
+    color: #FFFFFF !important;
 }
 .dialButtons span{
     color: #999999;
 }
 .dialButtonsDial{
-    color: #FFFFFF;
-    background-color: #25962f;
+    color: #FFFFFF !important;
+    background-color: #25962f !important;
 }
 .dialButtonsDial:hover{
-    color: #FFFFFF;
-    background-color: #44ad4d;
+    background-color: #44ad4d !important;
 }
 .dialButtonsDial:active{
     color: #FFFFFF;
     background-color: #0a5210;
 }
+
 .dialButtonsDial:disabled{
     color: #666666;
     background-color: #25962f;
 }
+
 .dialButtonsDial:disabled:hover{
     color: #666666;
     background-color: #25962f;
@@ -434,4 +442,63 @@ input[type=radio]:checked + label:before {
 
 .CallColorUnderlay{
     background-image: radial-gradient(circle, transparent, #f6f6f6);
+}
+
+/* ADDED */
+#BtnFreeDial i,
+#BtnAddSomeone i,
+#SettingsMenu i, #BtnToogle i{
+    color: #fff;
+}
+
+#UserCallID{
+    color: #FFFFFF;
+}
+#regStatus{
+    color: #444444;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 4px 8px 16px rgba(0, 0, 0, 0.1); /* Lighter shadow for light mode */
+    margin-bottom: 20px;
+    overflow: hidden;
+    position: relative;
+    color: #333; /* Darker text color for better contrast on light background */
+}
+
+.card:before {
+    content: '';
+    position: absolute;
+    top: -16px;
+    left: -16px;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #eee, #ccc); /* Lighter gradient for light mode */
+    border-radius: 50%;
+    z-index: -1;
+}
+
+.card-header {
+    background-color: #f7f7f7; /* Light background color */
+    border-bottom: 1px solid #ddd; /* Lighter border */
+    border-radius: 10px 10px 0 0;
+    padding: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #444444;
+
+}
+
+.card-body {
+    padding: 30px;
+    /* Increased padding for more margin */
+}
+
+#txtFindBuddy{
+    background-color: #F3F3F9 !important;
+    color: #9599AD;
+    
 }
