@@ -39,28 +39,35 @@
     font-family: Roboto, Arial, Helvetica;
     font-size: 15px;
     margin-top: 10px;
+    font-weight: 600;
 }
 
 .UiTextHeading{
     font-family: Roboto, Arial, Helvetica;
     font-size: 17px;
     margin-top: 7px;
+    font-weight: 600;
     border-bottom: 1px solid #383838;
     margin-bottom: 7px;
     cursor: pointer;
-    padding-bottom: 3px;
+    padding-bottom: 3px;  
+    border-radius: 4px;  
 }
+
 .UiTextHeading::before{
     content: "\f078";
     font-family: FontAwesome;
     font-size: 14px;
-    margin-right: 3px;
+    /* margin-right: 5px; */
+    margin: 8px;
     float: right;
+    
 }
 .UiTextHeadingIcon{
-    padding: 3px;
+    padding: 5px;
     font-size: 14px;
     border-radius: 3px;
+    margin: 8px;
 }
 
 .UiButtonBar {
@@ -405,12 +412,8 @@ body {
     padding: 2px !important; 
 
     /* This creates a resize issue, but makes it work nicely at fullscreen */
-    /* box-sizing: border-box; */
-    background-image: url('./icon_opacity.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 50% 50%;
-    border: none !important;
+    /* box-sizing: border-box; */   
+    
 }
 
 .ui-dialog .ui-dialog-content {
@@ -1986,6 +1989,10 @@ input[type=range]{
     height: 40px; /* Set the desired height for the image */
     border-radius: 50%; /* Make the image round if it's a profile picture */
     margin-right: 10px; /* Space between the image and buddy icon */
+}
+
+#AllertMessageText{
+    font-weight: normal;   
 }
 
 

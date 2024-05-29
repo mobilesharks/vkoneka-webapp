@@ -11895,24 +11895,12 @@ function ShowMyProfile(){
     var AccountHtml = "<div id=Configure_Extension_Html style=\"display:none\">";
     AccountHtml += "<div class='card' style='width: 100%;  margin: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;'>";        
     AccountHtml += "<div class='card-body' style='padding: 32px;'>";
-    // AccountHtml += "<div class='form-group' style='margin-bottom: 24px;'>";
-    // AccountHtml += "<label for='Configure_Account_profileName'>" + lang.full_name + ":</label>";
-    // AccountHtml += "<input id='Configure_Account_profileName' class='form-control' type='text' placeholder='" + lang.eg_full_name + "' value='" + getDbItem("profileName", "") + "'>";
-    // AccountHtml += "</div>";
     AccountHtml += "<div class=UiText>"+ lang.full_name +":</div>";
     AccountHtml += "<div><input id=Configure_Account_profileName class=UiInputText type=text placeholder='"+ lang.eg_full_name +"' value='"+ getDbItem("profileName", "") +"'></div>";
     
-    // AccountHtml += "<div class='form-group'>";
-    // AccountHtml += "<label for='Configure_Account_SipUsername'>" + lang.sip_username + ":</label>";
-    // AccountHtml += "<input id='Configure_Account_SipUsername' class='form-control' type='text' placeholder='" + lang.eg_sip_username + "' value='" + getDbItem("SipUsername", "") + "'>";
-    // AccountHtml += "</div>";
     AccountHtml += "<div class=UiText>"+ lang.sip_username +":</div>";
     AccountHtml += "<div><input id=Configure_Account_SipUsername class=UiInputText type=text placeholder='"+ lang.eg_sip_username +"' value='"+ getDbItem("SipUsername", "") +"'></div>";
     
-    // AccountHtml += "<div class='form-group'>";
-    // AccountHtml += "<label for='Configure_Account_SipPassword'>" + lang.sip_password + ":</label>";
-    // AccountHtml += "<input id='Configure_Account_SipPassword' class='form-control' type='password' placeholder='" + lang.eg_sip_password + "' value='" + getDbItem("SipPassword", "") + "'>";
-    // AccountHtml += "</div>";
     AccountHtml += "<div class=UiText>"+ lang.sip_password +":</div>";
     AccountHtml += "<div><input id=Configure_Account_SipPassword class=UiInputText type=password placeholder='"+ lang.eg_sip_password +"' value='"+ getDbItem("SipPassword", "") +"'></div>";
 
@@ -11922,38 +11910,7 @@ function ShowMyProfile(){
     AccountHtml += "<input type='checkbox' id='Configure_Account_Voicemail_Subscribe' class='form-check-input' " + (VoiceMailSubscribe ? "checked" : "") + ">";
     AccountHtml += "<label for='Configure_Account_Voicemail_Subscribe' class='form-check-label'>" + lang.yes + "</label>";
     AccountHtml += "</div>";
-    AccountHtml += "</div>";
-    /*AccountHtml += "<div class=UiText>"+ lang.subscribe_voicemail +":</div>";
-    AccountHtml += "<div><input type=checkbox id=Configure_Account_Voicemail_Subscribe "+ ((VoiceMailSubscribe == true)? "checked" : "") +"><label for=Configure_Account_Voicemail_Subscribe>"+ lang.yes +"</label></div>";
-
-    AccountHtml += "<div id=Voicemail_Did_row style=\"display:"+ ((VoiceMailSubscribe == true)? "unset" : "none") +"\">";
-    AccountHtml += "<div class=UiText style=\"margin-left:20px\">"+ lang.voicemail_did +":</div>";
-    AccountHtml += "<div style=\"margin-left:20px\"><input id=Configure_Account_Voicemail_Did class=UiInputText type=text placeholder='"+ lang.eg_internal_subscribe_extension +"' value='"+ getDbItem("VoicemailDid", "") +"'></div>";
-    AccountHtml += "</div>";
-
-    AccountHtml += "<div class=UiText>"+ lang.chat_engine +":</div>";
-
-    AccountHtml += "<ul style=\"list-style-type:none\">"
-    AccountHtml += "<li><input type=radio name=chatEngine id=chat_type_sip "+ ((ChatEngine == "XMPP")? "" : "checked") +"><label for=chat_type_sip>SIP</label>"
-    AccountHtml += "<li><input type=radio name=chatEngine id=chat_type_xmpp "+ ((ChatEngine == "XMPP")? "checked" : "") +"><label for=chat_type_xmpp>XMPP</label>"
-    AccountHtml += "</ul>"*/
-
-    // AccountHtml += "<div id=RowChatEngine_xmpp style=\"display:"+ ((ChatEngine == "XMPP")? "unset" : "none") +"\">";
-
-    // AccountHtml += "<div class=UiText>"+ lang.xmpp_server_address +":</div>";
-    // AccountHtml += "<div><input id=Configure_Account_xmpp_address class=UiInputText type=text placeholder='"+ lang.eg_xmpp_server_address +"' value='"+ getDbItem("XmppServer", "") +"'></div>";
-
-    // AccountHtml += "<div class=UiText>XMPP "+ lang.websocket_port +":</div>";
-    // AccountHtml += "<div><input id=Configure_Account_xmpp_port class=UiInputText type=text placeholder='"+ lang.eg_websocket_port +"' value='"+ getDbItem("XmppWebsocketPort", "") +"'></div>";
-
-    // AccountHtml += "<div class=UiText>XMPP "+ lang.websocket_path +":</div>";
-    // AccountHtml += "<div><input id=Configure_Account_xmpp_path class=UiInputText type=text placeholder='"+ lang.eg_websocket_path +"' value='"+ getDbItem("XmppWebsocketPath", "") +"'></div>";
-
-    // AccountHtml += "<div class=UiText>XMPP "+ lang.sip_domain +":</div>";
-    // AccountHtml += "<div><input id=Configure_Account_xmpp_domain class=UiInputText type=text placeholder='"+ lang.eg_sip_domain +"' value='"+ getDbItem("XmppDomain", "") +"'></div>";
-
-    // AccountHtml += "<div class=UiText>"+ lang.extension_number +":</div>";
-    // AccountHtml += "<div><input id=Configure_Account_profileUser class=UiInputText type=text placeholder='"+ lang.eg_internal_subscribe_extension +"' value='"+ getDbItem("profileUser", "") +"'></div>";
+    AccountHtml += "</div>";    
     AccountHtml += "</div>";
     AccountHtml += "</div>";
     AccountHtml += "</div>";
@@ -11972,6 +11929,8 @@ function ShowMyProfile(){
     
 
     if(EnableVideoCalling == true){
+        AudioVideoHtml += "<div class='card' style='width: 100%;  margin: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;'>";        
+        AudioVideoHtml += "<div class='card-body' style='padding: 32px;'>";
 
         AudioVideoHtml += "<div class=UiText>"+ lang.preview +":</div>";
         AudioVideoHtml += "<div style=\"text-align:center; margin-top:10px\"><video id=local-video-preview class=previewVideo muted playsinline></video></div>";
@@ -12035,6 +11994,8 @@ function ShowMyProfile(){
     AudioVideoHtml += "<div><input type=checkbox id=Settings_EchoCancellation><label for=Settings_EchoCancellation> "+ lang.echo_cancellation +"<label></div>";
     AudioVideoHtml += "<div><input type=checkbox id=Settings_NoiseSuppression><label for=Settings_NoiseSuppression> "+ lang.noise_suppression +"<label></div>";
     AudioVideoHtml += "</div>";
+    AudioVideoHtml += "</div>";
+    AudioVideoHtml += "</div>";
 
     html += AudioVideoHtml;
    
@@ -12046,6 +12007,8 @@ function ShowMyProfile(){
     }
 
     var AppearanceHtml = "<div id=Appearance_Html style=\"display:none\">"; 
+    AppearanceHtml += "<div class='card' style='width: 100%;  margin: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;'>";        
+    AppearanceHtml += "<div class='card-body' style='padding: 32px;'>";
     AppearanceHtml += "<div id=ImageCanvas style=\"width:150px; height:150px; display:none\"></div>";
     AppearanceHtml += "<div style=\"margin-top:50px; display:none\"><input id=fileUploader type=file ></div>";
     AppearanceHtml += "<div style=\"margin-top:10px; display:none\"></div>";
@@ -12066,6 +12029,8 @@ function ShowMyProfile(){
     AppearanceHtml += "<div><input id=Configure_Profile_Number2 class=UiInputText type=text placeholder='"+ lang.eg_contact_number_2 +"' value='"+ ((profileVcard != null)? profileVcard.Number2 : "") +"'></div>";
 
     AppearanceHtml += "</div>";
+    AppearanceHtml += "</div>";
+    AppearanceHtml += "</div>";
 
     if(EnableAppearanceSettings == true) html += AppearanceHtml;
 
@@ -12075,8 +12040,12 @@ function ShowMyProfile(){
     }
 
     var NotificationsHtml = "<div id=Notifications_Html style=\"display:none\">";
+    NotificationsHtml += "<div class='card' style='width: 100%;  margin: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;'>";        
+    NotificationsHtml += "<div class='card-body' style='padding: 32px;'>";
     NotificationsHtml += "<div class=UiText>"+ lang.notifications +":</div>";
     NotificationsHtml += "<div><input type=checkbox id=Settings_Notifications><label for=Settings_Notifications> "+ lang.enable_onscreen_notifications +"<label></div>";
+    NotificationsHtml += "</div>";
+    NotificationsHtml += "</div>";
     NotificationsHtml += "</div>";
     // TODO: Add ring tone selection etc
 

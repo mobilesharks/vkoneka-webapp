@@ -320,7 +320,8 @@ input[type=radio]:checked + label:before {
 /* UiTextHeading */
 .UiTextHeading{
     color:#333333;
-    border-bottom: 1px solid #CCCCCC;
+    border-bottom: none !important;
+    box-shadow: 1px 1px 5px rgb(0 0 0 / 25%);
 }
 .UiTextHeading::before{
     color: #333333;
@@ -501,4 +502,39 @@ input[type=radio]:checked + label:before {
     background-color: #F3F3F9 !important;
     color: #9599AD;
     
+}
+
+.ui-dialog {
+    background-color: #D9D9D9;   
+}
+
+
+.ui-widget-header{
+    color: #845FFA !important;
+   
+    border: none !important;
+    text-transform: uppercase;
+}
+
+.ui-widget-content {
+    border: 1px solid #ddd;
+    background: #fff;
+    color: #333;
+}
+
+.ui-button {
+    background-color: #845FFA !important;
+    color: #FFFFFF !important;
+    border: none !important;
+}
+.ui-button:hover{
+    background-color: transparent !important;
+    border: 1px solid #845FFA !important;
+    color: #845FFA !important;
+}
+
+.ui-menu{
+    background-color: #845FFA !important;
+    color: #FFFFFF !important;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
