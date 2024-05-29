@@ -23,7 +23,7 @@ build_docker_image_dev:
     - docker push $REGISTRY_URL/vkonekta/vkonekta-dev:latest
 
 deploy_dev:
-  image: docker:20.10.24
+  image: gcc:latest
   stage: deploy
   only:
     - develop
