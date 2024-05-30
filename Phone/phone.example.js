@@ -15,14 +15,14 @@
 
 // Global Settings
 // ===============
-const appversion = "0.3.26";
+const appversion = "0.3.27";
 const sipjsversion = "0.20.0";
 const navUserAgent = window.navigator.userAgent;  // TODO: change to Navigator.userAgentData
 const instanceID = String(Date.now());
 const localDB = window.localStorage;
 
 // Set the following to null to disable
-let welcomeScreen = "<div class=\"UiWindowField\"><pre style=\"font-size: 12px; text-transform: normal !important;\">";
+let welcomeScreen = "<div class=\"UiWindowField\"><pre style=\"font-size: 12px\">";
 welcomeScreen += "===========================================================================\n";
 welcomeScreen += "Copyright © 2020 - All Rights Reserved\n";
 welcomeScreen += "===========================================================================\n";
@@ -81,10 +81,10 @@ let wallpaperDark = getDbItem("wallpaperDark", "wallpaper.dark.webp");     // Wa
  */
 let profileUserID = getDbItem("profileUserID", null);   // Internal reference ID. (DON'T CHANGE THIS!)
 let profileName = getDbItem("profileName", null);       // eg: Keyla James
-let wssServer = getDbItem("wssServer", 'pbx.gov.cv');           // eg: raspberrypi.local
-let WebSocketPort = getDbItem("WebSocketPort", 8089);   // eg: 444 | 4443
-let ServerPath = getDbItem("ServerPath", '/ws');         // eg: /ws
-let SipDomain = getDbItem("SipDomain", 'pbx.gov.cv');           // eg: raspberrypi.local
+let wssServer = getDbItem("wssServer", null);           // eg: raspberrypi.local
+let WebSocketPort = getDbItem("WebSocketPort", null);   // eg: 444 | 4443
+let ServerPath = getDbItem("ServerPath", null);         // eg: /ws
+let SipDomain = getDbItem("SipDomain", null);           // eg: raspberrypi.local
 let SipUsername = getDbItem("SipUsername", null);       // eg: webrtc
 let SipPassword = getDbItem("SipPassword", null);       // eg: webrtc
 
@@ -125,7 +125,7 @@ let RecordAllCalls = (getDbItem("RecordAllCalls", "0") == "1");             // S
 let StartVideoFullScreen = (getDbItem("StartVideoFullScreen", "1") == "1"); // Starts a video call in the full screen (browser screen, not desktop)
 let SelectRingingLine = (getDbItem("SelectRingingLine", "1") == "1");       // Selects the ringing line if you are not on another call ()
 
-let UiMaxWidth = parseInt(getDbItem("UiMaxWidth", 100));                                   // Sets the max-width for the UI elements (don't set this less than 920. Set to very high number for full screen eg: 999999)
+let UiMaxWidth = parseInt(getDbItem("UiMaxWidth", 1240));                                   // Sets the max-width for the UI elements (don't set this less than 920. Set to very high number for full screen eg: 999999)
 let UiThemeStyle = getDbItem("UiThemeStyle", "system");                                     // Sets the color theme for the UI dark | light | system (set by your systems dark/light settings)
 let UiMessageLayout = getDbItem("UiMessageLayout", "middle");                               // Put the message Stream at the top or middle can be either: top | middle 
 let UiCustomConfigMenu = (getDbItem("UiCustomConfigMenu", "0") == "1");                     // If set to true, will only call web_hook_on_config_menu
@@ -937,11 +937,6 @@ function AddSomeoneWindow(numberStr){
     var html = "<div style=\"text-align:right\"><button class=roundButtons onclick=\"ShowContacts()\"><i class=\"fa fa-close\"></i></button></div>"
     
     html += "<div border=0 class=UiSideField>";
-    // TODO: ADDED
-    html += "<div class='card' style='width: 100%; max-width: 400px; margin: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;'>";
-    html += "<div class='card-header'>"+ lang.add_someone + "</div>";
-    html += "<div class='card-body' '>";
-    // END
 
     html += "<div class=UiText>"+ lang.full_name +":</div>";
     html += "<div><input id=AddSomeone_Name class=UiInputText type=text placeholder='"+ lang.eg_full_name +"'></div>";
@@ -996,8 +991,6 @@ function AddSomeoneWindow(numberStr){
     html += "<div><input type=checkbox id=AddSomeone_AutoDelete><label for=AddSomeone_AutoDelete>"+ lang.yes +"</label></div>";
     html += "</div>";
 
-    html += "</div>";
-    html += "</div>";
     html += "</div>";
 
     html += "<div class=UiWindowButtonBar id=ButtonBar></div>";
@@ -1550,18 +1543,15 @@ function SetStatusWindow(){
 // =======
 function InitUi(){
 
-    PreloadAudioFiles();
-
     // Custom Web hook
-    if (typeof web_hook_on_before_init !== 'undefined') web_hook_on_before_init(phoneOptions);
-    
-    $("#themeToggleBtn").click(toggleTheme);
+    if(typeof web_hook_on_before_init !== 'undefined') web_hook_on_before_init(phoneOptions);
+
     ApplyThemeColor()
 
     var phone = $("#Phone");
     phone.empty();
     phone.attr("class", "pageContainer");
-    phone.css("max-width", UiMaxWidth + "%");
+    phone.css("max-width", UiMaxWidth + "px");
 
     // Left Section
     var leftSection = $("<div/>");
@@ -1572,16 +1562,13 @@ function InitUi(){
     leftHTML += "<tr><td class=streamSection style=\"height: 50px; box-sizing: border-box;\">";
     
     // Profile User
-    leftHTML += "<div class=profileContainer>";    
+    leftHTML += "<div class=profileContainer>";
 
-    // Picture, Caller ID and settings Menu 
-    leftHTML += "<div class=contact id=UserProfile style=\"cursor: default; margin-bottom:5px;\">";   
+    // Picture, Caller ID and settings Menu
+    leftHTML += "<div class=contact id=UserProfile style=\"cursor: default; margin-bottom:5px;\">";
     // Voicemail Count
-  
-    leftHTML += "<span id=TxtVoiceMessages class=voiceMessageNotifyer>0</span>" 
-    // leftHTML += "<div id=UserProfilePic class=buddyIcon></div>";
-    
-    
+    leftHTML += "<span id=TxtVoiceMessages class=voiceMessageNotifyer>0</span>"
+    leftHTML += "<div id=UserProfilePic class=buddyIcon></div>";
 
     // Action Buttons
     leftHTML += "<span class=settingsMenu>";
@@ -1591,32 +1578,29 @@ function InitUi(){
          // TODO
         leftHTML += "<button id=BtnCreateGroup><i class=\"fa fa-users\"></i><i class=\"fa fa-plus\" style=\"font-size:9px\"></i></button>";
     }
-    leftHTML += "<button class=roundButtons id=BtnToogle onclick=\"toggleTheme()\"><i class=\"fa fa-adjust\"></i></button>";
     leftHTML += "<button class=roundButtons id=SettingsMenu><i class=\"fa fa-cogs\"></i></button>";
     leftHTML += "</span>";  // class=settingsMenu
 
-    // Display Name    
+    // Display Name
     leftHTML += "<div class=contactNameText style=\"margin-right: 0px;\">"
-    leftHTML += "<img src='https://cdn.glitch.global/b76886d5-68d7-4ed7-a41a-95928840dcd9/logo_light.svg?v=1710335757434' class='logoIcon'/>"
     // Status
-    leftHTML += "<div>"
     leftHTML += "<span id=dereglink class=dotOnline style=\"display:none\"></span>";
     leftHTML += "<span id=WebRtcFailed class=dotFailed style=\"display:none\"></span>";
     leftHTML += "<span id=reglink class=dotOffline></span>";
     // User
     leftHTML += " <span id=UserCallID></span>"
-    leftHTML += "<div class=presenceText><span id=regStatus>&nbsp;</span> <span id=dndStatus></span></div>";
     leftHTML += "</div>"; // class=contactNameText
-    leftHTML += "</div>";
-   
-    leftHTML += "</div>";  //id=UserProfile  
+    leftHTML += "<div class=presenceText><span id=regStatus>&nbsp;</span> <span id=dndStatus></span></div>";
+    leftHTML += "</div>";  //id=UserProfile
+
     leftHTML += "</div>"; //  class=profileContainer
+
     leftHTML += "</td></tr>";
-    leftHTML += "<tr id=searchArea><td class=streamSection style=\"height: 35px; box-sizing: border-box; padding:10px; margin:10px;\">";
-  
+    leftHTML += "<tr id=searchArea><td class=streamSection style=\"height: 35px; box-sizing: border-box; padding-top: 3px; padding-bottom: 0px;\">";
+
     // Search
-    leftHTML += "<span id=divFindBuddy class=searchClean><INPUT id=txtFindBuddy type=text autocomplete=none style=\"width: calc(100% - 85px);\"></span>";
-    leftHTML += "<button class=roundButtons id=BtnFilter style=\"margin:2px;\"><i class=\"fa fa-sliders\"></i></button>"
+    leftHTML += "<span id=divFindBuddy class=searchClean><INPUT id=txtFindBuddy type=text autocomplete=none style=\"width: calc(100% - 78px);\"></span>";
+    leftHTML += "<button class=roundButtons id=BtnFilter style=\"margin-left:5px\"><i class=\"fa fa-sliders\"></i></button>"
 
     leftHTML += "</td></tr>";
     leftHTML += "<tr><td class=streamSection>"
@@ -1665,12 +1649,8 @@ function InitUi(){
             catch(e){}
         }
     }
-
-    if(profileName){ 
-        $("#UserCallID").html(profilePrepend +""+ profileName);
-    }
+    if(profileName) $("#UserCallID").html(profilePrepend +""+ profileName);
     $("#UserProfilePic").css("background-image", "url('"+ getPicture("profilePicture") +"')");
-    //$("#UserProfilePic").css("background-image", "url('https://ui-avatars.com/api/?background=random&name="+profilePictureName+"&size=128')");
     
     $("#BtnFilter").attr("title", lang.filter_and_sort)
     $("#BtnFilter").on('click', function(event){
@@ -1779,6 +1759,7 @@ function InitUi(){
         UpdateUI();
     }
 
+    PreloadAudioFiles();
 
     // Custom Web hook
     if(typeof web_hook_on_init !== 'undefined') web_hook_on_init();
@@ -1864,120 +1845,51 @@ function ShowMyProfileMenu(obj){
     }
     PopupMenu(obj, menu);
 }
-// function ApplyThemeColor(){
-//     //UiThemeStyle = light | dark | system (can change at any time)
-//     var cssUrl = hostingPrefix +"phone.light.css";
-//     var wallpaperUrl = hostingPrefix +""+ imagesDirectory +""+ wallpaperLight;
-
-//     // Overall Theme
-//     if(UiThemeStyle == "system"){
-//         if(window.matchMedia){
-//             if(window.matchMedia('(prefers-color-scheme: dark)').matches){
-//                 cssUrl = hostingPrefix +"phone.dark.css";
-//                 wallpaperUrl = hostingPrefix +""+ imagesDirectory +""+ wallpaperDark;
-//             } else {
-//                 cssUrl = hostingPrefix +"phone.light.css";
-//                 wallpaperUrl = hostingPrefix +""+ imagesDirectory +""+ wallpaperLight;
-//             }
-//         } else {
-//             cssUrl = hostingPrefix +"phone.dark.css";
-//         }
-//     } else if(UiThemeStyle == "light"){
-//         cssUrl = hostingPrefix +"phone.light.css";
-//         wallpaperUrl = hostingPrefix +""+ imagesDirectory +""+ wallpaperLight;
-//     } else if(UiThemeStyle == "dark") {
-//         cssUrl = hostingPrefix +"phone.dark.css";
-//         wallpaperUrl = hostingPrefix +""+ imagesDirectory +""+ wallpaperDark;
-//     } else {
-//         // Defaults to light
-//         cssUrl = hostingPrefix +"phone.light.css";
-//         wallpaperUrl = hostingPrefix +""+ imagesDirectory +""+ wallpaperLight;
-//     }
-//     if($("#colorSchemeMode").length){
-//         // Style Sheet Added
-//     } else {
-//         $("head").append('<link rel="stylesheet" id="colorSchemeMode" />');
-//     }
-//     $("#colorSchemeMode").attr("href", cssUrl);
-
-//     //vkonekta Style Sheet Added
-//     var vkonektacssUrl = hostingPrefix +"vkonekta.phone.css";
-//     $("head").append('<link rel="stylesheet" id="vkonektaColorSchemeMode" href="'+vkonektacssUrl+'" />');
-
-//     // Wallpaper
-//     if($("#colorSchemeModeSheet").length){
-//         $("#colorSchemeModeSheet").empty();
-//     } else {
-//         $("head").append("<style id='colorSchemeModeSheet'></style>");
-//     }
-//     var wallpaperStyle = ".wallpaperBackground { background-image:url('"+ wallpaperUrl +"') }";
-//     $("#colorSchemeModeSheet").text(wallpaperStyle);
-// }
-function ApplyThemeColor() {
-    var cssUrl = hostingPrefix + "phone.light.css";
-    var wallpaperUrl = hostingPrefix + imagesDirectory + wallpaperLight;
+function ApplyThemeColor(){
+    //UiThemeStyle = light | dark | system (can change at any time)
+    var cssUrl = hostingPrefix +"phone.light.css";
+    var wallpaperUrl = hostingPrefix +""+ imagesDirectory +""+ wallpaperLight;
 
     // Overall Theme
-    if (UiThemeStyle === "system") {
-        if (window.matchMedia) {
-            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                cssUrl = hostingPrefix + "phone.dark.css";
-                wallpaperUrl = hostingPrefix + imagesDirectory + wallpaperDark;
+    if(UiThemeStyle == "system"){
+        if(window.matchMedia){
+            if(window.matchMedia('(prefers-color-scheme: dark)').matches){
+                cssUrl = hostingPrefix +"phone.dark.css";
+                wallpaperUrl = hostingPrefix +""+ imagesDirectory +""+ wallpaperDark;
             } else {
-                cssUrl = hostingPrefix + "phone.light.css";
-                wallpaperUrl = hostingPrefix + imagesDirectory + wallpaperLight;
+                cssUrl = hostingPrefix +"phone.light.css";
+                wallpaperUrl = hostingPrefix +""+ imagesDirectory +""+ wallpaperLight;
             }
         } else {
-            cssUrl = hostingPrefix + "phone.dark.css";
+            cssUrl = hostingPrefix +"phone.dark.css";
         }
-    } else if (UiThemeStyle === "light") {
-        cssUrl = hostingPrefix + "phone.light.css";
-        wallpaperUrl = hostingPrefix + imagesDirectory + wallpaperLight;
-    } else if (UiThemeStyle === "dark") {
-        cssUrl = hostingPrefix + "phone.dark.css";
-        wallpaperUrl = hostingPrefix + imagesDirectory + wallpaperDark;
+    } else if(UiThemeStyle == "light"){
+        cssUrl = hostingPrefix +"phone.light.css";
+        wallpaperUrl = hostingPrefix +""+ imagesDirectory +""+ wallpaperLight;
+    } else if(UiThemeStyle == "dark") {
+        cssUrl = hostingPrefix +"phone.dark.css";
+        wallpaperUrl = hostingPrefix +""+ imagesDirectory +""+ wallpaperDark;
     } else {
         // Defaults to light
-        cssUrl = hostingPrefix + "phone.light.css";
-        wallpaperUrl = hostingPrefix + imagesDirectory + wallpaperLight;
+        cssUrl = hostingPrefix +"phone.light.css";
+        wallpaperUrl = hostingPrefix +""+ imagesDirectory +""+ wallpaperLight;
     }
-
-    if ($("#colorSchemeMode").length) {
+    if($("#colorSchemeMode").length){
         // Style Sheet Added
     } else {
         $("head").append('<link rel="stylesheet" id="colorSchemeMode" />');
     }
     $("#colorSchemeMode").attr("href", cssUrl);
 
-    // vkonekta Style Sheet Added
-    var vkonektacssUrl = hostingPrefix + "vkonekta.phone.css";
-    if (!$("#vkonektaColorSchemeMode").length) {
-        $("head").append('<link rel="stylesheet" id="vkonektaColorSchemeMode" href="' + vkonektacssUrl + '" />');
-    }
-
     // Wallpaper
-    if ($("#colorSchemeModeSheet").length) {
+    if($("#colorSchemeModeSheet").length){
         $("#colorSchemeModeSheet").empty();
     } else {
         $("head").append("<style id='colorSchemeModeSheet'></style>");
     }
-    var wallpaperStyle = ".wallpaperBackground { background-image:url('" + wallpaperUrl + "') }";
+    var wallpaperStyle = ".wallpaperBackground { background-image:url('"+ wallpaperUrl +"') }";
     $("#colorSchemeModeSheet").text(wallpaperStyle);
-
-    // Update the theme icon
-    if (UiThemeStyle === "dark") {
-        $("#themeIcon").removeClass("fa-sun").addClass("fa-moon");
-    } else {
-        $("#themeIcon").removeClass("fa-moon").addClass("fa-sun");
-    }
 }
-
-function toggleTheme() {
-    UiThemeStyle = UiThemeStyle === 'light' ? 'dark' : 'light';
-    ApplyThemeColor();
-}
-
-
 
 function PreloadAudioFiles(){
     audioBlobs.Alert = { file : "Alert.mp3", url : hostingPrefix +"media/Alert.mp3" }
@@ -2007,8 +1919,7 @@ function PreloadAudioFiles(){
         }
         oReq.send();
     });
-    
-    //console.log(audioBlobs);
+    // console.log(audioBlobs);
 }
 
 // Create User Agent
@@ -4820,7 +4731,10 @@ function ReceiveNotify(notification, selfSubscribe) {
     var dotClass = "dotOffline";
     var Presence = "Unknown";
 
-    var ContentType = notification.request.headers["Content-Type"][0].parsed;
+    var ContentType = "";
+    if(notification.request.headers.length > 0 && notification.request.headers["Content-Type"] && notification.request.headers["Content-Type"][0]){
+        ContentType = notification.request.headers["Content-Type"][0].parsed;
+    }
     if (ContentType == "application/pidf+xml") {
         // Handle Presence
         /*
@@ -11883,61 +11797,100 @@ function ShowMyProfile(){
     $("#searchArea").hide();
     $("#actionArea").empty();
 
-    var html = "<div style=\"text-align:right; padding-top:5px;\"><button class=roundButtons onclick=\"ShowContacts()\"><i class=\"fa fa-close\"></i></button></div>"
+    var html = "<div style=\"text-align:right\"><button class=roundButtons onclick=\"ShowContacts()\"><i class=\"fa fa-close\"></i></button></div>"
 
     html += "<div border=0 class=UiSideField>";
-    html += "<div class=container>";
-    
-    // SIP Account    
-    if (EnableAccountSettings == true) {
-        html += "<div class=UiTextHeading onclick=\"ToggleHeading(this,'Configure_Extension_Html')\"><i class=\"fa fa-user-circle-o UiTextHeadingIcon\" style=\"background-color:#a93a3a\"></i> "+ lang.account +"</div>"        
+
+    // SIP Account
+    if(EnableAccountSettings == true){
+        html += "<div class=UiTextHeading onclick=\"ToggleHeading(this,'Configure_Extension_Html')\"><i class=\"fa fa-user-circle-o UiTextHeadingIcon\" style=\"background-color:#a93a3a\"></i> "+ lang.account +"</div>"
     }
-    var AccountHtml = "<div id=Configure_Extension_Html style=\"display:none\">";
-    AccountHtml += "<div class='card' style='width: 100%;  margin: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;'>";        
-    AccountHtml += "<div class='card-body' style='padding: 32px;'>";
+    var AccountHtml =  "<div id=Configure_Extension_Html style=\"display:none\">";
+    AccountHtml += "<div class=UiText>"+ lang.asterisk_server_address +":</div>";
+    AccountHtml += "<div><input id=Configure_Account_wssServer class=UiInputText type=text placeholder='"+ lang.eg_asterisk_server_address +"' value='"+ getDbItem("wssServer", "") +"'></div>";
+
+    AccountHtml += "<div class=UiText>"+ lang.websocket_port +":</div>";
+    AccountHtml += "<div><input id=Configure_Account_WebSocketPort class=UiInputText type=text placeholder='"+ lang.eg_websocket_port +"' value='"+ getDbItem("WebSocketPort", "") +"'></div>";
+
+    AccountHtml += "<div class=UiText>"+ lang.websocket_path +":</div>";
+    AccountHtml += "<div><input id=Configure_Account_ServerPath class=UiInputText type=text placeholder='"+ lang.eg_websocket_path +"' value='"+ getDbItem("ServerPath", "") +"'></div>";
+
     AccountHtml += "<div class=UiText>"+ lang.full_name +":</div>";
     AccountHtml += "<div><input id=Configure_Account_profileName class=UiInputText type=text placeholder='"+ lang.eg_full_name +"' value='"+ getDbItem("profileName", "") +"'></div>";
-    
+
+    AccountHtml += "<div class=UiText>"+ lang.sip_domain +":</div>";
+    AccountHtml += "<div><input id=Configure_Account_SipDomain class=UiInputText type=text placeholder='"+ lang.eg_sip_domain +"' value='"+ getDbItem("SipDomain", "") +"'></div>";
+
     AccountHtml += "<div class=UiText>"+ lang.sip_username +":</div>";
     AccountHtml += "<div><input id=Configure_Account_SipUsername class=UiInputText type=text placeholder='"+ lang.eg_sip_username +"' value='"+ getDbItem("SipUsername", "") +"'></div>";
-    
+
     AccountHtml += "<div class=UiText>"+ lang.sip_password +":</div>";
     AccountHtml += "<div><input id=Configure_Account_SipPassword class=UiInputText type=password placeholder='"+ lang.eg_sip_password +"' value='"+ getDbItem("SipPassword", "") +"'></div>";
 
-    AccountHtml += "<div class='form-group'>";
-    AccountHtml += "<label for='Configure_Account_Voicemail_Subscribe'>" + lang.subscribe_voicemail + ":</label>";
-    AccountHtml += "<div class='form-check'>";
-    AccountHtml += "<input type='checkbox' id='Configure_Account_Voicemail_Subscribe' class='form-check-input' " + (VoiceMailSubscribe ? "checked" : "") + ">";
-    AccountHtml += "<label for='Configure_Account_Voicemail_Subscribe' class='form-check-label'>" + lang.yes + "</label>";
-    AccountHtml += "</div>";
-    AccountHtml += "</div>";    
-    AccountHtml += "</div>";
-    AccountHtml += "</div>";
-    AccountHtml += "</div>";
-    AccountHtml += "</div>";
-    
-    if (EnableAccountSettings == true) {
-        html += AccountHtml;
-    }
+    AccountHtml += "<div class=UiText>"+ lang.subscribe_voicemail +":</div>";
+    AccountHtml += "<div><input type=checkbox id=Configure_Account_Voicemail_Subscribe "+ ((VoiceMailSubscribe == true)? "checked" : "") +"><label for=Configure_Account_Voicemail_Subscribe>"+ lang.yes +"</label></div>";
 
+    AccountHtml += "<div id=Voicemail_Did_row style=\"display:"+ ((VoiceMailSubscribe == true)? "unset" : "none") +"\">";
+    AccountHtml += "<div class=UiText style=\"margin-left:20px\">"+ lang.voicemail_did +":</div>";
+    AccountHtml += "<div style=\"margin-left:20px\"><input id=Configure_Account_Voicemail_Did class=UiInputText type=text placeholder='"+ lang.eg_internal_subscribe_extension +"' value='"+ getDbItem("VoicemailDid", "") +"'></div>";
+    AccountHtml += "</div>";
 
+    AccountHtml += "<div class=UiText>"+ lang.chat_engine +":</div>";
+
+    AccountHtml += "<ul style=\"list-style-type:none\">"
+    AccountHtml += "<li><input type=radio name=chatEngine id=chat_type_sip "+ ((ChatEngine == "XMPP")? "" : "checked") +"><label for=chat_type_sip>SIP</label>"
+    AccountHtml += "<li><input type=radio name=chatEngine id=chat_type_xmpp "+ ((ChatEngine == "XMPP")? "checked" : "") +"><label for=chat_type_xmpp>XMPP</label>"
+    AccountHtml += "</ul>"
+
+    AccountHtml += "<div id=RowChatEngine_xmpp style=\"display:"+ ((ChatEngine == "XMPP")? "unset" : "none") +"\">";
+
+    AccountHtml += "<div class=UiText>"+ lang.xmpp_server_address +":</div>";
+    AccountHtml += "<div><input id=Configure_Account_xmpp_address class=UiInputText type=text placeholder='"+ lang.eg_xmpp_server_address +"' value='"+ getDbItem("XmppServer", "") +"'></div>";
+
+    AccountHtml += "<div class=UiText>XMPP "+ lang.websocket_port +":</div>";
+    AccountHtml += "<div><input id=Configure_Account_xmpp_port class=UiInputText type=text placeholder='"+ lang.eg_websocket_port +"' value='"+ getDbItem("XmppWebsocketPort", "") +"'></div>";
+
+    AccountHtml += "<div class=UiText>XMPP "+ lang.websocket_path +":</div>";
+    AccountHtml += "<div><input id=Configure_Account_xmpp_path class=UiInputText type=text placeholder='"+ lang.eg_websocket_path +"' value='"+ getDbItem("XmppWebsocketPath", "") +"'></div>";
+
+    AccountHtml += "<div class=UiText>XMPP "+ lang.sip_domain +":</div>";
+    AccountHtml += "<div><input id=Configure_Account_xmpp_domain class=UiInputText type=text placeholder='"+ lang.eg_sip_domain +"' value='"+ getDbItem("XmppDomain", "") +"'></div>";
+
+    AccountHtml += "<div class=UiText>"+ lang.extension_number +":</div>";
+    AccountHtml += "<div><input id=Configure_Account_profileUser class=UiInputText type=text placeholder='"+ lang.eg_internal_subscribe_extension +"' value='"+ getDbItem("profileUser", "") +"'></div>";
+    AccountHtml += "</div>";
+
+    AccountHtml += "</div>";
+    if(EnableAccountSettings == true) html += AccountHtml;
 
     // 2 Audio & Video
-    html += "<div class=UiTextHeading onclick=\"ToggleHeading(this,'Audio_Video_Html')\"><i class=\"fa fa fa-video-camera UiTextHeadingIcon\" style=\"background-color:#208e3c\"></i> " + lang.audio_video + "</div>"
+    html += "<div class=UiTextHeading onclick=\"ToggleHeading(this,'Audio_Video_Html')\"><i class=\"fa fa fa-video-camera UiTextHeadingIcon\" style=\"background-color:#208e3c\"></i> "+ lang.audio_video +"</div>"
 
     var AudioVideoHtml = "<div id=Audio_Video_Html style=\"display:none\">";
-    
+
+    AudioVideoHtml += "<div class=UiText>"+ lang.speaker +":</div>";
+    AudioVideoHtml += "<div style=\"text-align:center\"><select id=playbackSrc style=\"width:100%\"></select></div>";
+    AudioVideoHtml += "<div class=Settings_VolumeOutput_Container><div id=Settings_SpeakerOutput class=Settings_VolumeOutput></div></div>";
+    AudioVideoHtml += "<div><button class=roundButtons id=preview_output_play><i class=\"fa fa-play\"></i></button></div>";
+
+    AudioVideoHtml += "<div id=RingDeviceSection>";
+    AudioVideoHtml += "<div class=UiText>"+ lang.ring_device +":</div>";
+    AudioVideoHtml += "<div style=\"text-align:center\"><select id=ringDevice style=\"width:100%\"></select></div>";
+    AudioVideoHtml += "<div class=Settings_VolumeOutput_Container><div id=Settings_RingerOutput class=Settings_VolumeOutput></div></div>";
+    AudioVideoHtml += "<div><button class=roundButtons id=preview_ringer_play><i class=\"fa fa-play\"></i></button></div>";
+    AudioVideoHtml += "</div>";
+
+    AudioVideoHtml += "<div class=UiText>"+ lang.microphone +":</div>";
+    AudioVideoHtml += "<div style=\"text-align:center\"><select id=microphoneSrc style=\"width:100%\"></select></div>";
+    AudioVideoHtml += "<div class=Settings_VolumeOutput_Container><div id=Settings_MicrophoneOutput class=Settings_VolumeOutput></div></div>";
+    AudioVideoHtml += "<div><input type=checkbox id=Settings_AutoGainControl><label for=Settings_AutoGainControl> "+ lang.auto_gain_control +"<label></div>";
+    AudioVideoHtml += "<div><input type=checkbox id=Settings_EchoCancellation><label for=Settings_EchoCancellation> "+ lang.echo_cancellation +"<label></div>";
+    AudioVideoHtml += "<div><input type=checkbox id=Settings_NoiseSuppression><label for=Settings_NoiseSuppression> "+ lang.noise_suppression +"<label></div>";
 
     if(EnableVideoCalling == true){
-        AudioVideoHtml += "<div class='card' style='width: 100%;  margin: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;'>";        
-        AudioVideoHtml += "<div class='card-body' style='padding: 32px;'>";
-
-        AudioVideoHtml += "<div class=UiText>"+ lang.preview +":</div>";
-        AudioVideoHtml += "<div style=\"text-align:center; margin-top:10px\"><video id=local-video-preview class=previewVideo muted playsinline></video></div>";
-
         AudioVideoHtml += "<div class=UiText>"+ lang.camera +":</div>";
         AudioVideoHtml += "<div style=\"text-align:center\"><select id=previewVideoSrc style=\"width:100%\"></select></div>";
-       
+
         AudioVideoHtml += "<div class=UiText>"+ lang.frame_rate +":</div>"
         AudioVideoHtml += "<div class=pill-nav>";
         AudioVideoHtml += "<input name=Settings_FrameRate id=r40 type=radio value=\"2\"><label class=radio_pill for=r40>2</label>";
@@ -11973,45 +11926,23 @@ function ShowMyProfile(){
         AudioVideoHtml += "<input name=Settings_AspectRatio id=r13 type=radio value=\"\"><label class=radio_pill for=r13><i class=\"fa fa-trash\"></i></label>";
         AudioVideoHtml += "</div>";
 
+        AudioVideoHtml += "<div class=UiText>"+ lang.preview +":</div>";
+        AudioVideoHtml += "<div style=\"text-align:center; margin-top:10px\"><video id=local-video-preview class=previewVideo muted playsinline></video></div>";
     }
 
-    AudioVideoHtml += "<div class=UiText>"+ lang.speaker +":</div>";
-    AudioVideoHtml += "<div style=\"text-align:center\"><select id=playbackSrc style=\"width:100%\"></select></div>";
-    AudioVideoHtml += "<div class=Settings_VolumeOutput_Container><div id=Settings_SpeakerOutput class=Settings_VolumeOutput></div></div>";
-    AudioVideoHtml += "<div><button class=roundButtons id=preview_output_play><i class=\"fa fa-play\"></i></button></div>";
-
-    AudioVideoHtml += "<div id=RingDeviceSection>";
-    AudioVideoHtml += "<div class=UiText>"+ lang.ring_device +":</div>";
-    AudioVideoHtml += "<div style=\"text-align:center\"><select id=ringDevice style=\"width:100%\"></select></div>";
-    AudioVideoHtml += "<div class=Settings_VolumeOutput_Container><div id=Settings_RingerOutput class=Settings_VolumeOutput></div></div>";
-    AudioVideoHtml += "<div><button class=roundButtons id=preview_ringer_play><i class=\"fa fa-play\"></i></button></div>";
-    AudioVideoHtml += "</div>";
-
-    AudioVideoHtml += "<div class=UiText>"+ lang.microphone +":</div>";
-    AudioVideoHtml += "<div style=\"text-align:center\"><select id=microphoneSrc style=\"width:100%\"></select></div>";
-    AudioVideoHtml += "<div class=Settings_VolumeOutput_Container><div id=Settings_MicrophoneOutput class=Settings_VolumeOutput></div></div>";
-    AudioVideoHtml += "<div><input type=checkbox id=Settings_AutoGainControl><label for=Settings_AutoGainControl> "+ lang.auto_gain_control +"<label></div>";
-    AudioVideoHtml += "<div><input type=checkbox id=Settings_EchoCancellation><label for=Settings_EchoCancellation> "+ lang.echo_cancellation +"<label></div>";
-    AudioVideoHtml += "<div><input type=checkbox id=Settings_NoiseSuppression><label for=Settings_NoiseSuppression> "+ lang.noise_suppression +"<label></div>";
-    AudioVideoHtml += "</div>";
-    AudioVideoHtml += "</div>";
     AudioVideoHtml += "</div>";
 
     html += AudioVideoHtml;
-   
 
     // 3 Appearance
-
     if(EnableAppearanceSettings == true) {
         html += "<div class=UiTextHeading onclick=\"ToggleHeading(this,'Appearance_Html')\"><i class=\"fa fa-pencil UiTextHeadingIcon\" style=\"background-color:#416493\"></i> "+ lang.appearance +"</div>"
     }
 
     var AppearanceHtml = "<div id=Appearance_Html style=\"display:none\">"; 
-    AppearanceHtml += "<div class='card' style='width: 100%;  margin: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;'>";        
-    AppearanceHtml += "<div class='card-body' style='padding: 32px;'>";
-    AppearanceHtml += "<div id=ImageCanvas style=\"width:150px; height:150px; display:none\"></div>";
-    AppearanceHtml += "<div style=\"margin-top:50px; display:none\"><input id=fileUploader type=file ></div>";
-    AppearanceHtml += "<div style=\"margin-top:10px; display:none\"></div>";
+    AppearanceHtml += "<div id=ImageCanvas style=\"width:150px; height:150px\"></div>";
+    AppearanceHtml += "<div style=\"margin-top:50px;\"><input id=fileUploader type=file></div>";
+    AppearanceHtml += "<div style=\"margin-top:10px\"></div>";
 
     // SIP & XMPP vCard
     var profileVcard = getDbItem("profileVcard", null);
@@ -12029,8 +11960,6 @@ function ShowMyProfile(){
     AppearanceHtml += "<div><input id=Configure_Profile_Number2 class=UiInputText type=text placeholder='"+ lang.eg_contact_number_2 +"' value='"+ ((profileVcard != null)? profileVcard.Number2 : "") +"'></div>";
 
     AppearanceHtml += "</div>";
-    AppearanceHtml += "</div>";
-    AppearanceHtml += "</div>";
 
     if(EnableAppearanceSettings == true) html += AppearanceHtml;
 
@@ -12040,20 +11969,14 @@ function ShowMyProfile(){
     }
 
     var NotificationsHtml = "<div id=Notifications_Html style=\"display:none\">";
-    NotificationsHtml += "<div class='card' style='width: 100%;  margin: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;'>";        
-    NotificationsHtml += "<div class='card-body' style='padding: 32px;'>";
     NotificationsHtml += "<div class=UiText>"+ lang.notifications +":</div>";
     NotificationsHtml += "<div><input type=checkbox id=Settings_Notifications><label for=Settings_Notifications> "+ lang.enable_onscreen_notifications +"<label></div>";
-    NotificationsHtml += "</div>";
-    NotificationsHtml += "</div>";
     NotificationsHtml += "</div>";
     // TODO: Add ring tone selection etc
 
     if(EnableNotificationSettings == true) html += NotificationsHtml;
 
     html += "</div>";
-
-    html += "</div>"; //close container
 
     html += "<div class=UiWindowButtonBar id=ButtonBar></div>";
 
@@ -12065,8 +11988,7 @@ function ShowMyProfile(){
         text: lang.save,
         action: function(){
 
-            //var chatEng = ($("#chat_type_sip").is(':checked'))? "SIMPLE" : "XMPP";
-            var chatEng = "SIMPLE";
+            var chatEng = ($("#chat_type_sip").is(':checked'))? "SIMPLE" : "XMPP";
 
             if(EnableAccountSettings){
                 if($("#Configure_Account_wssServer").val() == "") {
@@ -12118,14 +12040,11 @@ function ShowMyProfile(){
     
             // 1 Account
             if(EnableAccountSettings){
-                //localDB.setItem("wssServer", $("#Configure_Account_wssServer").val());
-                //localDB.setItem("WebSocketPort", $("#Configure_Account_WebSocketPort").val());
-                //localDB.setItem("ServerPath", $("#Configure_Account_ServerPath").val());
-                localDB.setItem("wssServer", "pbx.gov.cv");
-                localDB.setItem("WebSocketPort",8089);
-                localDB.setItem("ServerPath", "/ws");                
-                localDB.setItem("SipDomain","pbx.gov.cv");
+                localDB.setItem("wssServer", $("#Configure_Account_wssServer").val());
+                localDB.setItem("WebSocketPort", $("#Configure_Account_WebSocketPort").val());
+                localDB.setItem("ServerPath", $("#Configure_Account_ServerPath").val());
                 localDB.setItem("profileName", $("#Configure_Account_profileName").val());
+                localDB.setItem("SipDomain", $("#Configure_Account_SipDomain").val());
                 localDB.setItem("SipUsername", $("#Configure_Account_SipUsername").val());
                 localDB.setItem("SipPassword", $("#Configure_Account_SipPassword").val());
                 localDB.setItem("VoiceMailSubscribe", ($("#Configure_Account_Voicemail_Subscribe").is(':checked'))? "1" : "0");
@@ -13440,25 +13359,22 @@ function getPicture(buddy, typestr, ignoreCache){
     var defaultImg = hostingPrefix + "" + imagesDirectory + "" + avatars[rndInt].trim();
     if(buddy == "profilePicture"){
         // Special handling for profile image
-        /*var dbImg = localDB.getItem("profilePicture");
+        var dbImg = localDB.getItem("profilePicture");
         if(dbImg == null){
             return defaultImg;
         }
         else {
             return dbImg;
             // return URL.createObjectURL(base64toBlob(dbImg, 'image/png'));
-        }*/
-        var profileName = getDbItem("profileName", "User");
-        return `https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(profileName)}&size=128`;
+        }
     }
 
     typestr = (typestr)? typestr : "extension";
     var buddyObj = FindBuddyByIdentity(buddy);
     if(buddyObj == null){
-        //return defaultImg
-        return `https://ui-avatars.com/api/?background=random&name=${encodeURIComponent("User")}&size=128`;
+        return defaultImg
     }
-    /*if(ignoreCache != true && buddyObj.imageObjectURL != ""){
+    if(ignoreCache != true && buddyObj.imageObjectURL != ""){
         // Use Cache
         return buddyObj.imageObjectURL;
     }
@@ -13470,8 +13386,7 @@ function getPicture(buddy, typestr, ignoreCache){
     else {
         buddyObj.imageObjectURL = URL.createObjectURL(base64toBlob(dbImg, 'image/webp')); // image/png
         return buddyObj.imageObjectURL;
-    }*/
-    return `https://ui-avatars.com/api/?background=random&name=${encodeURIComponent(buddyObj.CallerIDName)}&size=128`;
+    }
 }
 
 // Image Editor
@@ -14787,8 +14702,7 @@ function onBuddyUpdate(iq){
 
     return true;
 }
-
-function RefreshBuddyData(buddyObj) {
+function RefreshBuddyData(buddyObj){
 
     // Get vCard
     
