@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+    <h1>Redirecting</h1>
+    <script>
+        window.onload = function() {
+          var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+          
+          if (/android/i.test(userAgent)) {
+            window.location.href = "https://play.google.com/store/apps/details?id=your.android.app";
+          } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+            window.location.href = "https://apps.apple.com/us/app/your-ios-app/id1234567890";
+          } else {
+            document.body.innerHTML = "Please open this link on a mobile device.";
+          }
+        };
+      </script>
+    
+</body>
+</html>
