@@ -10,12 +10,8 @@ app.get('/', (req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, 'pages/landing.html'));
 });
 
-app.get('/produts',(req:Request, res: Response) => {
-  res.sendFile(path.join(__dirname, 'pages/produts.html'));
-});
-
-app.get('/about_us',(req:Request, res: Response) => {
-  res.sendFile(path.join(__dirname, 'pages/about_us.html'));
+app.get('/solution',(req:Request, res: Response) => {
+  res.sendFile(path.join(__dirname, 'pages/solution.html'));
 });
 
 app.get('/business',(req:Request, res: Response) => {

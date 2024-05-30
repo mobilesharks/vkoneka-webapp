@@ -19,7 +19,7 @@ class Header extends HTMLElement {
       background-position: center;
     }
   </style>
-  <div class="header header-gradient navbar navbar-expand-lg">
+  <div class="header header-gradient navbar navbar-expand-lg pb-3 mb-5">
     <div class="container-xxl justify-content-between ps-2">
       <div class="d-inline-flex">
         <a class="navbar-brand konekta-icon" href="/">
@@ -45,9 +45,9 @@ class Header extends HTMLElement {
           <div class="collapse navbar-collapse p-2" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item pt-2">
-                <a class="nav-link text-white menu-item" href="/produts">
+                <a class="nav-link text-white menu-item" href="/solution">
                   <h7>
-                    <span>Produtos</span>
+                    <span>Solução</span>
                   </h7>
                 </a>
               </li>
@@ -58,28 +58,11 @@ class Header extends HTMLElement {
               </li>
               <li class="nav-item pt-2 dropdown">
                 <a
-                  class="nav-link text-white menu-item dropdown-toggle menu_drop"
-                  href="/resources"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
+                  class="nav-link text-white menu-item"
+                  href="/tech_corner"
                 >
-                  <h7>Recursos</h7>
+                  <h7>Suporte</h7>
                 </a>
-                <ul class="dropdown-menu submenu_drop">
-                  <li><a class="dropdown-item" href="/faqs">FAQs</a></li>
-                  <li>
-                    <a class="dropdown-item" href="/tech_corner">Documentação</a>
-                  </li>
-                  <li>
-                    <a class="dropdown-item" href="/contact">Contacto</a>
-                  </li>
-                </ul>
-              </li>
-              <li class="nav-item pt-2">
-                <a class="nav-link text-white menu-item" href="/about_us"
-                  ><h7>Sobre Nós</h7></a
-                >
               </li>
             </ul>
           </div>
