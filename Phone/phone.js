@@ -51,7 +51,6 @@ welcomeScreen += "POSSIBILITY OF SUCH DAMAGES.\n";
 welcomeScreen += "\n";
 welcomeScreen += "============================================================================\n</pre>";
 welcomeScreen += "</div>";
-welcomeScreen = false
 /**
  * Language Packs (lang/xx.json)
  * Note: The following should correspond to files on your server. 
@@ -1578,8 +1577,9 @@ function InitUi(){
     leftHTML += "<div class=contact id=UserProfile style=\"cursor: default; margin-bottom:5px;\">";   
     // Voicemail Count
   
-    leftHTML += "<span id=TxtVoiceMessages class=voiceMessageNotifyer>0</span>" 
+    leftHTML += "<span id=TxtVoiceMessages class=voiceMessageNotifyer>0</span>";
     // leftHTML += "<div id=UserProfilePic class=buddyIcon></div>";
+    leftHTML += "<img src='https://cdn.glitch.global/b76886d5-68d7-4ed7-a41a-95928840dcd9/logo_light.svg?v=1710335757434' class='logoIcon'/>";
     
     
 
@@ -1596,8 +1596,6 @@ function InitUi(){
     leftHTML += "</span>";  // class=settingsMenu
 
     // Display Name    
-    leftHTML += "<div class=contactNameText style=\"margin-right: 0px;\">"
-    leftHTML += "<img src='https://cdn.glitch.global/b76886d5-68d7-4ed7-a41a-95928840dcd9/logo_light.svg?v=1710335757434' class='logoIcon'/>"
     // Status
     leftHTML += "<div>"
     leftHTML += "<span id=dereglink class=dotOnline style=\"display:none\"></span>";
@@ -1607,7 +1605,6 @@ function InitUi(){
     leftHTML += " <span id=UserCallID></span>"
     leftHTML += "<div class=presenceText><span id=regStatus>&nbsp;</span> <span id=dndStatus></span></div>";
     leftHTML += "</div>"; // class=contactNameText
-    leftHTML += "</div>";
    
     leftHTML += "</div>";  //id=UserProfile  
     leftHTML += "</div>"; //  class=profileContainer
@@ -1623,7 +1620,7 @@ function InitUi(){
 
     // Lines & Buddies
     leftHTML += "<div id=myContacts class=\"contactArea cleanScroller\"></div>"
-    leftHTML += "<div id=actionArea style=\"display:none\" class=\"contactArea cleanScroller\"></div>"
+    leftHTML += "<div id=actionArea style=\"display:none\" class=\"contactArea cleanScroller\"></div>";
     
     leftHTML += "</td></tr>";
     leftHTML += "</table>";
@@ -11883,13 +11880,21 @@ function ShowMyProfile(){
     $("#searchArea").hide();
     $("#actionArea").empty();
 
+     // Get the element by its ID
+    var regStatusElement = document.getElementById("regStatus");            
+    // Get the text content of the element
+    var regStatusValue = regStatusElement.textContent || regStatusElement.innerText;
+
+    // Trim the value to remove any leading or trailing whitespace
+    regStatusValue = regStatusValue.trim();
+
     var html = "<div style=\"text-align:right; padding-top:5px;\"><button class=roundButtons onclick=\"ShowContacts()\"><i class=\"fa fa-close\"></i></button></div>"
 
     html += "<div border=0 class=UiSideField>";
     html += "<div class=container>";
     
     // SIP Account    
-    if (EnableAccountSettings == true) {
+    if (EnableAccountSettings == true && regStatusValue == "Registered") {
         html += "<div class=UiTextHeading onclick=\"ToggleHeading(this,'Configure_Extension_Html')\"><i class=\"fa fa-user-circle-o UiTextHeadingIcon\" style=\"background-color:#a93a3a\"></i> "+ lang.account +"</div>"        
     }
     var AccountHtml = "<div id=Configure_Extension_Html style=\"display:none\">";
@@ -11915,17 +11920,55 @@ function ShowMyProfile(){
     AccountHtml += "</div>";
     AccountHtml += "</div>";
     AccountHtml += "</div>";
+
+    var StartLogin = "<div class='card' style='width: 100%; max-width: 400px; margin: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;'>";
+    StartLogin += "<div class='card-header'>"+ lang.account + " Settings</div>";
+    StartLogin += "<div class='card-body' style='padding: 32px;'>";
+    StartLogin += "<div class='avatar-container'>";
+    StartLogin += "<i class='fa fa-user-circle-o avatar'></i>";
+    StartLogin += "<img id='avatar-img' class='avatar' style='display:none;'";
+    StartLogin += "<input type='file' id=fileUploader class='form-control-file'>";
+    StartLogin += "</div>";
+    StartLogin += "<div class='form-group' style='margin-bottom: 24px;'>";
+    StartLogin += "<label for='Configure_Account_profileName'>" + lang.full_name + ":</label>";
+    StartLogin += "<input id='Configure_Account_profileName' class='UiInputText' type='text' placeholder='" + lang.eg_full_name + "' value='" + getDbItem("profileName", "") + "'>";
+    StartLogin += "</div>";
+    StartLogin += "<div class='form-group'>";
+    StartLogin += "<label for='Configure_Account_SipUsername'>" + lang.sip_username + ":</label>";
+    StartLogin += "<input id='Configure_Account_SipUsername' class='UiInputText' type='text' placeholder='" + lang.eg_sip_username + "' value='" + getDbItem("SipUsername", "") + "'>";
+    StartLogin += "</div>";
+    StartLogin += "<div class='form-group'>";
+    StartLogin += "<label for='Configure_Account_SipPassword'>" + lang.sip_password + ":</label>";
+    StartLogin += "<input id='Configure_Account_SipPassword' class='UiInputText' type='password' placeholder='" + lang.eg_sip_password + "' value='" + getDbItem("SipPassword", "") + "'>";
+    StartLogin += "</div>";
+    StartLogin += "<div class='form-group'>";
+    StartLogin += "<label for='Configure_Account_Voicemail_Subscribe'>" + lang.subscribe_voicemail + ":</label>";
+    StartLogin += "<div class='form-check'>";
+    StartLogin += "<input type='checkbox' id='Configure_Account_Voicemail_Subscribe' class='form-check-input' " + (VoiceMailSubscribe ? "checked" : "") + ">";
+    StartLogin += "<label for='Configure_Account_Voicemail_Subscribe' class='form-check-label'>" + lang.yes + "</label>";
+    StartLogin += "</div>";
+    StartLogin += "</div>";
+    StartLogin += "</div>"; // End of card-body
+    StartLogin += "</div>"; // End of card'
+
+
     
-    if (EnableAccountSettings == true) {
+    if (EnableAccountSettings == true && regStatusValue == "Registered") {
         html += AccountHtml;
+    } else {
+        EnableVideoCalling = false;
+        EnableAppearanceSettings = false;
+        EnableNotificationSettings = false;
+
+        html += StartLogin;
     }
 
 
 
     // 2 Audio & Video
-    html += "<div class=UiTextHeading onclick=\"ToggleHeading(this,'Audio_Video_Html')\"><i class=\"fa fa fa-video-camera UiTextHeadingIcon\" style=\"background-color:#208e3c\"></i> " + lang.audio_video + "</div>"
+    var AudioVideoHtml = "<div class=UiTextHeading onclick=\"ToggleHeading(this,'Audio_Video_Html')\"><i class=\"fa fa fa-video-camera UiTextHeadingIcon\" style=\"background-color:#208e3c\"></i> " + lang.audio_video + "</div>"
 
-    var AudioVideoHtml = "<div id=Audio_Video_Html style=\"display:none\">";
+    AudioVideoHtml = "<div id=Audio_Video_Html style=\"display:none\">";
     
 
     if(EnableVideoCalling == true){
