@@ -31,7 +31,7 @@ class Footer extends HTMLElement{
     left: 0;
   }
         </style>
-        <div class="footer pt-3 mt-5">
+        <div class="footer pt-5">
       <div class="container">
         <div
           class="flex-sm-column footer-flex flex-lg-row justify-content-center align-content-center flex-sm-wrap"

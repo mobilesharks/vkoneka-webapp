@@ -168,6 +168,10 @@
     font-size: 30px;
     font-weight: 600;
   }
+  .vkonekta-card {
+   
+    align-items: center;
+  }
 
 
 
@@ -240,12 +244,19 @@
   font-size: 22px;
 }
 
+
+
 .vkonekta-card {
   color: var(--title-blue);
   background-color: #ffffff;
   border-radius: 8px;
   border: none;
   box-shadow: 0px 9px 10px 10px #00000008;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
 }
 
 .vkonekta-card:hover {
@@ -388,7 +399,7 @@ a {
 }
 
 
-.timeline {
+/* .timeline {
   display: flex;
   padding: 20px;
   white-space: nowrap;
@@ -439,4 +450,23 @@ a {
   position: relative;
   top: -35px;
   border-top: 5px solid black;
+} */
+
+.card-number{
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  border: none;
+}
+.card-number-header{
+  background-color: #fff;
+  border: none;
+  font-weight: 600;
+}
+.indicators-icon{
+  width: 50px;
+  height: 50px;  
 }
