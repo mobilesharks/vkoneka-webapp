@@ -51,7 +51,7 @@ welcomeScreen += "POSSIBILITY OF SUCH DAMAGES.\n";
 welcomeScreen += "\n";
 welcomeScreen += "============================================================================\n</pre>";
 welcomeScreen += "</div>";
-
+welcomeScreen = false
 /**
  * Language Packs (lang/xx.json)
  * Note: The following should correspond to files on your server. 
