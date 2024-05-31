@@ -11905,7 +11905,7 @@ function ShowMyProfile(){
     html += "<div class=container>";
     
     // SIP Account    
-    if (EnableAccountSettings == true && regStatusValue == "Registered") {
+    if (EnableAccountSettings == true && regStatusValue == lang.registered) {
         html += "<div class=UiTextHeading onclick=\"ToggleHeading(this,'Configure_Extension_Html')\"><i class=\"fa fa-user-circle-o UiTextHeadingIcon\" style=\"background-color:#a93a3a\"></i> "+ lang.account +"</div>"        
     }
     var AccountHtml = "<div id=Configure_Extension_Html style=\"display:none\">";
@@ -11965,7 +11965,7 @@ function ShowMyProfile(){
 
 
     
-    if (EnableAccountSettings == true && regStatusValue == "Registered") {
+    if (EnableAccountSettings == true && regStatusValue == lang.registered) {
         html += AccountHtml;
     } else {
         EnableVideoCalling = false;
