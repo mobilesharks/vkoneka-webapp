@@ -222,7 +222,7 @@ body {
     user-select: none;          /* Likely future */
     -webkit-touch-callout: none; /* iOS */
 
-    background: url('https://cdn.glitch.global/b76886d5-68d7-4ed7-a41a-95928840dcd9/bg_section_1.svg?v=1710344404847');
+    background: url('avatars/bg.png');
     background-repeat: no-repeat;
     background-size: cover;
     z-index: 1;

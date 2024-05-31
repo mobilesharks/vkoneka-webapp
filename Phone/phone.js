@@ -52,6 +52,8 @@ welcomeScreen += "\n";
 welcomeScreen += "============================================================================\n</pre>";
 welcomeScreen += "</div>";
 welcomeScreen = false;
+
+
 /**
  * Language Packs (lang/xx.json)
  * Note: The following should correspond to files on your server. 
@@ -1569,7 +1571,7 @@ function InitUi(){
     leftSection.attr("style", "float:left; height: 100%; width:320px");
 
     var leftHTML = "<table id=leftContentTable class=leftContentTable style=\"height:100%; width:100%\" cellspacing=0 cellpadding=0>";
-    leftHTML += "<tr><td class=streamSection style=\"height: 50px; box-sizing: border-box;\">";
+    leftHTML += "<tr style='"+(localStorage.getItem('isLogged',false) ? '':'display:none')+"'><td class=streamSection style=\"height: 50px; box-sizing: border-box;\">";
     
     // Profile User
     leftHTML += "<div class=profileContainer>";    
@@ -2374,7 +2376,10 @@ function onRegisterFailed(response, cause){
     $("#reglink").show();
     $("#dereglink").hide();
 
+    localStorage.removeItem('isLogged')
+
     Alert(lang.registration_failed +":"+ response, lang.registration_failed);
+    
 
     userAgent.registering = false;
 
@@ -11930,26 +11935,27 @@ function ShowMyProfile(){
     AccountHtml += "</div>";
     AccountHtml += "</div>";
     AccountHtml += "</div>";
-    AccountHtml += "</div>";
+    AccountHtml += "</div>";    
 
-    var StartLogin = "<div class='card' style='width: 100%; max-width: 400px; margin: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;'>";
-    StartLogin += "<div class='card-header'>"+ lang.account + " Settings</div>";
+    var StartLogin = "<div class='card mt-10' style='width: 100%; max-width: 400px; margin: auto; margin-top:50px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;'>";
+    //StartLogin += "<div class='card-header'>"+ lang.account + " Settings</div>";
     StartLogin += "<div class='card-body' style='padding: 32px;'>";
     StartLogin += "<div class='avatar-container'>";
-    StartLogin += "<i class='fa fa-user-circle-o avatar'></i>";
-    StartLogin += "<img id='avatar-img' class='avatar' style='display:none;'";
-    StartLogin += "<input type='file' id=fileUploader class='form-control-file'>";
+    StartLogin += "<img src='avatars/logo.png' width='210px'/>";
+    //StartLogin += "<i class='fa fa-user-circle-o avatar'></i>";
+    //StartLogin += "<img id='avatar-img' class='avatar' style='display:none;'";
+    //StartLogin += "<input type='file' id=fileUploader class='form-control-file'>";
     StartLogin += "</div>";
     //StartLogin += "<div class='form-group' style='margin-bottom: 24px;'>";
     //StartLogin += "<label for='Configure_Account_profileName'>" + lang.full_name + ":</label>";
     //StartLogin += "<input id='Configure_Account_profileName' class='UiInputText' type='text' placeholder='" + lang.eg_full_name + "' value='" + getDbItem("profileName", "") + "'>";
     //StartLogin += "</div>";
     StartLogin += "<div class='form-group'>";
-    StartLogin += "<label for='Configure_Account_SipUsername'>" + lang.sip_username + ":</label>";
+    StartLogin += "<label for='Configure_Account_SipUsername'>" + lang.sip_username + "</label>";
     StartLogin += "<input id='Configure_Account_SipUsername' class='UiInputText' type='text' placeholder='" + lang.eg_sip_username + "' value='" + getDbItem("SipUsername", "") + "'>";
     StartLogin += "</div>";
     StartLogin += "<div class='form-group'>";
-    StartLogin += "<label for='Configure_Account_SipPassword'>" + lang.sip_password + ":</label>";
+    StartLogin += "<label for='Configure_Account_SipPassword'>" + lang.sip_password + "</label>";
     StartLogin += "<input id='Configure_Account_SipPassword' class='UiInputText' type='password' placeholder='" + lang.eg_sip_password + "' value='" + getDbItem("SipPassword", "") + "'>";
     StartLogin += "</div>";
     //StartLogin += "<div class='form-group'>";
@@ -11960,8 +11966,10 @@ function ShowMyProfile(){
     //StartLogin += "</div>";
     //StartLogin += "</div>";
     StartLogin += "<input type='hidden' id='Configure_Account_Voicemail_Subscribe' value='1'>";
+    StartLogin += "<div id='LoginButton' class='UiWindowButtonBar'></div>";
     StartLogin += "</div>"; // End of card-body
-    StartLogin += "</div>"; // End of card'
+    StartLogin += "</div>"; // End of card'    
+    
 
 
     
@@ -12114,10 +12122,14 @@ function ShowMyProfile(){
 
     $("#actionArea").html(html);
 
+    if(!localStorage.getItem('isLogged',false)){
+        $(".roundButtons").hide()
+    }
+
     // Buttons
     var buttons = [];
     buttons.push({
-        text: lang.save,
+        text: localStorage.getItem('isLogged',false) ? lang.save : "<i class='fa fa-sign-in'></i> Entrar",
         action: function(){
 
             //var chatEng = ($("#chat_type_sip").is(':checked'))? "SIMPLE" : "XMPP";
@@ -12176,6 +12188,7 @@ function ShowMyProfile(){
                 //localDB.setItem("wssServer", $("#Configure_Account_wssServer").val());
                 //localDB.setItem("WebSocketPort", $("#Configure_Account_WebSocketPort").val());
                 //localDB.setItem("ServerPath", $("#Configure_Account_ServerPath").val());
+                localDB.setItem("isLogged",true);
                 localDB.setItem("wssServer", "pbx.gov.cv");
                 localDB.setItem("WebSocketPort",8089);
                 localDB.setItem("ServerPath", "/ws");                
@@ -12244,9 +12257,10 @@ function ShowMyProfile(){
             }
             else {
                 // Notify Changes
-                Alert(lang.alert_settings, lang.reload_required, function(){
+                /*Alert(lang.alert_settings, lang.reload_required, function(){
                     window.location.reload();
-                });
+                });*/
+                window.location.reload();
             }
 
             // 4 Notifications
@@ -12256,7 +12270,7 @@ function ShowMyProfile(){
 
         }
     });
-    buttons.push({
+    if(localStorage.getItem('isLogged',false)) buttons.push({
         text: lang.cancel,
         action: function(){
             ShowContacts();
@@ -12264,7 +12278,11 @@ function ShowMyProfile(){
     });
     $.each(buttons, function(i,obj){
         var button = $('<button>'+ obj.text +'</button>').click(obj.action);
-        $("#ButtonBar").append(button);
+        if(localStorage.getItem('isLogged',false)){
+            $("#ButtonBar").append(button);
+        }else{
+            $("#LoginButton").append(button);
+        }
     });
 
     // Show
