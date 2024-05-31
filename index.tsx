@@ -27,9 +27,7 @@ app.get('/faqs',(req:Request, res: Response) => {
 app.get('/tech_corner',(req:Request, res: Response) => {
   res.sendFile(path.join(__dirname, 'pages/tech_corner.html'));
 });
-app.get('/about_us',(req:Request, res: Response) => {
-  res.sendFile(path.join(__dirname, 'pages/about_us.html'));
-});
+
 app.get('/redirect',(req:Request, res: Response) => {
   res.sendFile(path.join(__dirname, 'pages/redirect.html'));
 });
