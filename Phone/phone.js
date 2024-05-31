@@ -11933,9 +11933,6 @@ function ShowMyProfile(){
     AccountHtml += "</div>";
     AccountHtml += "</div>";    
     AccountHtml += "</div>";
-    AccountHtml += "</div>";
-    AccountHtml += "</div>";
-    AccountHtml += "</div>";    
 
     var StartLogin = "<div class='card mt-10' style='width: 100%; max-width: 400px; margin: auto; margin-top:50px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;'>";
     //StartLogin += "<div class='card-header'>"+ lang.account + " Settings</div>";
