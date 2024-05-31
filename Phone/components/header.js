@@ -45,6 +45,13 @@ class Header extends HTMLElement {
           <div class="collapse navbar-collapse p-2" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item pt-2">
+                <a class="nav-link text-white menu-item" href="/about_us">
+                  <h7>
+                    <span>Sobre Nós</span>
+                  </h7>
+                </a>
+              </li>
+              <li class="nav-item pt-2">
                 <a class="nav-link text-white menu-item" href="/solution">
                   <h7>
                     <span>Solução</span>
@@ -53,7 +60,7 @@ class Header extends HTMLElement {
               </li>
               <li class="nav-item pt-2">
                 <a class="nav-link text-white menu-item" href="/business"
-                  ><h7>Negócios</h7></a
+                  ><h7>Preço</h7></a
                 >
               </li>
               <li class="nav-item pt-2 dropdown">
