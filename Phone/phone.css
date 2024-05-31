@@ -1878,11 +1878,11 @@ input[type=range]{
     outline-style: none;
 }
 .dialButtons{
-    font-size: 18px; 
+    font-size: 20px; 
     border: none;
     border-radius: 100px;
-    width:55px;
-    height:55px;
+    width:65px;
+    height:65px;
 }
 .dialButtons:disabled:hover{
     border: none;

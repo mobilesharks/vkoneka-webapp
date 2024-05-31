@@ -51,6 +51,7 @@ welcomeScreen += "POSSIBILITY OF SUCH DAMAGES.\n";
 welcomeScreen += "\n";
 welcomeScreen += "============================================================================\n</pre>";
 welcomeScreen += "</div>";
+welcomeScreen = false;
 /**
  * Language Packs (lang/xx.json)
  * Note: The following should correspond to files on your server. 
@@ -60,7 +61,7 @@ welcomeScreen += "</div>";
  * "en.json" is always loaded by default
  */
 let loadAlternateLang = (getDbItem("loadAlternateLang", "0") == "1"); // Enables searching and loading for the additional language packs other thAan /en.json
-const availableLang = ["fr", "ja", "zh-hans", "zh", "ru", "tr", "nl", "es", "de", "pl", "pt-br"]; // Defines the language packs (.json) available in /lang/ folder
+const availableLang = ["fr", "ja", "zh-hans", "zh", "ru", "tr", "nl", "es", "de", "pl", "pt-br","pt-pt"]; // Defines the language packs (.json) available in /lang/ folder
 
 /**
  * Image Assets
@@ -157,7 +158,7 @@ let DidLength = parseInt(getDbItem("DidLength", 6));                 // DID leng
 let MaxDidLength = parseInt(getDbItem("MaxDidLength", 16));          // Maximum length of any DID number including international dialled numbers.
 let DisplayDateFormat = getDbItem("DateFormat", "YYYY-MM-DD");       // The display format for all dates. https://momentjs.com/docs/#/displaying/
 let DisplayTimeFormat = getDbItem("TimeFormat", "h:mm:ss A");        // The display format for all times. https://momentjs.com/docs/#/displaying/
-let Language = getDbItem("Language", "auto");                        // Overrides the language selector or "automatic". Must be one of availableLang[]. If not defaults to en.
+let Language = getDbItem("Language", "pt-pt");                        // Overrides the language selector or "automatic". Must be one of availableLang[]. If not defaults to en.
 
 // Buddy Sort and Filter
 let BuddySortBy = getDbItem("BuddySortBy", "activity");                      // Sorting for Buddy List display (type|extension|alphabetical|activity)
@@ -181,7 +182,7 @@ let EnableAccountSettings = (getDbItem("EnableAccountSettings", "1") == "1");   
 let EnableAppearanceSettings = (getDbItem("EnableAppearanceSettings", "1") == "1");     // Controls the Appearance tab in Settings
 let EnableNotificationSettings = (getDbItem("EnableNotificationSettings", "1") == "1"); // Controls the Notifications tab in Settings
 let EnableAlphanumericDial = (getDbItem("EnableAlphanumericDial", "0") == "1");         // Allows calling /[^\da-zA-Z\*\#\+\-\_\.\!\~\'\(\)]/g default is /[^\d\*\#\+]/g 
-let EnableVideoCalling = (getDbItem("EnableVideoCalling", "1") == "1");                 // Enables Video during a call
+let EnableVideoCalling = (getDbItem("EnableVideoCalling", "1") == "0");                 // Enables Video during a call
 let EnableTextExpressions = (getDbItem("EnableTextExpressions", "1") == "1");           // Enables Expressions (Emoji) glyphs when texting
 let EnableTextDictate = (getDbItem("EnableTextDictate", "1") == "1");                   // Enables Dictate (speech-to-text) when texting
 let EnableRingtone = (getDbItem("EnableRingtone", "1") == "1");                         // Enables a ring tone when an inbound call comes in.  (media/Ringtone_1.mp3)
@@ -827,8 +828,8 @@ function UpdateUI(){
             $("#rightContent").hide();
         }
         else{
-            $("#leftContent").css("width", "320px");
-            $("#rightContent").css("margin-left", "320px");
+            $("#leftContent").css("width", "360px");
+            $("#rightContent").css("margin-left", "360px");
             $("#leftContent").show();
             $("#rightContent").show();
 
@@ -1822,6 +1823,9 @@ function ShowMyProfileMenu(obj){
         items.push({ icon: "fa fa-comments", text: lang.set_status, value: 9});
     }
 
+    items.push({ icon: null, text: "-" })
+    items.push({ icon: "fa fa-sign-out", text: "Logout", value: 10});
+
     var menu = {
         selectEvent : function( event, ui ) {
             var id = ui.item.attr("value");
@@ -1852,6 +1856,9 @@ function ShowMyProfileMenu(obj){
             }
             if(id == "9") {
                 SetStatusWindow();
+            }
+            if(id=="10"){
+                LogoutWebphone();
             }
 
         },
@@ -1910,6 +1917,10 @@ function ShowMyProfileMenu(obj){
 //     var wallpaperStyle = ".wallpaperBackground { background-image:url('"+ wallpaperUrl +"') }";
 //     $("#colorSchemeModeSheet").text(wallpaperStyle);
 // }
+function LogoutWebphone(){
+    localStorage.clear();
+    window.location.reload();
+}
 function ApplyThemeColor() {
     var cssUrl = hostingPrefix + "phone.light.css";
     var wallpaperUrl = hostingPrefix + imagesDirectory + wallpaperLight;
@@ -11900,8 +11911,8 @@ function ShowMyProfile(){
     var AccountHtml = "<div id=Configure_Extension_Html style=\"display:none\">";
     AccountHtml += "<div class='card' style='width: 100%;  margin: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;'>";        
     AccountHtml += "<div class='card-body' style='padding: 32px;'>";
-    AccountHtml += "<div class=UiText>"+ lang.full_name +":</div>";
-    AccountHtml += "<div><input id=Configure_Account_profileName class=UiInputText type=text placeholder='"+ lang.eg_full_name +"' value='"+ getDbItem("profileName", "") +"'></div>";
+    //AccountHtml += "<div class=UiText>"+ lang.full_name +":</div>";
+    //AccountHtml += "<div><input id=Configure_Account_profileName class=UiInputText type=text placeholder='"+ lang.eg_full_name +"' value='"+ getDbItem("profileName", "") +"'></div>";
     
     AccountHtml += "<div class=UiText>"+ lang.sip_username +":</div>";
     AccountHtml += "<div><input id=Configure_Account_SipUsername class=UiInputText type=text placeholder='"+ lang.eg_sip_username +"' value='"+ getDbItem("SipUsername", "") +"'></div>";
@@ -11929,10 +11940,10 @@ function ShowMyProfile(){
     StartLogin += "<img id='avatar-img' class='avatar' style='display:none;'";
     StartLogin += "<input type='file' id=fileUploader class='form-control-file'>";
     StartLogin += "</div>";
-    StartLogin += "<div class='form-group' style='margin-bottom: 24px;'>";
-    StartLogin += "<label for='Configure_Account_profileName'>" + lang.full_name + ":</label>";
-    StartLogin += "<input id='Configure_Account_profileName' class='UiInputText' type='text' placeholder='" + lang.eg_full_name + "' value='" + getDbItem("profileName", "") + "'>";
-    StartLogin += "</div>";
+    //StartLogin += "<div class='form-group' style='margin-bottom: 24px;'>";
+    //StartLogin += "<label for='Configure_Account_profileName'>" + lang.full_name + ":</label>";
+    //StartLogin += "<input id='Configure_Account_profileName' class='UiInputText' type='text' placeholder='" + lang.eg_full_name + "' value='" + getDbItem("profileName", "") + "'>";
+    //StartLogin += "</div>";
     StartLogin += "<div class='form-group'>";
     StartLogin += "<label for='Configure_Account_SipUsername'>" + lang.sip_username + ":</label>";
     StartLogin += "<input id='Configure_Account_SipUsername' class='UiInputText' type='text' placeholder='" + lang.eg_sip_username + "' value='" + getDbItem("SipUsername", "") + "'>";
@@ -11941,13 +11952,14 @@ function ShowMyProfile(){
     StartLogin += "<label for='Configure_Account_SipPassword'>" + lang.sip_password + ":</label>";
     StartLogin += "<input id='Configure_Account_SipPassword' class='UiInputText' type='password' placeholder='" + lang.eg_sip_password + "' value='" + getDbItem("SipPassword", "") + "'>";
     StartLogin += "</div>";
-    StartLogin += "<div class='form-group'>";
-    StartLogin += "<label for='Configure_Account_Voicemail_Subscribe'>" + lang.subscribe_voicemail + ":</label>";
-    StartLogin += "<div class='form-check'>";
-    StartLogin += "<input type='checkbox' id='Configure_Account_Voicemail_Subscribe' class='form-check-input' " + (VoiceMailSubscribe ? "checked" : "") + ">";
-    StartLogin += "<label for='Configure_Account_Voicemail_Subscribe' class='form-check-label'>" + lang.yes + "</label>";
-    StartLogin += "</div>";
-    StartLogin += "</div>";
+    //StartLogin += "<div class='form-group'>";
+    //StartLogin += "<label for='Configure_Account_Voicemail_Subscribe'>" + lang.subscribe_voicemail + ":</label>";
+    //StartLogin += "<div class='form-check'>";
+    //StartLogin += "<input type='checkbox' id='Configure_Account_Voicemail_Subscribe' class='form-check-input' " + (VoiceMailSubscribe ? "checked" : "") + ">";
+    //StartLogin += "<label for='Configure_Account_Voicemail_Subscribe' class='form-check-label'>" + lang.yes + "</label>";
+    //StartLogin += "</div>";
+    //StartLogin += "</div>";
+    StartLogin += "<input type='hidden' id='Configure_Account_Voicemail_Subscribe' value='1'>";
     StartLogin += "</div>"; // End of card-body
     StartLogin += "</div>"; // End of card'
 
@@ -12120,10 +12132,10 @@ function ShowMyProfile(){
                     console.warn("Validation Failed");
                     return;
                 } 
-                if($("#Configure_Account_profileName").val() == "") {
+                /*if($("#Configure_Account_profileName").val() == "") {
                     console.warn("Validation Failed");
                     return;
-                } 
+                }*/ 
                 if($("#Configure_Account_SipDomain").val() == "") {
                     console.warn("Validation Failed");
                     return;
@@ -12168,10 +12180,12 @@ function ShowMyProfile(){
                 localDB.setItem("WebSocketPort",8089);
                 localDB.setItem("ServerPath", "/ws");                
                 localDB.setItem("SipDomain","pbx.gov.cv");
-                localDB.setItem("profileName", $("#Configure_Account_profileName").val());
+                //localDB.setItem("profileName", $("#Configure_Account_profileName").val());
+                localDB.setItem("profileName", $("#Configure_Account_SipUsername").val());
                 localDB.setItem("SipUsername", $("#Configure_Account_SipUsername").val());
                 localDB.setItem("SipPassword", $("#Configure_Account_SipPassword").val());
-                localDB.setItem("VoiceMailSubscribe", ($("#Configure_Account_Voicemail_Subscribe").is(':checked'))? "1" : "0");
+                //localDB.setItem("VoiceMailSubscribe", ($("#Configure_Account_Voicemail_Subscribe").is(':checked'))? "1" : "0");
+                localDB.setItem("VoiceMailSubscribe", ($("#Configure_Account_Voicemail_Subscribe").is(':checked'))? "1" : ($("#Configure_Account_Voicemail_Subscribe").val()?$("#Configure_Account_Voicemail_Subscribe").val():"0"));
                 localDB.setItem("VoicemailDid", $("#Configure_Account_Voicemail_Did").val());
 
                 localDB.setItem("ChatEngine", chatEng);
