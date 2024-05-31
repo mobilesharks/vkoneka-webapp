@@ -138,7 +138,7 @@ class Footer extends HTMLElement{
             </ul>
             <p
               class="text-white flex-wrap justify-content-center text-left pt-2"
-              >Direção Customer Experience Managment<br>
+              >Customer Experience Managment<br>
               (+238) 260 79 73
               email:<a href="mailto:cxm@nosi.cv">cxm@nosi.cv</a>
               

@@ -43,7 +43,7 @@ class Header extends HTMLElement {
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse p-2" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">              
               <li class="nav-item pt-2">
                 <a class="nav-link text-white menu-item" href="/solution">
                   <h7>
@@ -53,7 +53,7 @@ class Header extends HTMLElement {
               </li>
               <li class="nav-item pt-2">
                 <a class="nav-link text-white menu-item" href="/business"
-                  ><h7>Negócios</h7></a
+                  ><h7>Pacotes</h7></a
                 >
               </li>
               <li class="nav-item pt-2 dropdown">
