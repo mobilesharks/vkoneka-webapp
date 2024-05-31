@@ -306,5 +306,6 @@
     "pin_to_top" : "Fijado",
     "voice_mail" : "Mensaje de voz",
     "you_have_new_voice_mail" : "Tienes {0} nuevos mensajes de correo de voz.",
-    "new_voice_mail" : "Nuevo mensaje de correo de voz"
+    "new_voice_mail" : "Nuevo mensaje de correo de voz",
+    "log_out": "Desconnectar"
 }

@@ -11972,10 +11972,11 @@ function ShowMyProfile(){
     
     if (EnableAccountSettings == true && regStatusValue == lang.registered) {
         html += AccountHtml;
-    } else {
+    } else {     
         EnableVideoCalling = false;
         EnableAppearanceSettings = false;
         EnableNotificationSettings = false;
+        
 
         html += StartLogin;
     }
@@ -12116,6 +12117,7 @@ function ShowMyProfile(){
     html += "</div>"; //close container
 
     html += "<div class=UiWindowButtonBar id=ButtonBar></div>";
+   // $("#actionArea").css("background-image", "url('./background.png')"); // TODO UPDATE BACKGROUND WITH IMAGE
 
     $("#actionArea").html(html);
 
