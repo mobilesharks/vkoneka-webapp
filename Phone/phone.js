@@ -11901,12 +11901,9 @@ function ShowMyProfile(){
      
     var regStatusElement = document.getElementById("regStatus");      // Get the element by its ID     
     var regStatusValue = regStatusElement.textContent || regStatusElement.innerText; // Get the text content of the element
-
-    
     regStatusValue = regStatusValue.trim(); // Trim the value to remove any leading or trailing whitespace
 
     var html = "<div style=\"text-align:right; padding-top:5px;\"><button class=roundButtons onclick=\"ShowContacts()\"><i class=\"fa fa-close\"></i></button></div>"
-
     html += "<div border=0 class=UiSideField>";
     html += "<div class=container>";
     
@@ -11917,15 +11914,10 @@ function ShowMyProfile(){
     var AccountHtml = "<div id=Configure_Extension_Html style=\"display:none\">";
     AccountHtml += "<div class='card' style='width: 100%;  margin: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;'>";        
     AccountHtml += "<div class='card-body' style='padding: 32px;'>";
-    //AccountHtml += "<div class=UiText>"+ lang.full_name +":</div>";
-    //AccountHtml += "<div><input id=Configure_Account_profileName class=UiInputText type=text placeholder='"+ lang.eg_full_name +"' value='"+ getDbItem("profileName", "") +"'></div>";
-    
     AccountHtml += "<div class=UiText>"+ lang.sip_username +":</div>";
     AccountHtml += "<div><input id=Configure_Account_SipUsername class=UiInputText type=text placeholder='"+ lang.eg_sip_username +"' value='"+ getDbItem("SipUsername", "") +"'></div>";
-    
     AccountHtml += "<div class=UiText>"+ lang.sip_password +":</div>";
     AccountHtml += "<div><input id=Configure_Account_SipPassword class=UiInputText type=password placeholder='"+ lang.eg_sip_password +"' value='"+ getDbItem("SipPassword", "") +"'></div>";
-
     AccountHtml += "<div class='form-group'>";
     AccountHtml += "<label for='Configure_Account_Voicemail_Subscribe'>" + lang.subscribe_voicemail + ":</label>";
     AccountHtml += "<div class='form-check'>";
