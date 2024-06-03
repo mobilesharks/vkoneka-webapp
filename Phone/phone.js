@@ -12095,8 +12095,7 @@ function ShowMyProfile(){
 
   
     if (regStatusValue != lang.registered) {
-        $("#actionArea").css("background-image", "url('./background.png')"); // TODO UPDATE BACKGROUND WITH IMAGE
-        
+        $("#actionArea").css("background-image", "url('./background.png')"); // TODO UPDATE BACKGROUND WITH IMAGE     
     }
 
    
