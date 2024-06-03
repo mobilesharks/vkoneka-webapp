@@ -11898,14 +11898,12 @@ function ShowMyProfile(){
     $("#myContacts").hide();
     $("#searchArea").hide();
     $("#actionArea").empty();
+     
+    var regStatusElement = document.getElementById("regStatus");      // Get the element by its ID     
+    var regStatusValue = regStatusElement.textContent || regStatusElement.innerText; // Get the text content of the element
 
-     // Get the element by its ID
-    var regStatusElement = document.getElementById("regStatus");            
-    // Get the text content of the element
-    var regStatusValue = regStatusElement.textContent || regStatusElement.innerText;
-
-    // Trim the value to remove any leading or trailing whitespace
-    regStatusValue = regStatusValue.trim();
+    
+    regStatusValue = regStatusValue.trim(); // Trim the value to remove any leading or trailing whitespace
 
     var html = "<div style=\"text-align:right; padding-top:5px;\"><button class=roundButtons onclick=\"ShowContacts()\"><i class=\"fa fa-close\"></i></button></div>"
 
