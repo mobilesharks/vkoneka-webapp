@@ -575,24 +575,6 @@ input[type=tel]:focus {
     color:#845FFA !important;
 }
 
-.startCard {
-    background-color: #FFFFFF !important;
-    color: #2E3841 !important;
-}
-
-
-.startCard-header {
-    background-color: #3C454D !important;
-    border-bottom: 1px solid #444 !important;
-    color:#845FFA !important;
-}
-
-
-
-
-
-
-
 .ui-dialog {
     background-color: rgba(46, 56, 65, 0.9);   
     background-repeat: no-repeat;

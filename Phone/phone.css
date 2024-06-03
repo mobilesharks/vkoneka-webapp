@@ -2127,6 +2127,19 @@ input[type=range]{
     background-color: #845FFA;
 }
 
+.startCard {
+    background-color: #FFFFFF !important;
+    color: #2E3841 !important;
+}
+
+
+.startCard-header {
+    background-color: #3C454D !important;
+    border-bottom: 1px solid #444 !important;
+    color:#845FFA !important;
+}
+
+
 
 
 
