@@ -130,7 +130,6 @@ let SelectRingingLine = (getDbItem("SelectRingingLine", "1") == "1");       // S
 let UiMaxWidth = parseInt(getDbItem("UiMaxWidth", 100));                                   // Sets the max-width for the UI elements (don't set this less than 920. Set to very high number for full screen eg: 999999)
 let savedTheme = localStorage.getItem('UiThemeStyle');
 let UiThemeStyle = savedTheme ? savedTheme : (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'dark' : 'light');
-//let UiThemeStyle = getDbItem("UiThemeStyle", "system");                                     // Sets the color theme for the UI dark | light | system (set by your systems dark/light settings)
 let UiMessageLayout = getDbItem("UiMessageLayout", "middle");                               // Put the message Stream at the top or middle can be either: top | middle 
 let UiCustomConfigMenu = (getDbItem("UiCustomConfigMenu", "0") == "1");                     // If set to true, will only call web_hook_on_config_menu
 let UiCustomDialButton = (getDbItem("UiCustomDialButton", "0") == "1");                     // If set to true, will only call web_hook_dial_out
@@ -11899,17 +11898,12 @@ function ShowMyProfile(){
     $("#myContacts").hide();
     $("#searchArea").hide();
     $("#actionArea").empty();
-
-     // Get the element by its ID
-    var regStatusElement = document.getElementById("regStatus");            
-    // Get the text content of the element
-    var regStatusValue = regStatusElement.textContent || regStatusElement.innerText;
-
-    // Trim the value to remove any leading or trailing whitespace
-    regStatusValue = regStatusValue.trim();
+     
+    var regStatusElement = document.getElementById("regStatus");      // Get the element by its ID     
+    var regStatusValue = regStatusElement.textContent || regStatusElement.innerText; // Get the text content of the element
+    regStatusValue = regStatusValue.trim(); // Trim the value to remove any leading or trailing whitespace
 
     var html = "<div style=\"text-align:right; padding-top:5px;\"><button class=roundButtons onclick=\"ShowContacts()\"><i class=\"fa fa-close\"></i></button></div>"
-
     html += "<div border=0 class=UiSideField>";
     html += "<div class=container>";
     
@@ -11920,15 +11914,10 @@ function ShowMyProfile(){
     var AccountHtml = "<div id=Configure_Extension_Html style=\"display:none\">";
     AccountHtml += "<div class='card' style='width: 100%;  margin: auto; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;'>";        
     AccountHtml += "<div class='card-body' style='padding: 32px;'>";
-    //AccountHtml += "<div class=UiText>"+ lang.full_name +":</div>";
-    //AccountHtml += "<div><input id=Configure_Account_profileName class=UiInputText type=text placeholder='"+ lang.eg_full_name +"' value='"+ getDbItem("profileName", "") +"'></div>";
-    
     AccountHtml += "<div class=UiText>"+ lang.sip_username +":</div>";
     AccountHtml += "<div><input id=Configure_Account_SipUsername class=UiInputText type=text placeholder='"+ lang.eg_sip_username +"' value='"+ getDbItem("SipUsername", "") +"'></div>";
-    
     AccountHtml += "<div class=UiText>"+ lang.sip_password +":</div>";
     AccountHtml += "<div><input id=Configure_Account_SipPassword class=UiInputText type=password placeholder='"+ lang.eg_sip_password +"' value='"+ getDbItem("SipPassword", "") +"'></div>";
-
     AccountHtml += "<div class='form-group'>";
     AccountHtml += "<label for='Configure_Account_Voicemail_Subscribe'>" + lang.subscribe_voicemail + ":</label>";
     AccountHtml += "<div class='form-check'>";
@@ -11937,24 +11926,7 @@ function ShowMyProfile(){
     AccountHtml += "</div>";
     AccountHtml += "</div>";    
     AccountHtml += "</div>";
-
-    // var StartLogin = "<div class='card mt-10' style='width: 100%; max-width: 400px; margin: auto; margin-top:50px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;'>";
-    // StartLogin += "<div class='card-body' style='padding: 32px;'>";
-    // StartLogin += "<div class='avatar-container'>";
-    // StartLogin += "<img src='avatars/logo.png' width='210px'/>";
-    // StartLogin += "</div>";
-    // StartLogin += "<div class='form-group'>";
-    // StartLogin += "<label for='Configure_Account_SipUsername'>" + lang.sip_username + "</label>";
-    // StartLogin += "<input id='Configure_Account_SipUsername' class='UiInputText' type='text' placeholder='" + lang.eg_sip_username + "' value='" + getDbItem("SipUsername", "") + "'>";
-    // StartLogin += "</div>";
-    // StartLogin += "<div class='form-group'>";
-    // StartLogin += "<label for='Configure_Account_SipPassword'>" + lang.sip_password + "</label>";
-    // StartLogin += "<input id='Configure_Account_SipPassword' class='UiInputText' type='password' placeholder='" + lang.eg_sip_password + "' value='" + getDbItem("SipPassword", "") + "'>";
-    // StartLogin += "</div>";
-    // StartLogin += "<input type='hidden' id='Configure_Account_Voicemail_Subscribe' value='1'>";
-    // StartLogin += "<div id='LoginButton' class='UiWindowButtonBar'></div>";
-    // StartLogin += "</div>"; // End of card-body
-    // StartLogin += "</div>"; // End of card'    
+    
     var StartLogin = "<div class='card-container' style='display: flex; justify-content: flex-start; align-items: center; height: 100vh;'>";
     StartLogin += "<div class='startCard' style='width: 100%; max-width: 400px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden; margin-left: 20px;'>";
     StartLogin += "<div class='startCard-body' style='padding: 32px;'>";
