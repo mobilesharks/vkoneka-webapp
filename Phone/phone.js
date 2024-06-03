@@ -1827,7 +1827,7 @@ function ShowMyProfileMenu(obj){
     }
 
     items.push({ icon: null, text: "-" })
-    items.push({ icon: "fa fa-sign-out", text: "Logout", value: 10});
+    items.push({ icon: "fa fa-sign-out", text: lang.log_out, value: 10});
 
     var menu = {
         selectEvent : function( event, ui ) {
