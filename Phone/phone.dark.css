@@ -575,16 +575,21 @@ input[type=tel]:focus {
     color:#845FFA !important;
 }
 
-
-.start-card {
-    background-color: #2E3841;
-    color: #fff;
+.startCard {
+    background-color: #FFFFFF !important;
+    color: #2E3841 !important;
 }
 
-.start-card-header {
+
+.startCard-header {
     background-color: #3C454D !important;
+    border-bottom: 1px solid #444 !important;
     color:#845FFA !important;
 }
+
+
+
+
 
 
 

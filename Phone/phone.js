@@ -128,7 +128,9 @@ let StartVideoFullScreen = (getDbItem("StartVideoFullScreen", "1") == "1"); // S
 let SelectRingingLine = (getDbItem("SelectRingingLine", "1") == "1");       // Selects the ringing line if you are not on another call ()
 
 let UiMaxWidth = parseInt(getDbItem("UiMaxWidth", 100));                                   // Sets the max-width for the UI elements (don't set this less than 920. Set to very high number for full screen eg: 999999)
-let UiThemeStyle = getDbItem("UiThemeStyle", "system");                                     // Sets the color theme for the UI dark | light | system (set by your systems dark/light settings)
+let savedTheme = localStorage.getItem('UiThemeStyle');
+let UiThemeStyle = savedTheme ? savedTheme : (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'dark' : 'light');
+//let UiThemeStyle = getDbItem("UiThemeStyle", "system");                                     // Sets the color theme for the UI dark | light | system (set by your systems dark/light settings)
 let UiMessageLayout = getDbItem("UiMessageLayout", "middle");                               // Put the message Stream at the top or middle can be either: top | middle 
 let UiCustomConfigMenu = (getDbItem("UiCustomConfigMenu", "0") == "1");                     // If set to true, will only call web_hook_on_config_menu
 let UiCustomDialButton = (getDbItem("UiCustomDialButton", "0") == "1");                     // If set to true, will only call web_hook_dial_out
@@ -1984,6 +1986,8 @@ function ApplyThemeColor() {
 
 function toggleTheme() {
     UiThemeStyle = UiThemeStyle === 'light' ? 'dark' : 'light';
+    // Save the user's theme preference to localStorage
+    localStorage.setItem('UiThemeStyle', UiThemeStyle);
     ApplyThemeColor();
 }
 
@@ -11934,40 +11938,42 @@ function ShowMyProfile(){
     AccountHtml += "</div>";    
     AccountHtml += "</div>";
 
-    var StartLogin = "<div class='card mt-10' style='width: 100%; max-width: 400px; margin: auto; margin-top:50px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;'>";
-    //StartLogin += "<div class='card-header'>"+ lang.account + " Settings</div>";
-    StartLogin += "<div class='card-body' style='padding: 32px;'>";
+    // var StartLogin = "<div class='card mt-10' style='width: 100%; max-width: 400px; margin: auto; margin-top:50px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden;'>";
+    // StartLogin += "<div class='card-body' style='padding: 32px;'>";
+    // StartLogin += "<div class='avatar-container'>";
+    // StartLogin += "<img src='avatars/logo.png' width='210px'/>";
+    // StartLogin += "</div>";
+    // StartLogin += "<div class='form-group'>";
+    // StartLogin += "<label for='Configure_Account_SipUsername'>" + lang.sip_username + "</label>";
+    // StartLogin += "<input id='Configure_Account_SipUsername' class='UiInputText' type='text' placeholder='" + lang.eg_sip_username + "' value='" + getDbItem("SipUsername", "") + "'>";
+    // StartLogin += "</div>";
+    // StartLogin += "<div class='form-group'>";
+    // StartLogin += "<label for='Configure_Account_SipPassword'>" + lang.sip_password + "</label>";
+    // StartLogin += "<input id='Configure_Account_SipPassword' class='UiInputText' type='password' placeholder='" + lang.eg_sip_password + "' value='" + getDbItem("SipPassword", "") + "'>";
+    // StartLogin += "</div>";
+    // StartLogin += "<input type='hidden' id='Configure_Account_Voicemail_Subscribe' value='1'>";
+    // StartLogin += "<div id='LoginButton' class='UiWindowButtonBar'></div>";
+    // StartLogin += "</div>"; // End of card-body
+    // StartLogin += "</div>"; // End of card'    
+    var StartLogin = "<div class='card-container' style='display: flex; justify-content: flex-start; align-items: center; height: 100vh;'>";
+    StartLogin += "<div class='startCard' style='width: 100%; max-width: 400px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden; margin-left: 20px;'>";
+    StartLogin += "<div class='startCard-body' style='padding: 32px;'>";
     StartLogin += "<div class='avatar-container'>";
     StartLogin += "<img src='avatars/logo.png' width='210px'/>";
-    //StartLogin += "<i class='fa fa-user-circle-o avatar'></i>";
-    //StartLogin += "<img id='avatar-img' class='avatar' style='display:none;'";
-    //StartLogin += "<input type='file' id=fileUploader class='form-control-file'>";
     StartLogin += "</div>";
-    //StartLogin += "<div class='form-group' style='margin-bottom: 24px;'>";
-    //StartLogin += "<label for='Configure_Account_profileName'>" + lang.full_name + ":</label>";
-    //StartLogin += "<input id='Configure_Account_profileName' class='UiInputText' type='text' placeholder='" + lang.eg_full_name + "' value='" + getDbItem("profileName", "") + "'>";
-    //StartLogin += "</div>";
     StartLogin += "<div class='form-group'>";
     StartLogin += "<label for='Configure_Account_SipUsername'>" + lang.sip_username + "</label>";
-    StartLogin += "<input id='Configure_Account_SipUsername' class='UiInputText' type='text' placeholder='" + lang.eg_sip_username + "' value='" + getDbItem("SipUsername", "") + "'>";
+    StartLogin += "<input id='Configure_Account_SipUsername' class='UiInputText' type='text' placeholder='" + lang.eg_sip_username + "' value='" + getDbItem('SipUsername', '') + "'>";
     StartLogin += "</div>";
     StartLogin += "<div class='form-group'>";
     StartLogin += "<label for='Configure_Account_SipPassword'>" + lang.sip_password + "</label>";
-    StartLogin += "<input id='Configure_Account_SipPassword' class='UiInputText' type='password' placeholder='" + lang.eg_sip_password + "' value='" + getDbItem("SipPassword", "") + "'>";
+    StartLogin += "<input id='Configure_Account_SipPassword' class='UiInputText' type='password' placeholder='" + lang.eg_sip_password + "' value='" + getDbItem('SipPassword', '') + "'>";
     StartLogin += "</div>";
-    //StartLogin += "<div class='form-group'>";
-    //StartLogin += "<label for='Configure_Account_Voicemail_Subscribe'>" + lang.subscribe_voicemail + ":</label>";
-    //StartLogin += "<div class='form-check'>";
-    //StartLogin += "<input type='checkbox' id='Configure_Account_Voicemail_Subscribe' class='form-check-input' " + (VoiceMailSubscribe ? "checked" : "") + ">";
-    //StartLogin += "<label for='Configure_Account_Voicemail_Subscribe' class='form-check-label'>" + lang.yes + "</label>";
-    //StartLogin += "</div>";
-    //StartLogin += "</div>";
     StartLogin += "<input type='hidden' id='Configure_Account_Voicemail_Subscribe' value='1'>";
     StartLogin += "<div id='LoginButton' class='UiWindowButtonBar'></div>";
     StartLogin += "</div>"; // End of card-body
-    StartLogin += "</div>"; // End of card'    
-    
-
+    StartLogin += "</div>"; // End of card
+    StartLogin += "</div>"; // End of card-container
 
     
     if (EnableAccountSettings == true && regStatusValue == lang.registered) {
@@ -11975,13 +11981,10 @@ function ShowMyProfile(){
     } else {     
         EnableVideoCalling = false;
         EnableAppearanceSettings = false;
-        EnableNotificationSettings = false;
-        
+        EnableNotificationSettings = false;        
 
         html += StartLogin;
     }
-
-
 
     // 2 Audio & Video
     var AudioVideoHtml = "<div class=UiTextHeading onclick=\"ToggleHeading(this,'Audio_Video_Html')\"><i class=\"fa fa fa-video-camera UiTextHeadingIcon\" style=\"background-color:#208e3c\"></i> " + lang.audio_video + "</div>"
@@ -12117,7 +12120,7 @@ function ShowMyProfile(){
     html += "</div>"; //close container
 
     html += "<div class=UiWindowButtonBar id=ButtonBar></div>";
-   // $("#actionArea").css("background-image", "url('./background.png')"); // TODO UPDATE BACKGROUND WITH IMAGE
+    $("#actionArea").css("background-image", "url('./background.png')"); // TODO UPDATE BACKGROUND WITH IMAGE
 
     $("#actionArea").html(html);
 
