@@ -12092,7 +12092,14 @@ function ShowMyProfile(){
     html += "</div>"; //close container
 
     html += "<div class=UiWindowButtonBar id=ButtonBar></div>";
-    $("#actionArea").css("background-image", "url('./background.png')"); // TODO UPDATE BACKGROUND WITH IMAGE
+
+  
+    if (regStatusValue != lang.registered) {
+        $("#actionArea").css("background-image", "url('./background.png')"); // TODO UPDATE BACKGROUND WITH IMAGE
+        
+    }
+
+   
 
     $("#actionArea").html(html);
 
