@@ -20,7 +20,7 @@ class Header extends HTMLElement {
     }
   </style>
   <div class="header header-gradient navbar navbar-expand-lg pb-3 mb-5">
-    <div class="container-xxl justify-content-between ps-2">
+    <div class="container justify-content-between ps-2">
       <div class="d-inline-flex">
         <a class="navbar-brand konekta-icon" href="/">
           <img
