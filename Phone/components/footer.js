@@ -1,11 +1,10 @@
-class Footer extends HTMLElement{
-    constructor(){
-        super();
-    }
+class Footer extends HTMLElement {
+  constructor() {
+    super();
+  }
 
-    connectedCallback() {
-        this.innerHTML =
-        `
+  connectedCallback() {
+    this.innerHTML = `
         <style>
         
         
@@ -137,23 +136,23 @@ class Footer extends HTMLElement{
               </li>
             </ul>
             <p
-              class="text-white flex-wrap justify-content-center text-left pt-2"
-              >Customer Experience Managment<br>
+            class="text-white flex-wrap justify-content-center text-left pt-2"
+            >Customer Experience Managment<br>
               (+238) 260 79 73
               email:<a href="mailto:cxm@nosi.cv">cxm@nosi.cv</a>
               
               </p>
               <p class="text-white flex-wrap justify-content-center text-left pb-5">
-              Service Desk: 333 62 73
-              email:
+                Service Desk: 333 62 73
+                email:
               <a href="mailto:helpdesk@nosi.cv">helpdesk@nosi.cv</a>
-              </p>
+            </p>
+
           </div>
         </div>
       </div>
     </div>        
     `;
-    }
-
+  }
 }
-customElements.define("footer-component",Footer)
+customElements.define("footer-component", Footer);
