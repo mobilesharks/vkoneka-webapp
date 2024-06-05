@@ -12095,10 +12095,12 @@ function ShowMyProfile(){
 
   
     if (regStatusValue != lang.registered) {
-        $("#actionArea").css("background-image", "url('./background.png')"); // TODO UPDATE BACKGROUND WITH IMAGE     
+        $("#actionArea").css("background", "url('./background.png')"); // TODO UPDATE BACKGROUND WITH IMAGE  
+        $("#actionArea").css("background-repeat", "no-repeat"); 
+        $("#actionArea").css("background-size", "cover");  
+        $("#actionArea").css("z-index", "1");
+        // $("actionArea").css("background-position", "center");
     }
-
-   
 
     $("#actionArea").html(html);
 
