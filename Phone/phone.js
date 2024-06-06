@@ -1810,12 +1810,12 @@ function loginUI(){
     StartLogin += "</div>";
     StartLogin += "<div class='form-group'>";
     StartLogin += "<label for='Configure_Account_SipUsername'>" + lang.sip_username + "</label>";
-    StartLogin += "<input id='Configure_Account_SipUsername' value='0217' class='UiInputText iv' type='text' placeholder='" + lang.eg_sip_username + "' value='" + getDbItem('SipUsername', '') + "'>";
+    StartLogin += "<input id='Configure_Account_SipUsername' class='UiInputText iv' type='text' placeholder='" + lang.eg_sip_username + "' value='" + getDbItem('SipUsername', '') + "'>";
     StartLogin += "<p id='Configure_Account_SipUsername_Error' class='is-invalid' style='display:none'>Campo obrigatório</p>"
     StartLogin += "</div>";
     StartLogin += "<div class='form-group'>";
     StartLogin += "<label for='Configure_Account_SipPassword'>" + lang.sip_password + "</label>";
-    StartLogin += "<input id='Configure_Account_SipPassword' value='ab123456' class='UiInputText' type='password' placeholder='" + lang.eg_sip_password + "' value='" + getDbItem('SipPassword', '') + "'>";
+    StartLogin += "<input id='Configure_Account_SipPassword' class='UiInputText' type='password' placeholder='" + lang.eg_sip_password + "' value='" + getDbItem('SipPassword', '') + "'>";
     StartLogin += "<p id='Configure_Account_SipPassword_Error' class='is-invalid' style='display:none'>Campo obrigatório</p>"
     StartLogin += "</div>";
     StartLogin += "<input type='hidden' id='Configure_Account_Voicemail_Subscribe' value='1'>";
