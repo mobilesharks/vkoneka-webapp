@@ -800,8 +800,9 @@ input[type=range]{
 }
 
 .contactArea {
-    height: 100%;
-    overflow: hidden;
+    height: 100%;    
+    overflow-y: auto;
+    overflow-x: hidden;
 
     /* For Firefox */
     position: absolute;
