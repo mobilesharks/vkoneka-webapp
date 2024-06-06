@@ -89,3 +89,26 @@ input[type=text], input[type=password], input[type=email], input[type=tel] {
     }
 
 }
+
+.alert-danger{
+    color: red;
+    border: 1px solid red;
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.alert-success{
+    color: #48C9B0;
+    border: 1px solid #48C9B0;
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.is-invalid{
+    color: red;
+    font-weight:100;
+    font-size: 11px;
+    margin: 0px;
+}
