@@ -136,13 +136,13 @@ class Footer extends HTMLElement {
               </li>
             </ul>
             <p
-            class="text-white flex-wrap justify-content-center text-left pt-2"
+            class="text-white flex-wrap d-flex justify-content-center text-left pt-2"
             >Customer Experience Managment<br>
               (+238) 260 79 73
               email:<a href="mailto:cxm@nosi.cv">cxm@nosi.cv</a>
               
               </p>
-              <p class="text-white flex-wrap justify-content-center text-left pb-5">
+              <p class="text-white flex-wrap d-flex justify-content-center text-left pb-5">
                 Service Desk: 333 62 73
                 email:
               <a href="mailto:helpdesk@nosi.cv">helpdesk@nosi.cv</a>
