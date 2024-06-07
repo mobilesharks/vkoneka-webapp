@@ -1,0 +1,114 @@
+input[type=checkbox] + label:before {
+    color: #855FFA !important;
+}
+
+input[type=text], input[type=password], input[type=email], input[type=tel] {
+    border-bottom: 1px solid  #855FFA;
+}
+
+.UiSideField input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, input[type=tel]:focus {
+    border-bottom: 1px solid #855FFA;
+}
+
+.dialButtons {
+    color:#fff; 
+    background-color: #2E3841;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);    border: none; 
+    padding: 10px; 
+    /* border-radius: 5px;  */    
+}
+
+.dialButtons.dialButtonsDial {
+    color: #44ad4d;
+}
+.dialButtons.dialButtonsDial:hover {
+    color: #fff;
+}
+
+.settingsMenu {
+    margin-top: 5px;
+}
+
+.roundButtons {
+    color: #855FFA;
+    border: 1px solid  #855FFA;
+}
+
+.roundButtons:hover {
+    border: 1px solid #855FFA;
+    color: #fff;
+    background: #855FFA;
+}
+
+.pill-nav{
+    border: 1px solid #855FFA;
+}
+.pill-nav input[type=radio] + label {
+    color: #855FFA;
+}
+
+.pill-nav input[type=radio]:checked + label {
+    background-color: #855FFA;
+}
+
+.UiWindowButtonBar button {
+    background-color: #855FFA;
+    background-image: none;
+    color: #fff;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.UiWindowButtonBar button:hover {
+    border: 1px solid #855FFA;
+    background-color: transparent;
+    background-image: none;
+    color: #855FFA;
+}
+
+.previewVideo {
+    border: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+   
+    .UiWindowButtonBar button {
+        /* border: 1px solid #855FFA !important; */
+        background-color: #855FFA !important;
+        background-image: none !important;
+        color: #fff !important;
+        border-radius: 4px;
+    }
+    
+    .UiWindowButtonBar button:hover {
+        border: 2px solid #855FFA !important;
+        background-color: transparent !important;
+        background-image: none !important;
+        color: #855FFA !important;
+    
+    }
+
+}
+
+.alert-danger{
+    color: red;
+    border: 1px solid red;
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.alert-success{
+    color: #48C9B0;
+    border: 1px solid #48C9B0;
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.is-invalid{
+    color: red;
+    font-weight:100;
+    font-size: 11px;
+    margin: 0px;
+}
