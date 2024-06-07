@@ -112,3 +112,13 @@ input[type=text], input[type=password], input[type=email], input[type=tel] {
     font-size: 11px;
     margin: 0px;
 }
+
+#dialBotton{
+    width: 100%;
+    position:absolute;
+    top: 20px;
+    left: 0;
+    z-index: 1;
+    overflow: hidden;
+}
+

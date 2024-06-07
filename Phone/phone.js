@@ -821,6 +821,9 @@ function UpdateUI(){
             
             if(selectedBuddy != null) updateScroll(selectedBuddy.identity);
         }
+        
+        $('#BtnFreeDial').show()
+        $('.dialBotton').hide()
     }
     else {
         // Wide Screen Layout
@@ -831,13 +834,18 @@ function UpdateUI(){
             $("#rightContent").hide();
         }
         else{
-            $("#leftContent").css("width", "360px");
-            $("#rightContent").css("margin-left", "360px");
+            $("#leftContent").css("width", "580px");
+            $("#rightContent").css("margin-left", "580px");
             $("#leftContent").show();
             $("#rightContent").show();
 
             if(selectedBuddy != null) updateScroll(selectedBuddy.identity);
         }
+        $('#BtnFreeDial').hide()
+        $('.dialBotton').show()
+        $('#actionArea').hide()
+        $('#searchArea').show()
+        $('#myContacts').show()
     }
     for(var l=0; l<Lines.length; l++){
         updateLineScroll(Lines[l].LineNumber);
@@ -1574,13 +1582,37 @@ function InitUi(){
     phone.attr("class", "pageContainer");
     phone.css("max-width", UiMaxWidth + "%");
 
+
+    // dialBotton   
+    var dialBotton = "<div style=\"text-align:center; margin-top:15px\"><input id=dialText class=dialTextInput oninput=\"handleDialInput(this, event)\" onkeydown=\"dialOnkeydown(event, this)\" style=\"width:170px; height:32px\"><button id=dialDeleteKey class=roundButtons onclick=\"KeyPress('del')\">⌫</button></div>";
+    dialBotton += "<table cellspacing=10 cellpadding=0 style=\"margin-left:auto; margin-right: auto\">";
+    dialBotton += "<tr><td><button class=dialButtons onclick=\"KeyPress('1')\"><div>1</div><span>&nbsp;</span></button></td>"
+    dialBotton += "<td><button class=dialButtons onclick=\"KeyPress('2')\"><div>2</div><span>ABC</span></button></td>"
+    dialBotton += "<td><button class=dialButtons onclick=\"KeyPress('3')\"><div>3</div><span>DEF</span></button></td></tr>";
+    dialBotton += "<tr><td><button class=dialButtons onclick=\"KeyPress('4')\"><div>4</div><span>GHI</span></button></td>"
+    dialBotton += "<td><button class=dialButtons onclick=\"KeyPress('5')\"><div>5</div><span>JKL</span></button></td>"
+    dialBotton += "<td><button class=dialButtons onclick=\"KeyPress('6')\"><div>6</div><span>MNO</span></button></td></tr>";
+    dialBotton += "<tr><td><button class=dialButtons onclick=\"KeyPress('7')\"><div>7</div><span>PQRS</span></button></td>"
+    dialBotton += "<td><button class=dialButtons onclick=\"KeyPress('8')\"><div>8</div><span>TUV</span></button></td>"
+    dialBotton += "<td><button class=dialButtons onclick=\"KeyPress('9')\"><div>9</div><span>WXYZ</span></button></td></tr>";
+    dialBotton += "<tr><td><button class=dialButtons onclick=\"KeyPress('*')\">*</button></td>"
+    dialBotton += "<td><button class=dialButtons onclick=\"KeyPress('0')\">0</button></td>"
+    dialBotton += "<td><button class=dialButtons onclick=\"KeyPress('#')\">#</button></td></tr>";
+    dialBotton += "</table>";
+    dialBotton += "<div style=\"text-align: center; margin-bottom:15px\">";
+    dialBotton += "<button class=\"dialButtons dialButtonsDial\" id=dialAudio title=\""+ lang.audio_call  +"\" onclick=\"DialByLine('audio')\"><i class=\"fa fa-phone\"></i></button>";
+    if(EnableVideoCalling == true){
+        dialBotton += "<button class=\"dialButtons dialButtonsDial\" id=dialVideo style=\"margin-left:20px\" title=\""+ lang.video_call +"\" onclick=\"DialByLine('video')\"><i class=\"fa fa-video-camera\"></i></button>";
+    }
+    dialBotton += "</div>";
+
     // Left Section
     var leftSection = $("<div/>");
     leftSection.attr("id", "leftContent");
     leftSection.attr("style", "float:left; height: 100%; width:320px");
 
     var leftHTML = "<table id=leftContentTable class=leftContentTable style=\"height:100%; width:100%\" cellspacing=0 cellpadding=0>";
-    leftHTML += "<tr style='"+(localStorage.getItem('isLogged',false) ? '':'display:none')+"'><td class=streamSection style=\"height: 50px; box-sizing: border-box;\">";
+    leftHTML += "<tr style='"+(localStorage.getItem('isLogged',false) ? '':'display:none')+"'><td colspan=2 class=streamSection style=\"height: 50px; box-sizing: border-box;\">";
     
     // Profile User
     leftHTML += "<div class=profileContainer>";    
@@ -1597,7 +1629,7 @@ function InitUi(){
 
     // Action Buttons
     leftHTML += "<span class=settingsMenu>";
-    leftHTML += "<button class=roundButtons id=BtnFreeDial><i class=\"fa fa-phone\"></i></button>";
+    leftHTML += "<button class=roundButtons id=BtnFreeDial style='display: none'><i class=\"fa fa-phone\"></i></button>";
     leftHTML += "<button class=roundButtons id=BtnAddSomeone><i class=\"fa fa-user-plus\"></i></button>";
     if(false){
          // TODO
@@ -1605,6 +1637,7 @@ function InitUi(){
     }
     leftHTML += "<button class=roundButtons id=BtnToogle onclick=\"toggleTheme()\"><i class=\"fa fa-adjust\"></i></button>";
     leftHTML += "<button class=roundButtons id=SettingsMenu><i class=\"fa fa-cogs\"></i></button>";
+    leftHTML += "<button class=roundButtons id=BtnLogout onclick=LogoutWebphone() title=Sair><i class=\"fa fa-sign-out\"></i></button>";
     leftHTML += "</span>";  // class=settingsMenu
 
     // Display Name    
@@ -1621,20 +1654,27 @@ function InitUi(){
     leftHTML += "</div>";  //id=UserProfile  
     leftHTML += "</div>"; //  class=profileContainer
     leftHTML += "</td></tr>";
-    leftHTML += "<tr id=searchArea><td class=streamSection style=\"height: 35px; box-sizing: border-box; padding:10px; margin:10px;\">";
+    /*leftHTML += "<tr id=searchArea><td colspan=2 class=streamSection style=\"height: 35px; box-sizing: border-box; padding:10px; margin:10px;\">";
   
     // Search
     leftHTML += "<span id=divFindBuddy class=searchClean><INPUT id=txtFindBuddy type=text autocomplete=none style=\"width: calc(100% - 85px);\"></span>";
     leftHTML += "<button class=roundButtons id=BtnFilter style=\"margin:2px;\"><i class=\"fa fa-sliders\"></i></button>"
 
-    leftHTML += "</td></tr>";
-    leftHTML += "<tr><td class=streamSection>"
+    leftHTML += "</td></tr>";*/
+    leftHTML += "<tr><td class='dialBotton' style='width:280px; position: relative'><div id='dialBotton'>"+dialBotton+"</div></td>"
+    leftHTML += "<td class=streamSection>"
 
     // Lines & Buddies
+    leftHTML += "<div id=searchArea style=\"height: 35px; box-sizing: border-box; padding:0px; margin:0px\">";
+    leftHTML += "<span id=divFindBuddy class=searchClean><INPUT id=txtFindBuddy type=text autocomplete=none style=\"width: calc(100% - 85px);\"></span>";
+    leftHTML += "<button class=roundButtons id=BtnFilter style=\"margin:2px;\"><i class=\"fa fa-sliders\"></i></button>"
+    leftHTML += "</div>";
+
     leftHTML += "<div id=myContacts class=\"contactArea cleanScroller\"></div>"
     leftHTML += "<div id=actionArea style=\"display:none\" class=\"contactArea cleanScroller\"></div>";
     
     leftHTML += "</td></tr>";
+    leftHTML += "<tr class='footer'><td colspan=2>© "+new Date().getFullYear() +"  Copyright NOSi. All Rights Reserved</td></tr>";
     leftHTML += "</table>";
 
     leftSection.html(leftHTML);
@@ -1801,7 +1841,7 @@ function loginUI(){
     if (!$("#vkonektaColorSchemeMode").length) {
         $("head").append('<link rel="stylesheet" id="vkonektaColorSchemeMode" href="' + vkonektacssUrl + '" />');
     }
-    var StartLogin ="<div style='background: url(&quot;./background.png&quot;) 0% 0% / cover no-repeat; z-index: 1;overflow: hidden;'>"
+    var StartLogin ="<div style='background: url(&quot;./background.png&quot;) 0% 0% / cover no-repeat; z-index: 1;'>"
     StartLogin += "<div class='card-container' style='display: flex; justify-content: flex-start; align-items: center; height: 100vh;'>";
     StartLogin += "<div class='startCard' style='width: 100%; max-width: 400px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden; margin-left: 20px;'>";
     StartLogin += "<div class='startCard-body' style='padding: 32px;'>";
@@ -1986,8 +2026,8 @@ function ShowMyProfileMenu(obj){
         items.push({ icon: "fa fa-comments", text: lang.set_status, value: 9});
     }
 
-    items.push({ icon: null, text: "-" })
-    items.push({ icon: "fa fa-sign-out", text: lang.log_out, value: 10});
+    /*items.push({ icon: null, text: "-" })
+    items.push({ icon: "fa fa-sign-out", text: lang.log_out, value: 10});*/
 
     var menu = {
         selectEvent : function( event, ui ) {
@@ -2020,9 +2060,9 @@ function ShowMyProfileMenu(obj){
             if(id == "9") {
                 SetStatusWindow();
             }
-            if(id=="10"){
+            /*if(id=="10"){
                 LogoutWebphone();
-            }
+            }*/
 
         },
         createEvent : null,
@@ -10084,7 +10124,7 @@ function UpdateBuddyList(){
                     web_hook_dial_out(null);
                 }
             } else {
-                ShowDial();
+                 ShowDial();
             }
         }
         return;
@@ -10103,7 +10143,8 @@ function UpdateBuddyList(){
                 web_hook_dial_out(null);
             }
         } else {
-            ShowDial();
+            var windowWidth = $(window).outerWidth()
+            if(windowWidth < 920) ShowDial();
         }
         return;
     }

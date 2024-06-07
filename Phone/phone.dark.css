@@ -558,7 +558,7 @@ input[type=tel]:focus {
 #BtnFreeDial i,
 #BtnAddSomeone i,
 #SettingsMenu i,
-#BtnToogle i {
+#BtnToogle i, #BtnLogout i {
     color: #fff;
 }
 
@@ -643,4 +643,14 @@ input[type=tel]:focus {
 
 #avatar-img {
     border: 3px solid #555;
+}
+
+.footer{
+    padding:10px;
+    margin:0; 
+    height:20px;
+    text-align: center;
+}
+.dialBotton{
+    border-right: 1px solid #444;
 }

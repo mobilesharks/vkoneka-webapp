@@ -133,7 +133,7 @@ body {
 }
 
 .presenceText {
-    color: #FFFFFF !important;
+    color: #000 !important;
 }
 
 .streamSectionBackground {
@@ -446,7 +446,7 @@ input[type=radio]:checked + label:before {
 /* ADDED */
 #BtnFreeDial i,
 #BtnAddSomeone i,
-#SettingsMenu i, #BtnToogle i{
+#SettingsMenu i, #BtnToogle i, #BtnLogout i{
     color: #fff;
 }
 
@@ -538,4 +538,18 @@ input[type=radio]:checked + label:before {
 
 #avatar-img {
     border: 3px solid #D9D9D9;
+}
+
+
+.dialBotton{
+    background: #ffffff;
+    border-right: 1px solid #eee;
+}
+
+.footer{
+    background: #ffffff;
+    padding:10px;
+    margin:0; 
+    height:20px;
+    text-align: center;
 }
