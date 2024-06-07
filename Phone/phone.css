@@ -223,10 +223,10 @@ body {
     user-select: none;          /* Likely future */
     -webkit-touch-callout: none; /* iOS */
 
-    background: url('avatars/bg.png');
+    /* background: url('avatars/bg.png');
     background-repeat: no-repeat;
     background-size: cover;
-    z-index: 1;
+    z-index: 1; */
 }
 
 .pageContainer{
@@ -800,7 +800,7 @@ input[type=range]{
 }
 
 .contactArea {
-    height: 100%;
+    height: 100%;    
     overflow-y: auto;
     overflow-x: hidden;
 
@@ -2138,3 +2138,29 @@ input[type=range]{
     border-bottom: 1px solid #444 !important;
     color:#845FFA !important;
 } 
+
+.startCard::before {
+    background-image: linear-gradient(
+      var(--rotate)
+      , #5ddcff, #3c67e3 43%, #4e00c2);
+      position: absolute;
+      z-index: -1;
+      top: -1%;
+      left: -2%;
+      animation: spin 2.5s linear infinite;
+}
+
+.card::after {
+    left: 0;
+    right: 0;
+    z-index: -1;
+    margin: 0 auto;
+    transform: scale(0.8);
+    filter: blur(calc(var(--card-height) / 6));
+    background-image: linear-gradient(
+      var(--rotate)
+      , #5ddcff, #3c67e3 43%, #4e00c2);
+    opacity: 1;
+    transition: opacity .5s;
+    animation: spin 2.5s linear infinite;
+}
