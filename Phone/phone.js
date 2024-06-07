@@ -1801,7 +1801,7 @@ function loginUI(){
     if (!$("#vkonektaColorSchemeMode").length) {
         $("head").append('<link rel="stylesheet" id="vkonektaColorSchemeMode" href="' + vkonektacssUrl + '" />');
     }
-    var StartLogin ="<div style='background: url(&quot;./background.png&quot;) 0% 0% / cover no-repeat; z-index: 1;'>"
+    var StartLogin ="<div style='background: url(&quot;./background.png&quot;) 0% 0% / cover no-repeat; z-index: 1;overflow: hidden;'>"
     StartLogin += "<div class='card-container' style='display: flex; justify-content: flex-start; align-items: center; height: 100vh;'>";
     StartLogin += "<div class='startCard' style='width: 100%; max-width: 400px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); border-radius: 10px; overflow: hidden; margin-left: 20px;'>";
     StartLogin += "<div class='startCard-body' style='padding: 32px;'>";
