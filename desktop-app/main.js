@@ -14,7 +14,7 @@ function createWindow () {
   })
   
 
-  win.loadFile('../Phone/index.html')
+  win.loadFile('Phone/index.html')
 
   // Hide the window instead of closing
   /*win.on('close', (event) => {
