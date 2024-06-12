@@ -1965,6 +1965,7 @@ function loginServices(){
         switch (newState) {
             case SIP.RegistererState.Registered:
                 $('.alert').html(`<div class='alert-success'>Login efetuado</div>`)
+                $('#LoginButton').hide()
                 localStorage.setItem('isLogged',true)
                 setTimeout(()=>{
                     $("#phone").empty()
@@ -2121,8 +2122,11 @@ function ShowMyProfileMenu(obj){
 //     $("#colorSchemeModeSheet").text(wallpaperStyle);
 // }
 function LogoutWebphone(){
-    localStorage.clear();
-    window.location.reload();
+    var userConfirmed = confirm("Desejas sair?");
+    if (userConfirmed) {        
+        localStorage.clear();
+        window.location.reload();
+    }
 }
 function ApplyThemeColor() {
     var cssUrl = hostingPrefix + "phone.light.css";
