@@ -1977,6 +1977,7 @@ function loginServices(){
                 break;
         }
     });
+    
     userAgent.start().catch(function(){
         alertLogin('Erro no servidor! contactar comsec@nosi.cv')
     });
