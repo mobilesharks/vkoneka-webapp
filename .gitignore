@@ -14,3 +14,4 @@ node_modules/
 bun.lockb
 out/
 .gitlab-ci.yml
+.gitlab-ci.yml
