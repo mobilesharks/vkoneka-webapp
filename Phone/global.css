@@ -405,9 +405,9 @@ body {
 }
 
 .card-faqs {
-  border-radius: 7px;
+  /* border-radius: 7px;
   box-shadow: 0px 8.54286px 20.26081px 0px rgba(139, 141, 142, 0.15);
-  border: 1px solid var(--text-grey);
+  border: 1px solid var(--text-grey); */
 }
 
 .card-faqs-header {
@@ -429,7 +429,7 @@ body {
   flex-direction: column;
   justify-content: center;
   text-align: center;
-  width: 75%;
+  /* width: 75%; */
   border: 1px solid #b9b9b9b0;
   border-radius: 5px;
 }
