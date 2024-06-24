@@ -37,191 +37,192 @@
     <link rel="stylesheet" type="text/css" href="global.css" />
     <script src="components/header.js" type="text/javascript" defer></script>
     <script src="components/footer.js" type="text/javascript" defer></script>
+    <style>
+     .timeline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  padding: 20px 0;
+}
+
+.timeline-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 200px; /* Define uma largura padrão */
+  text-align: center; /* Centraliza o texto */
+}
+
+.timeline-content {
+  min-height: 100px; /* Ajusta a altura mínima para uniformizar */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centraliza verticalmente */
+}
+
+.timeline-content.top {
+  margin-bottom: 20px;
+}
+
+.timeline-content.bottom {
+  margin-top: 20px;
+}
+
+.circle {
+  width: 20px;
+  height: 20px;
+  background-color: var(--secondary);
+  border-radius: 50%;
+  position: relative;
+  z-index: 1;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--secondary);
+  z-index: 0;
+}
+
+.timeline h2 {
+  font-size: 1.2em;
+  margin: 0 0 10px;
+}
+
+.timeline p {
+  margin: 0;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .timeline {
+    flex-direction: column;
+  }
+
+  .timeline-item {
+    margin-bottom: 40px;
+    width: auto; /* Ajusta a largura automaticamente para mobile */
+  }
+
+  .timeline::before {
+    left: 31px;
+  }
+}
+
+    </style>
   </head>
+
   <body>
-    <div class="pt-5 py-5">
+    <div class="py-5">
       <header-component></header-component>
       <div class="container navigation-body">
-        <div class="d-flex row">
-          <div class="col-8">
-            <h1 class="navigation-title pb-2">
-              VKonekta para Instituições RTPE
+        <div class="d-flex">
+          <div class="container">
+            <h1 class="navigation-title pb-3">
+              VKonekta, a revolução da comunicação institucional em Cabo Verde.
             </h1>
-            <p>
-              Garantimos que a sua Instituição possa operar de maneira mais
-              fluida e produtiva no seu dia a dia.
+            <p class="navigation-text">
+              O VKonekta surge das tecnologias de comunicação existentes da Rede
+              do Estado. Plataforma de comunicação VoIP disponibilizada para
+              smartphones, tablets e Web.
             </p>
-            <h2 class="navigation-subtitle py-2">Como Adquirir o VKonekta</h2>
-            <h3 class="navigation-sub-subtitle">Já tem Extensão?</h3>
-            <p>
-              Se já possui uma extensão, basta descarregar a aplicação VKonekta
-              e criar a sua conta. Em poucos minutos, estará pronto para começar
-              a utilizar a plataforma em todos os seus dispositivos.
+            <p class="navigation-text">
+              Praticidade, segurança e privacidade nas suas conexões, de
+              qualquer lugar do mundo, em qualquer dispositivo! Gerida pela
+              NOSi, esta solução é destinada às interações governamentais e dos
+              serviços públicos, promovendo colaborações internas e com outros
+              stakeholders. Parte do Programa Estratégico para a Sociedade de
+              Informação, o VKonekta visa garantir a acessibilidade digital,
+              fomentar a coesão digital e estimular a presença universal.
             </p>
-            <h3 class="navigation-sub-subtitle">Ainda Não Tem Extensão?</h3>
-            <p>
-              Se ainda não possui uma extensão, entre em contacto connosco
-              através dos e-mails:
-              <a href="mailto:cxm@nosi.cv">cxm@nosi.cv</a> ou
-              <a href="mailto:helpdesk@nosi.cv">helpdesk@nosi.cv</a>. A nossa
-              equipa está disponível para ajudar com a configuração e fornecer
-              todo o suporte necessário.
-            </p>
-            <hr />
-            <h2 class="navigation-subtitle py-2">
-              Principais Benefícios para o seu Negócio
-            </h2>
-            <h3 class="navigation-sub-subtitle">Flexibilidade Total</h3>
-            <p>
-              Com o VKonekta, pode utilizar várias extensões num único telefone
-              e ter a plataforma acessível em diferentes dispositivos como
-              tablets, telemóveis e computadores. Isto significa que pode
-              atender chamadas e gerir a comunicação da sua empresa em qualquer
-              lugar, sem estar preso a um local específico.
-            </p>
-            <hr />
+          </div>
+        </div>
+        <div class="container" style="margin: 10px; padding: 0; justify-content: center; align-items: center;">
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-content top">
+                <h2>2008</h2>
+                <p>PKonekta</p>
+              </div>
+              <div class="circle"></div>
+              <div class="timeline-content bottom">
+                <p>Instalação da Primeira Praça Digital.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content top">
+                <h2>2009-2012</h2>
+                <p>Expansão</p>
+              </div>
+              <div class="circle"></div>
+              <div class="timeline-content bottom">
+                <p>Expansão com instalações de novas Praças Digitais nas outras Ilhas e Conselhos.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content top">
+                <h2>2015-2016</h2>
+                <p>MKonekta</p>
+              </div>
+              <div class="circle"></div>
+              <div class="timeline-content bottom">
+                <p>Criação e expansão da comunicação mobile em todas as instituições do Estado.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content top">
+                <h2>2018</h2>
+                <p>Projeto SV4Dkonekta</p>
+              </div>
+              <div class="circle"></div>
+              <div class="timeline-content bottom">
+                <p>provimento
 
-            <h2 class="navigation-title py-2" pt-3>Planos e Preços</h2>
-            <h3 class="navigation-sub-subtitle">Planos Flexíveis</h3>
-            <p>
-              Plano Básico: Ideal para pequenas instituições, inclui
-              funcionalidades essenciais de comunicação.
-            </p>
-            <p>
-              Plano Avançado: Para médias e grandes instituições, com
-              funcionalidades adicionais e suporte prioritário.
-            </p>
-            <p>
-              Plano Personalizado: Soluções sob medida para atender necessidades
-              específicas do seu negócio.
-            </p>
-            <h3 class="navigation-sub-subtitle">Simplicidade e Rapidez</h3>
-            <p>
-              A configuração do VKonekta é fácil e rápida. Quer esteja a usar um
-              smartphone, tablet ou computador, a aplicação está pronta para ser
-              usada de imediato, permitindo uma transição suave e sem
-              complicações.
-            </p>
-            <h3 class="navigation-sub-subtitle">Comunicação Unificada</h3>
-            <p>
-              Reúna todas as suas ferramentas de comunicação numa única
-              plataforma. O VKonekta permite que todas as suas conversas,
-              reuniões e colaborações sejam feitas de forma integrada e
-              eficiente.
-            </p>
-            <h3 class="navigation-sub-subtitle">Eficiência Operacional</h3>
-            <p>
-              Com chamadas de alta qualidade e funcionalidades avançadas de
-              mensagens, o VKonekta melhora a produtividade da sua equipa,
-              garantindo comunicações claras e fiáveis.
-            </p>
-            <h3 class="navigation-sub-subtitle">Segurança Avançada</h3>
-            <p>
-              O VKonekta assegura que todas as suas comunicações são protegidas
-              com criptografia ponta-a-ponta, priorizando a segurança e a
-              privacidade dos utilizadores.
-            </p>
-            <h3 class="navigation-sub-subtitle">Suporte Contínuo</h3>
-            <p>
-              Pode contar com a nossa equipa de suporte dedicada para
-              assistência em todas as etapas. Estamos aqui para garantir que a
-              sua experiência com o VKonekta seja a melhor possível.
-            </p>
-            <hr />
-            <h2 class="navigation-title py-2" pt-3>Funcionalidades Chave</h2>
-            <ul class="pb-5">
-              <li class="v-list">
-                <span class="material-symbols-outlined pe-4">
-                  radio_button_checked </span
-                >Chamadas de Voz de Alta Qualidade: Comunicações claras e
-                fiáveis.
-              </li>
-              <li class="v-list">
-                <span class="material-symbols-outlined pe-4">
-                  radio_button_checked </span
-                >Mensagens Instantâneas Avançadas: Troca rápida e eficiente de
-                informações.
-              </li>
-              <li class="v-list">
-                <span class="material-symbols-outlined pe-4">
-                  radio_button_checked </span
-                >Criptografia Ponta-a-Ponta: Segurança máxima para todas as
-                comunicações.
-              </li>
-              <li class="v-list">
-                <span class="material-symbols-outlined pe-4">
-                  radio_button_checked </span
-                >Integração com PBX: Extensão, SIP Trunk, gestão de chamadas,
-                IVR menu, e mais.
-              </li>
-              <li class="v-list">
-                <span class="material-symbols-outlined pe-4">
-                  radio_button_checked </span
-                >Compatibilidade Multiplataforma: Utilize em smartphones,
-                tablets, web e desktop.
-              </li>
-            </ul>
-            <h2 class="navigation-subtitle py-2">
-              Flexibilidade e Acessibilidade
-            </h2>
-
-            <ul>
-              <li class="v-list">
-                <span class="material-symbols-outlined pe-4"
-                  >radio_button_checked </span
-                >Multi-Dispositivo: Use o VKonekta em telemóveis, tablets, e
-                computadores, permitindo a mobilidade e flexibilidade no
-                atendimento.
-              </li>
-              <li class="v-list">
-                <span class="material-symbols-outlined pe-4"
-                  >radio_button_checked </span
-                >Lista RTPE: Acesse a lista de VoIP da RTPE diretamente no
-                VKonekta. Basta escolher a instituição ou o nome da pessoa que
-                deseja contactar, e o VKonekta fornecerá o número de VoIP.
-              </li>
-            </ul>
-            <h1 class="title-landing-second navigation-title pt-3">
-              Testemunhos de Clientes
-            </h1>
-            <h2 class="navigation-subtitle">O que Nossos Clientes Dizem</h2>
-            <p>
-              "Integramos o VKonekta na nossa empresa e a mudança foi notável. A
-              qualidade das chamadas e a facilidade de uso realmente
-              simplificaram a nossa comunicação diária." - João Silva, CEO da
-              Empresa XYZ.
-            </p>
-            <p>
-              "O suporte contínuo e a segurança avançada do VKonekta garantem
-              que todas as nossas comunicações estão protegidas e são
-              eficientes." - Maria Santos, Diretora de TI da Empresa ABC.
-            </p>
-            <h2 class="navigation-subtitle">Casos de Sucesso</h2>
-            <h3 class="navigation-sub-subtitle">
-              Exemplos de Implementação do VKonekta
-            </h3>
-            <ul>
-              <li class="v-list">
-                <span class="material-symbols-outlined pe-4">
-                  radio_button_checked </span
-                >Caso de Sucesso 1: Uma grande empresa multinacional que
-                conseguiu reduzir os custos de comunicação em 30% após a
-                implementação do VKonekta.
-              </li>
-              <li class="v-list">
-                <span class="material-symbols-outlined pe-4">
-                  radio_button_checked </span
-                >Caso de Sucesso 2: Uma pequena empresa local que aumentou a
-                produtividade em 20% devido à flexibilidade e eficiência do
-                VKonekta
-              </li>
-            </ul>
+                  "provimento", in Dicionário Priberam da Língua Portuguesa [em linha], 2008-2024, https://dicionario.priberam.org/provimento. o acesso internet de banda larga as comunidades remotas.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content top">
+                <h2>2019-2023</h2>
+                <p>Melhorias</p>
+              </div>
+              <div class="circle"></div>
+              <div class="timeline-content bottom">
+                <p>Instalação e reforço dos pontos WiFi Konekta nas Instituições do Estado e nas Praças Públicas</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-content top">
+                <h2>2024</h2>
+                <p>VKonekta</p>
+              </div>
+              <div class="circle"></div>
+              <div class="timeline-content bottom">
+                <p>Desenvolvimento e Lançamento Público</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <div class="container">
+      <p>O VKonekta surge das tecnologias de comunicação existentes da Rede do Estado. Plataforma de comunicação VoIP disponibilizada para smartphones, tablets e Web.</p>
+      <p>Praticidade, segurança e privacidade nas suas conexões, de qualquer lugar do mundo, em qualquer dispositivo!</p>
+      <p>Gerida pela NOSi, esta solução é destinada às interações governamentais e dos serviços públicos, promovendo colaborações internas e com outros stakeholders. Parte do Programa Estratégico para a Sociedade de Informação, o VKonekta visa garantir a acessibilidade digital, fomentar a coesão digital e estimular a presença universal.</p>
+    </div>
     <footer-component></footer-component>
 
+    <script>
+      window.onload = function () {
+        document.body.style.height = document.body.scrollHeight + "px";
+      };
+    </script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"

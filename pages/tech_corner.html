@@ -20,15 +20,21 @@
       table {
         width: 100%;
         border-collapse: collapse;
+        /* background-color: #8f8f8f; */
       }
       th,
       td {
-        border: 1px solid #ddd;
+        border: 1px solid #fff;
         padding: 8px;
       }
       th {
-        background-color: #f2f2f2;
+        /* background-color: var(--primary); */
       }
+      tbody tr:hover {
+        background-color: #36363647;
+        color: #fff;
+      }
+
     </style>
 </head>
 <body>
@@ -56,7 +62,7 @@
           </select>
         </div>
 
-          <table>
+          <table class="table-primary table-striped">
             <thead>
               <tr>
                 <th>Fornecedor</th>

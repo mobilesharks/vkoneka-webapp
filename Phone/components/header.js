@@ -45,17 +45,17 @@ class Header extends HTMLElement {
           <div class="collapse navbar-collapse p-2" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">              
               <li class="nav-item pt-2">
-                <a class="nav-link text-white menu-item" href="/solution">
+                <a class="nav-link text-white menu-item" href="/about_us">
                   <h7>
-                    <span>Solução</span>
+                    <span>Sobre</span>
                   </h7>
                 </a>
               </li>
-              <li class="nav-item pt-2">
+              <!--<li class="nav-item pt-2">
                 <a class="nav-link text-white menu-item" href="/business"
                   ><h7>Pacotes</h7></a
                 >
-              </li>
+              </li>-->
               <li class="nav-item pt-2 dropdown">
                 <a
                   class="nav-link text-white menu-item"
