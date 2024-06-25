@@ -28,7 +28,7 @@ class Footer extends HTMLElement {
      /*display: table-row;*/
      }
   </style>
-  <div class="footer pt-5">
+  <div class="footer pt-5" id="footer">
      <div class="container">
         <div class="flex-sm-column footer-flex flex-lg-row justify-content-center align-content-center flex-sm-wrap">
            <div class="col-lg-4 justify-content-center" id="logo_download">
